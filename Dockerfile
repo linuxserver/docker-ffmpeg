@@ -31,7 +31,6 @@ ENV \
 
 RUN \
  echo "**** install build packages ****" && \
- echo https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 && \ 
  apk add \
 	autoconf \
 	automake \
