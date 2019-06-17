@@ -30,15 +30,8 @@ ENV \
  XVID=1.3.4 
 
 RUN \
- echo "**** Versioning ****" && \
- if [ -z ${FFMPEG_VERSION+x} ]; then \
-	FFMPEG=${FFMPEG_HARD}; \
- else \
-	FFMPEG=${FFMPEG_VERSION}; \
- fi
-
-RUN \
  echo "**** install build packages ****" && \
+ echo https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 && \ 
  apk add \
 	autoconf \
 	automake \
@@ -384,12 +377,19 @@ RUN \
 
 # main ffmpeg compile
 RUN \
+ echo "**** Versioning ****" && \
+ if [ -z ${FFMPEG_VERSION+x} ]; then \
+	FFMPEG=${FFMPEG_HARD}; \
+ else \
+	FFMPEG=${FFMPEG_VERSION}; \
+ fi && \
  echo "**** static x265 fix ****" && \
  sed -i \
 	's/-lgcc_s//g' \
 	/usr/local/lib/pkgconfig/x265.pc && \
  echo "**** grabbing ffmpeg ****" && \
  mkdir -p /tmp/ffmpeg && \
+ echo "https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2" && \
  curl -Lf \
         https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 | \
         tar -jx --strip-components=1 -C /tmp/ffmpeg

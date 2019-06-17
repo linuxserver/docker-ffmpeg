@@ -5,7 +5,7 @@ ARG FFMPEG_VERSION
 
 # common env
 ENV \
- MAKEFLAGS="-j6" 
+ MAKEFLAGS="-j4" 
 
 # versions
 ENV \
@@ -28,14 +28,6 @@ ENV \
  VPX=1.8.0 \
  X265=3.0 \
  XVID=1.3.4 
-
-RUN \
- echo "**** Versioning ****" && \
- if [ -z ${FFMPEG_VERSION+x} ]; then \
-	FFMPEG=${FFMPEG_HARD}; \
- else \
-	FFMPEG=${FFMPEG_VERSION}; \
- fi
 
 RUN \
  echo "**** install build packages ****" && \
@@ -394,6 +386,12 @@ RUN \
 
 # main ffmpeg compile
 RUN \
+ echo "**** Versioning ****" && \
+ if [ -z ${FFMPEG_VERSION+x} ]; then \
+	FFMPEG=${FFMPEG_HARD}; \
+ else \
+	FFMPEG=${FFMPEG_VERSION}; \
+ fi && \
  echo "**** static x265 fix ****" && \
  sed -i \
 	's/-lgcc_s//g' \
