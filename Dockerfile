@@ -19,6 +19,7 @@ ENV \
  LAME=3.99.5 \
  LIBASS=0.13.7 \
  LIBVIDSTAB=1.1.0 \
+ NVCODEC=n9.0.18.1 \
  OGG=1.3.2 \
  OPENCOREAMR=0.1.5 \
  OPENJPEG=2.3.1 \
@@ -40,18 +41,22 @@ RUN \
 	curl \
 	diffutils \
 	expat \
+	expat-dev \
 	g++ \
 	gcc \
 	git \
 	gperf \
 	jq \
-	expat-dev \
-	libgomp \
+	libdrm-dev \
 	libgcc \
-	openssl-dev \
+	libgomp \
+	libjpeg-turbo-dev \
 	libtool \
+	libva-dev \
+	libvdpau-dev \
 	make \
 	nasm \
+	openssl-dev \
 	perl \
 	pkgconfig \
 	python \
@@ -63,6 +68,7 @@ RUN \
  mkdir -p \
 	/tmp/aom \
 	/tmp/fdk-aac \
+	/tmp/ffnvcodec \
 	/tmp/fontconfig \
 	/tmp/freetype \
 	/tmp/fribidi \
@@ -91,6 +97,12 @@ RUN \
  curl -Lf \
 	https://github.com/mstorsjo/fdk-aac/archive/v${FDKAAC}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/fdk-aac
+RUN \
+ echo "**** grabbing ffnvcodec ****" && \
+ git clone \
+        --branch ${NVCODEC} \
+        --depth 1 https://git.videolan.org/git/ffmpeg/nv-codec-headers.git \
+        /tmp/ffnvcodec
 RUN \
  echo "**** grabbing fontconfig ****" && \
  curl -Lf \
@@ -200,6 +212,10 @@ RUN \
 	--disable-shared \
 	--enable-static && \
  make && \
+ make install
+RUN \
+ echo "**** compiling ffnvcodec ****" && \
+ cd /tmp/ffnvcodec && \
  make install
 RUN \
  echo "**** compiling freetype ****" && \
@@ -401,6 +417,7 @@ RUN \
 	--disable-ffplay \
 	--disable-ffprobe \
 	--enable-avresample \
+	--enable-cuvid \
 	--enable-gpl \
 	--enable-libaom \
 	--enable-libass \
@@ -420,6 +437,8 @@ RUN \
 	--enable-libx265 \
 	--enable-libxvid \
 	--enable-nonfree \
+	--enable-nvdec \
+	--enable-nvenc \
 	--enable-openssl \
 	--enable-small \
 	--enable-stripping \
