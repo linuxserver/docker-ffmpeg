@@ -410,7 +410,7 @@ RUN \
 	--enable-libkvazaar \
 	--enable-libmp3lame \
 	--enable-libopencore-amrnb \
-        --enable-libopencore-amrwb \
+	--enable-libopencore-amrwb \
 	--enable-libopenjpeg \
 	--enable-libopus \
 	--enable-libtheora \
