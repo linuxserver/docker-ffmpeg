@@ -311,7 +311,7 @@ RUN \
  curl -fL \
 	'https://git.xiph.org/?p=theora.git;a=commitdiff_plain;h=7288b539c52e99168488dc3a343845c9365617c8' \
 	> png.patch && \
- patch ./examples/png2theora.c < png.patch && \
+ patch -p1 < png.patch && \
  ./configure \
 	--disable-shared \
 	--enable-static && \

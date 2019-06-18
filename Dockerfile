@@ -18,13 +18,18 @@ ENV \
  KVAZAAR=1.2.0 \
  LAME=3.99.5 \
  LIBASS=0.13.7 \
+ LIBDRM=2.4.98 \
+ LIBVA=2.4.1 \
+ LIBVDPAU=1.2 \
  LIBVIDSTAB=1.1.0 \
+ NOUVEAU=1.0.16 \
  NVCODEC=n9.0.18.1 \
  OGG=1.3.2 \
  OPENCOREAMR=0.1.5 \
  OPENJPEG=2.3.1 \
  OPUS=1.2 \
  THEORA=1.1.1 \
+ VAAPI=2.3.0 \
  VORBIS=1.3.5 \
  VPX=1.8.0 \
  X265=3.0 \
@@ -47,19 +52,18 @@ RUN \
 	git \
 	gperf \
 	jq \
-	libdrm-dev \
 	libgcc \
 	libgomp \
-	libjpeg-turbo-dev \
+	libpciaccess-dev \
 	libtool \
-	libva-dev \
-	libvdpau-dev \
+	linux-headers \
 	make \
 	nasm \
 	openssl-dev \
 	perl \
 	pkgconfig \
 	python \
+	xorg-server-dev \
 	yasm \
 	zlib-dev
 
@@ -75,11 +79,16 @@ RUN \
 	/tmp/kvazaar \
 	/tmp/lame \
 	/tmp/libass \
+	/tmp/libdrm \
+	/tmp/libva \
+	/tmp/libvdpau \
+	/tmp/nouveau \
 	/tmp/ogg \
 	/tmp/opencore-amr \
 	/tmp/openjpeg \
 	/tmp/opus \
 	/tmp/theora \
+	/tmp/vaapi \
 	/tmp/vid.stab \
 	/tmp/vorbis \
 	/tmp/vpx \
@@ -134,6 +143,28 @@ RUN \
 	https://github.com/libass/libass/archive/${LIBASS}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/libass
 RUN \
+ echo "**** grabbing libdrm ****" && \
+ curl -Lf \
+	https://dri.freedesktop.org/libdrm/libdrm-${LIBDRM}.tar.gz | \
+	tar -zx --strip-components=1 -C /tmp/libdrm
+RUN \
+ echo "**** grabbing libva ****" && \
+ curl -Lf \
+	https://github.com/intel/libva/archive/${LIBVA}.tar.gz | \
+	tar -zx --strip-components=1 -C /tmp/libva
+RUN \
+ echo "**** grabbing libvdpau ****" && \
+ git clone \
+	--branch libvdpau-${LIBVDPAU} \
+	--depth 1 https://gitlab.freedesktop.org/vdpau/libvdpau.git \
+	/tmp/libvdpau
+RUN \
+ echo "**** grabbing nouveau ****" && \
+ git clone \
+	--branch xf86-video-nouveau-${NOUVEAU} \
+	--depth 1 git://anongit.freedesktop.org/nouveau/xf86-video-nouveau \
+	/tmp/nouveau
+RUN \
  echo "**** grabbing ogg ****" && \
  curl -Lf \
 	http://downloads.xiph.org/releases/ogg/libogg-${OGG}.tar.gz | \
@@ -158,6 +189,11 @@ RUN \
  curl -Lf \
 	http://downloads.xiph.org/releases/theora/libtheora-${THEORA}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/theora
+RUN \
+ echo "**** grabbing vaapi ****" && \
+ curl -Lf \
+	https://github.com/intel/intel-vaapi-driver/archive/${VAAPI}.tar.gz | \
+	tar -zx --strip-components=1 -C /tmp/vaapi
 RUN \
  echo "**** grabbing vid.stab ****" && \
  curl -Lf \
@@ -277,6 +313,42 @@ RUN \
  make && \
  make install
 RUN \
+ echo "**** compiling libdrm ****" && \
+ cd /tmp/libdrm && \
+ ./configure \
+        --disable-shared \
+        --enable-static && \
+ make && \
+ make install
+RUN \
+ echo "**** compiling libva ****" && \
+ cd /tmp/libva && \
+ ./autogen.sh && \
+ ./configure \
+	--disable-shared \
+	--enable-static && \
+ make && \
+ make install
+RUN \
+ echo "**** compiling libvdpau ****" && \
+ cd /tmp/libvdpau && \
+ ./autogen.sh && \
+ ./configure \
+	--disable-shared \
+	--enable-static && \
+ make && \
+ make install
+RUN \
+ echo "**** compiling nouveau ****" && \
+ apk add libx11-dev util-macros && \
+ cd /tmp/nouveau && \
+ ./autogen.sh && \
+ ./configure \
+	--disable-shared \
+	--enable-static && \
+ make && \
+ make install
+RUN \
  echo "**** compiling ogg ****" && \
  cd /tmp/ogg && \
  ./configure \
@@ -327,6 +399,15 @@ RUN \
 	'https://git.xiph.org/?p=theora.git;a=commitdiff_plain;h=7288b539c52e99168488dc3a343845c9365617c8' \
 	> png.patch && \
  patch ./examples/png2theora.c < png.patch && \
+ ./configure \
+	--disable-shared \
+	--enable-static && \
+ make && \
+ make install
+RUN \
+ echo "**** compiling vaapi ****" && \
+ cd /tmp/vaapi && \
+ ./autogen.sh && \
  ./configure \
 	--disable-shared \
 	--enable-static && \
@@ -442,10 +523,22 @@ RUN \
 	--enable-openssl \
 	--enable-small \
 	--enable-stripping \
+	--enable-vaapi \
+	--enable-vdpau \
 	--enable-version3 \
 	--extra-cflags="-I/usr/local/include --static" \
 	--extra-ldflags="-L/usr/local/lib -static" \
-	--extra-libs="-lstdc++ -lexpat -ldl -lpthread" \
+	--extra-libs="\
+		-ldl \
+		-ldrm \
+		-ldrm_amdgpu \
+		-ldrm_intel \
+		-ldrm_nouveau \
+		-ldrm_radeon \
+		-lexpat \
+		-lpthread \
+		-lstdc++ \
+		-lva-drm" \
 	--pkg-config-flags="--static" && \
  make && \
  echo "**** arrange files ****" && \
@@ -453,15 +546,3 @@ RUN \
  cp \
 	/tmp/ffmpeg/ffmpeg \
 	/buildout/usr/local/bin
-
-# Runtime stage
-FROM lsiobase/alpine:3.9
-
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="TheLamer"
-
-# copy local files
-COPY --from=buildstage /buildout/ /
