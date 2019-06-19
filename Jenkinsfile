@@ -13,7 +13,7 @@ pipeline {
     BUILD_VERSION_ARG = 'FFMPEG_VERSION'
     LS_USER = 'linuxserver'
     LS_REPO = 'docker-ffmpeg'
-    CONTAINER_NAME = 'ffmepg'
+    CONTAINER_NAME = 'ffmpeg'
     DOCKERHUB_IMAGE = 'lsiobase/ffmpeg'
     DEV_DOCKERHUB_IMAGE = 'lsiodev/ffmpeg'
     PR_DOCKERHUB_IMAGE = 'lspipepr/ffmpeg'
