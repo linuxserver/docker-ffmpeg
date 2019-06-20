@@ -28,4 +28,6 @@ RUN \
 	mesa-vulkan-ati \
 	v4l-utils-libs
 
-ENTRYPOINT ["/usr/local/bin/ffmpeg"]
+COPY /root /
+
+ENTRYPOINT ["/ffmpegwrapper.sh"]
