@@ -1,5 +1,5 @@
 FROM lsiobase/ffmpeg:bin as binstage
-FROM lsiobase/alpine:3.9
+FROM lsiobase/ubuntu:bionic
 
 # Add files from binstage
 COPY --from=binstage / /
@@ -12,21 +12,28 @@ LABEL maintainer="thelamer"
 
 # hardware env
 ENV \
- LIBVA_DRIVERS_PATH="/usr/lib/dri" \
+ LIBVA_DRIVERS_PATH="/usr/lib/x86_64-linux-gnu/dri" \
  NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
 
 RUN \
- echo "**** install packages ****" && \
- apk add --no-cache \
-	libgomp \
-	libpng \
-	libxext \
-	libva-intel-driver \
-	libxml2 \
-	mesa-dri-ati \
-	mesa-dri-nouveau \
-	mesa-vulkan-ati \
-	v4l-utils-libs
+ echo "**** install runtime ****" && \
+ apt-get update && \
+ apt-get install -y \
+	i965-va-driver \
+	libexpat1 \
+	libgl1-mesa-dri \
+	libglib2.0-0 \
+	libgomp1 \
+	libharfbuzz0b \
+	libv4l-0 \
+	libx11-6 \
+	libxcb1 \
+	libxext6 \
+	libxml2 && \
+ echo "**** clean up ****" && \
+ rm -rf \
+	/var/lib/apt/lists/* \
+	/var/tmp/*
 
 COPY /root /
 

@@ -1,5 +1,5 @@
 FROM lsiobase/ffmpeg:arm32v7-bin as binstage
-FROM lsiobase/alpine:arm32v7-3.9
+FROM lsiobase/ubuntu:arm32v7-bionic
 
 # Add files from binstage
 COPY --from=binstage / /
@@ -11,15 +11,22 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 LABEL maintainer="thelamer"
 
 RUN \
- echo "**** install packages ****" && \
- apk add --no-cache \
-	expat \
-	libgomp \
-	libpng \
-	libstdc++ \
-	libxext \
-	libxml2 \
-	v4l-utils-libs
+ echo "**** install runtime ****" && \
+ apt-get update && \
+ apt-get install -y \
+	libexpat1 \
+	libglib2.0-0 \
+	libgomp1 \
+	libharfbuzz0b \
+	libv4l-0 \
+	libx11-6 \
+	libxcb1 \
+	libxext6 \
+	libxml2 && \
+ echo "**** clean up ****" && \
+ rm -rf \
+	/var/lib/apt/lists/* \
+	/var/tmp/*
 
 COPY /root /
 
