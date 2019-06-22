@@ -17,8 +17,8 @@ pipeline {
     DOCKERHUB_IMAGE = 'lsiobase/ffmpeg'
     DEV_DOCKERHUB_IMAGE = 'lsiodev/ffmpeg'
     PR_DOCKERHUB_IMAGE = 'lspipepr/ffmpeg'
-    DIST_IMAGE = 'ubuntu'
-    MULTIARCH='true'
+    DIST_IMAGE = 'alpine'
+    MULTIARCH='false'
     CI='false'
   }
   stages {
@@ -28,7 +28,7 @@ pipeline {
         script{
           env.EXIT_STATUS = ''
           env.LS_RELEASE = sh(
-            script: '''docker run --rm alexeiled/skopeo sh -c 'skopeo inspect docker://docker.io/'${DOCKERHUB_IMAGE}':bin 2>/dev/null' | jq -r '.Labels.build_version' | awk '{print $3}' | grep '\\-ls' || : ''',
+            script: '''docker run --rm alexeiled/skopeo sh -c 'skopeo inspect docker://docker.io/'${DOCKERHUB_IMAGE}':sources 2>/dev/null' | jq -r '.Labels.build_version' | awk '{print $3}' | grep '\\-ls' || : ''',
             returnStdout: true).trim()
           env.LS_RELEASE_NOTES = sh(
             script: '''cat readme-vars.yml | awk -F \\" '/date: "[0-9][0-9].[0-9][0-9].[0-9][0-9]:/ {print $4;exit;}' | sed -E ':a;N;$!ba;s/\\r{0,1}\\n/\\\\n/g' ''',
@@ -97,7 +97,7 @@ pipeline {
       steps{
         script{
           env.EXT_RELEASE = sh(
-            script: ''' echo 4.1.3 ''',
+            script: ''' echo 4.1.3_source ''',
             returnStdout: true).trim()
             env.RELEASE_LINK = 'custom_command'
         }
@@ -113,10 +113,10 @@ pipeline {
         }
       }
     }
-    // If this is a bin build use live docker endpoints
+    // If this is a fetch_stage build use live docker endpoints
     stage("Set ENV live build"){
       when {
-        branch "bin"
+        branch "fetch_stage"
         environment name: 'CHANGE_ID', value: ''
       }
       steps {
@@ -134,7 +134,7 @@ pipeline {
     // If this is a dev build use dev docker endpoints
     stage("Set ENV dev build"){
       when {
-        not {branch "bin"}
+        not {branch "fetch_stage"}
         environment name: 'CHANGE_ID', value: ''
       }
       steps {
@@ -201,7 +201,7 @@ pipeline {
     // Use helper containers to render templated files
     stage('Update-Templates') {
       when {
-        branch "bin"
+        branch "fetch_stage"
         environment name: 'CHANGE_ID', value: ''
         expression {
           env.CONTAINER_NAME != null
@@ -212,15 +212,15 @@ pipeline {
               set -e
               TEMPDIR=$(mktemp -d)
               docker pull linuxserver/jenkins-builder:latest
-              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=bin -v ${TEMPDIR}:/ansible/jenkins linuxserver/jenkins-builder:latest 
+              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=fetch_stage -v ${TEMPDIR}:/ansible/jenkins linuxserver/jenkins-builder:latest 
               docker pull linuxserver/doc-builder:latest
-              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=bin -v ${TEMPDIR}:/ansible/readme linuxserver/doc-builder:latest
+              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=fetch_stage -v ${TEMPDIR}:/ansible/readme linuxserver/doc-builder:latest
               if [ "$(md5sum ${TEMPDIR}/${LS_REPO}/Jenkinsfile | awk '{ print $1 }')" != "$(md5sum Jenkinsfile | awk '{ print $1 }')" ] || \
                  [ "$(md5sum ${TEMPDIR}/${CONTAINER_NAME}/README.md | awk '{ print $1 }')" != "$(md5sum README.md | awk '{ print $1 }')" ] || \
                  [ "$(cat ${TEMPDIR}/${LS_REPO}/LICENSE | md5sum | cut -c1-8)" != "${LICENSE_TAG}" ]; then
                 mkdir -p ${TEMPDIR}/repo
                 git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/repo/${LS_REPO}
-                git --git-dir ${TEMPDIR}/repo/${LS_REPO}/.git checkout -f bin
+                git --git-dir ${TEMPDIR}/repo/${LS_REPO}/.git checkout -f fetch_stage
                 cp ${TEMPDIR}/${CONTAINER_NAME}/README.md ${TEMPDIR}/repo/${LS_REPO}/
                 cp ${TEMPDIR}/docker-${CONTAINER_NAME}/Jenkinsfile ${TEMPDIR}/repo/${LS_REPO}/
                 cp ${TEMPDIR}/docker-${CONTAINER_NAME}/LICENSE ${TEMPDIR}/repo/${LS_REPO}/
@@ -252,7 +252,7 @@ pipeline {
     // Exit the build if the Templated files were just updated
     stage('Template-exit') {
       when {
-        branch "bin"
+        branch "fetch_stage"
         environment name: 'CHANGE_ID', value: ''
         environment name: 'FILES_UPDATED', value: 'true'
         expression {
@@ -294,7 +294,7 @@ pipeline {
         }
         stage('Build ARMHF') {
           agent {
-            label 'X86-64-MULTI'
+            label 'ARMHF'
           }
           steps {
             withCredentials([
@@ -321,7 +321,7 @@ pipeline {
         }
         stage('Build ARM64') {
           agent {
-            label 'X86-64-MULTI'
+            label 'ARM64'
           }
           steps {
             withCredentials([
@@ -419,12 +419,12 @@ pipeline {
           sh '''#! /bin/bash
              echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin
              '''
-          sh "docker tag ${IMAGE}:${META_TAG} ${IMAGE}:bin"
-          sh "docker push ${IMAGE}:bin"
+          sh "docker tag ${IMAGE}:${META_TAG} ${IMAGE}:sources"
+          sh "docker push ${IMAGE}:sources"
           sh "docker push ${IMAGE}:${META_TAG}"
           sh '''docker rmi \
                 ${IMAGE}:${META_TAG} \
-                ${IMAGE}:bin || :'''
+                ${IMAGE}:sources || :'''
                 
         }
       }
@@ -454,32 +454,32 @@ pipeline {
                   docker tag lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm32v7-${META_TAG}
                   docker tag lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm64v8-${META_TAG}
                 fi'''
-          sh "docker tag ${IMAGE}:amd64-${META_TAG} ${IMAGE}:amd64-bin"
-          sh "docker tag ${IMAGE}:arm32v7-${META_TAG} ${IMAGE}:arm32v7-bin"
-          sh "docker tag ${IMAGE}:arm64v8-${META_TAG} ${IMAGE}:arm64v8-bin"
+          sh "docker tag ${IMAGE}:amd64-${META_TAG} ${IMAGE}:amd64-sources"
+          sh "docker tag ${IMAGE}:arm32v7-${META_TAG} ${IMAGE}:arm32v7-sources"
+          sh "docker tag ${IMAGE}:arm64v8-${META_TAG} ${IMAGE}:arm64v8-sources"
           sh "docker push ${IMAGE}:amd64-${META_TAG}"
           sh "docker push ${IMAGE}:arm32v7-${META_TAG}"
           sh "docker push ${IMAGE}:arm64v8-${META_TAG}"
-          sh "docker push ${IMAGE}:amd64-bin"
-          sh "docker push ${IMAGE}:arm32v7-bin"
-          sh "docker push ${IMAGE}:arm64v8-bin"
-          sh "docker manifest push --purge ${IMAGE}:bin || :"
-          sh "docker manifest create ${IMAGE}:bin ${IMAGE}:amd64-bin ${IMAGE}:arm32v7-bin ${IMAGE}:arm64v8-bin"
-          sh "docker manifest annotate ${IMAGE}:bin ${IMAGE}:arm32v7-bin --os linux --arch arm"
-          sh "docker manifest annotate ${IMAGE}:bin ${IMAGE}:arm64v8-bin --os linux --arch arm64 --variant v8"
+          sh "docker push ${IMAGE}:amd64-sources"
+          sh "docker push ${IMAGE}:arm32v7-sources"
+          sh "docker push ${IMAGE}:arm64v8-sources"
+          sh "docker manifest push --purge ${IMAGE}:sources || :"
+          sh "docker manifest create ${IMAGE}:sources ${IMAGE}:amd64-sources ${IMAGE}:arm32v7-sources ${IMAGE}:arm64v8-sources"
+          sh "docker manifest annotate ${IMAGE}:sources ${IMAGE}:arm32v7-sources --os linux --arch arm"
+          sh "docker manifest annotate ${IMAGE}:sources ${IMAGE}:arm64v8-sources --os linux --arch arm64 --variant v8"
           sh "docker manifest push --purge ${IMAGE}:${META_TAG} || :"
           sh "docker manifest create ${IMAGE}:${META_TAG} ${IMAGE}:amd64-${META_TAG} ${IMAGE}:arm32v7-${META_TAG} ${IMAGE}:arm64v8-${META_TAG}"
           sh "docker manifest annotate ${IMAGE}:${META_TAG} ${IMAGE}:arm32v7-${META_TAG} --os linux --arch arm"
           sh "docker manifest annotate ${IMAGE}:${META_TAG} ${IMAGE}:arm64v8-${META_TAG} --os linux --arch arm64 --variant v8"
-          sh "docker manifest push --purge ${IMAGE}:bin"
+          sh "docker manifest push --purge ${IMAGE}:sources"
           sh "docker manifest push --purge ${IMAGE}:${META_TAG}"
           sh '''docker rmi \
                 ${IMAGE}:amd64-${META_TAG} \
-                ${IMAGE}:amd64-bin \
+                ${IMAGE}:amd64-sources \
                 ${IMAGE}:arm32v7-${META_TAG} \
-                ${IMAGE}:arm32v7-bin \
+                ${IMAGE}:arm32v7-sources \
                 ${IMAGE}:arm64v8-${META_TAG} \
-                ${IMAGE}:arm64v8-bin \
+                ${IMAGE}:arm64v8-sources \
                 lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER} \
                 lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} || :'''
         }
@@ -488,7 +488,7 @@ pipeline {
     // If this is a public release tag it in the LS Github
     stage('Github-Tag-Push-Release') {
       when {
-        branch "bin"
+        branch "fetch_stage"
         expression {
           env.LS_RELEASE != env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
         }
@@ -500,14 +500,14 @@ pipeline {
         sh '''curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST https://api.github.com/repos/${LS_USER}/${LS_REPO}/git/tags \
         -d '{"tag":"'${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}'",\
              "object": "'${COMMIT_SHA}'",\
-             "message": "Tagging Release '${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}' to bin",\
+             "message": "Tagging Release '${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}' to fetch_stage",\
              "type": "commit",\
              "tagger": {"name": "LinuxServer Jenkins","email": "jenkins@linuxserver.io","date": "'${GITHUB_DATE}'"}}' '''
         echo "Pushing New release for Tag"
         sh '''#! /bin/bash
               echo "Updating to ${EXT_RELEASE_CLEAN}" > releasebody.json
               echo '{"tag_name":"'${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}'",\
-                     "target_commitish": "bin",\
+                     "target_commitish": "fetch_stage",\
                      "name": "'${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}'",\
                      "body": "**LinuxServer Changes:**\\n\\n'${LS_RELEASE_NOTES}'\\n**Remote Changes:**\\n\\n' > start
               printf '","draft": false,"prerelease": true}' >> releasebody.json
