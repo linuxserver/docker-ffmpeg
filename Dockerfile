@@ -1,10 +1,11 @@
-FROM lsiobase/alpine:3.9 as buildstage
+FROM lsiobase/ubuntu:bionic as buildstage
 
 # set version label
 ARG FFMPEG_VERSION
 
 # common env
 ENV \
+ DEBIAN_FRONTEND="noninteractive" \
  MAKEFLAGS="-j4"
 
 # versions
@@ -12,12 +13,12 @@ ENV \
  AOM=v1.0.0 \
  FDKAAC=0.1.5 \
  FFMPEG_HARD=4.1.3 \
- FONTCONFIG=2.12.4 \
- FREETYPE=2.5.5 \
+ FONTCONFIG=2.13.91 \
+ FREETYPE=2.9.1 \
  FRIBIDI=0.19.7 \
  KVAZAAR=1.2.0 \
  LAME=3.99.5 \
- LIBASS=0.13.7 \
+ LIBASS=0.14.0 \
  LIBDRM=2.4.98 \
  LIBVA=2.4.1 \
  LIBVDPAU=1.2 \
@@ -26,16 +27,17 @@ ENV \
  OGG=1.3.2 \
  OPENCOREAMR=0.1.5 \
  OPENJPEG=2.3.1 \
- OPUS=1.2 \
+ OPUS=1.3 \
  THEORA=1.1.1 \
- VORBIS=1.3.5 \
+ VORBIS=1.3.6 \
  VPX=1.8.0 \
  X265=3.0 \
  XVID=1.3.4 
 
 RUN \
  echo "**** install build packages ****" && \
- apk add \
+ apt-get update && \ 
+ apt-get install -y \
 	autoconf \
 	automake \
 	bzip2 \
@@ -43,29 +45,29 @@ RUN \
 	cmake \
 	curl \
 	diffutils \
-	expat \
-	expat-dev \
 	g++ \
 	gcc \
 	git \
 	gperf \
-	jq \
-	libgcc \
-	libgomp \
+	libexpat1-dev \
+	libxext-dev \
+	libgcc-7-dev \
+	libgomp1 \
 	libpciaccess-dev \
+	libssl-dev \
 	libtool \
+	libv4l-dev \
+	libx11-dev \
 	libxml2-dev \
-	linux-headers \
 	make \
 	nasm \
-	openssl-dev \
 	perl \
-	pkgconfig \
+	pkg-config \
 	python \
-	v4l-utils-dev \
-	xorg-server-dev \
+	x11proto-xext-dev \
+	xserver-xorg-dev \
 	yasm \
-	zlib-dev
+	zlib1g-dev 
 
 # compile 3rd party libs
 RUN \
@@ -132,8 +134,8 @@ RUN \
  echo "**** grabbing fontconfig ****" && \
  mkdir -p /tmp/fontconfig && \
  curl -Lf \
-	https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.bz2 | \
-	tar -jx --strip-components=1 -C /tmp/fontconfig
+	https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.gz | \
+	tar -zx --strip-components=1 -C /tmp/fontconfig
 RUN \
  echo "**** compiling fontconfig ****" && \
  cd /tmp/fontconfig && \
@@ -182,10 +184,10 @@ RUN \
  echo "**** compiling lame ****" && \
  cd /tmp/lame && \
  cp \
-	/usr/share/automake-1.16/config.guess \
+	/usr/share/automake-1.15/config.guess \
 	config.guess && \
  cp \
-        /usr/share/automake-1.16/config.sub \
+        /usr/share/automake-1.15/config.sub \
         config.sub && \
  ./configure \
 	--disable-frontend \
@@ -326,10 +328,10 @@ RUN \
  echo "**** compiling theora ****" && \
  cd /tmp/theora && \
  cp \
-	/usr/share/automake-1.16/config.guess \
+	/usr/share/automake-1.15/config.guess \
 	config.guess && \
  cp \
-	/usr/share/automake-1.16/config.sub \
+	/usr/share/automake-1.15/config.sub \
 	config.sub && \
  curl -fL \
 	'https://git.xiph.org/?p=theora.git;a=commitdiff_plain;h=7288b539c52e99168488dc3a343845c9365617c8' \
@@ -487,6 +489,7 @@ RUN \
 
 RUN \
  echo "**** arrange files ****" && \
+ ldconfig && \
  mkdir -p /buildout/usr/local/bin && \
  cp \
 	/tmp/ffmpeg/ffmpeg \
@@ -494,7 +497,10 @@ RUN \
  mkdir -p /buildout/usr/lib && \
  ldd /tmp/ffmpeg/ffmpeg \
 	| awk '/local/ {print $3}' \
-	| xargs -i cp -L {} /buildout/usr/lib/
+	| xargs -i cp -L {} /buildout/usr/lib/ && \
+ cp -a \
+	/usr/local/lib/libdrm_* \
+	/buildout/usr/lib/
 
 # Storage layer consumed downstream
 FROM scratch

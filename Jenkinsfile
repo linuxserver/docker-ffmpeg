@@ -17,7 +17,7 @@ pipeline {
     DOCKERHUB_IMAGE = 'lsiobase/ffmpeg'
     DEV_DOCKERHUB_IMAGE = 'lsiodev/ffmpeg'
     PR_DOCKERHUB_IMAGE = 'lspipepr/ffmpeg'
-    DIST_IMAGE = 'alpine'
+    DIST_IMAGE = 'ubuntu'
     MULTIARCH='true'
     CI='false'
   }
