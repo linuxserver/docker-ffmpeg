@@ -42,7 +42,8 @@ RUN \
  echo "**** install stuff specific to the dev container ****" && \
  apt-get install -y \
 	git \
-	npm && \
+	npm \
+	sudo && \
  npm install -g nodemon && \
  echo "**** install web app from git ****" && \
  if [ -z ${FFMPEGWEB_COMMIT+x} ]; then \
@@ -52,16 +53,18 @@ RUN \
  git clone \
 	https://github.com/linuxserver/docker-ffmpeg.git \
 	/app/ffmpeg-web && \
+ cd /app/ffmpeg-web && \
  git \
-	--git-dir /app/ffmpeg-web/.git \
 	checkout -f ${FFMPEGWEB_COMMIT} && \
  pip3 install \
-	-r /app/ffmpeg-web/requirements.txt && \
+	-r requirements.txt && \
  echo "**** permissions ****" && \
- mkdir -p /applogs/ && \
+ mkdir -p \
+	/applogs \
+	/c9sdk/build/standalone && \
  chown -R abc:abc \
 	/app/ffmpeg-web \
-	/applogs && \
+	/applogs \
 	/c9sdk/build/standalone \
 	/c9bins && \
  usermod -aG sudo \
