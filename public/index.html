@@ -1,1 +1,95 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Web interface for defining post processing FFmpeg commands">
+    <meta name="author" content="linuxserver.io">
+    <title>FFmpeg Web</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="/public/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/public/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/public/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/public/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/public/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/public/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/public/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/public/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/public/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/public/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/public/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/public/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="navbar-brand" style="cursor:pointer;" onclick="renderhome()">
+        <img src="/public/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        FFmpeg Web
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <div class="nav-link" style="cursor:pointer;" onclick="rendercommands()" >Example Commands</div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br>
+    <!-- Body -->
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          Process Rule RULENAME
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-row align-items-center">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="File Extension">
+              </div>
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Frequency (seconds)">
+              </div>
+              <div class="col-auto">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="deletesource">
+                  <label class="form-check-label" for="deletesource">
+                    Delete Source
+                  </label>
+                </div>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary mb-2">Save</button>
+              </div>
+              <div class="col float-right">
+                <button class="btn btn-success mb-2 float-right">Run Now</button>
+              </div>
+            </div>
+          </form>
+          <br>
+          <div id="editor" style="height: 250px; width: 100%"></div>
+        </div>
+      </div>
+      <br>
+      <center><button type="button" class="btn btn-secondary btn-lg">+</button></center>
+    </div>
+    <!-- Bootstrap core JavaScript -->
+    <script src="/public/vendor/js/jquery.min.js"></script>
+    <script src="/public/vendor/js/popper.min.js"></script>
+    <script src="/public/vendor/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="/public/vendor/js/socket.io.js"></script>
+    <script src="/public/vendor/js/ace.js"></script>
+    <!-- Our JavaScript -->
+    <script src="/public/ffmpeg-web.js"></script>
+  </body>
+</html>

@@ -67,7 +67,7 @@ RUN \
  usermod -aG sudo \
 	abc && \
  chsh abc -s /bin/bash && \
- sed -e 's/%sudo       ALL=(ALL:ALL) ALL/%sudo ALL=(ALL:ALL) NOPASSWD: ALL/g' \
+ sed -e 's/%sudo    ALL=(ALL:ALL) ALL/%sudo ALL=(ALL:ALL) NOPASSWD: ALL/g' \
 	-i /etc/sudoers && \
  sed -e 's/^wheel:\(.*\)/wheel:\1,abc/g' -i /etc/group && \
  echo "**** clean up ****" && \
