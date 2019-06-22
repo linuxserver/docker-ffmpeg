@@ -50,7 +50,7 @@ RUN \
 	| awk '/sha/{print $4;exit}' FS='[""]'); \
  fi && \
  git clone \
-	https://github.com/linuxserver/docker-ffmpeg.git
+	https://github.com/linuxserver/docker-ffmpeg.git \
 	/app/ffmpeg-web && \
  git \
 	--git-dir /app/ffmpeg-web/.git \
@@ -63,7 +63,7 @@ RUN \
 	/app/ffmpeg-web \
 	/applogs && \
 	/c9sdk/build/standalone \
-	/c9bins
+	/c9bins && \
  usermod -aG sudo \
 	abc && \
  chsh abc -s /bin/bash && \
@@ -74,7 +74,7 @@ RUN \
  rm -rf \
 	/root \
 	/var/lib/apt/lists/* \
-	/var/tmp/* &&
+	/var/tmp/* && \
  mkdir /root
 
 # add local files
