@@ -26,6 +26,7 @@ ENV \
  THEORA=1.1.1 \
  VORBIS=1.3.6 \
  VPX=1.8.0 \
+ X264=last_stable_x264 \
  X265=3.0 \
  XVID=1.3.4
 
@@ -48,7 +49,7 @@ http://downloads.xiph.org/releases/theora/libtheora-${THEORA}.tar.gz \
 https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB}.tar.gz \
 http://downloads.xiph.org/releases/vorbis/libvorbis-${VORBIS}.tar.gz \
 https://github.com/webmproject/libvpx/archive/v${VPX}.tar.gz \
-https://download.videolan.org/pub/videolan/x264/snapshots/last_stable_x264.tar.bz2 \
+https://download.videolan.org/pub/videolan/x264/snapshots/${X264}.tar.bz2 \
 https://download.videolan.org/pub/videolan/x265/x265_${X265}.tar.gz \
 http://downloads.xvid.org/downloads/xvidcore-${XVID}.tar.gz"
 
