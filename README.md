@@ -13,7 +13,7 @@
 &nbsp;
 &nbsp;
 
-This is an internal image layer used for downstream images needing dynamically linked ffmpeg.
+This is an internal image layer used for downstream images needing ffmpeg sources.
 
 The following line is only in this repo for loop testing:
 
