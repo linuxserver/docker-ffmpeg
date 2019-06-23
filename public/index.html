@@ -28,7 +28,7 @@
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="navbar-brand" style="cursor:pointer;" onclick="renderhome()">
+      <div class="navbar-brand" style="cursor:pointer;" onclick="rendermain()">
         <img src="/public/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
         FFmpeg Web
       </div>
@@ -45,42 +45,7 @@
     </nav>
     <br>
     <!-- Body -->
-    <div class="container">
-      <div class="card">
-        <div class="card-header">
-          Process Rule RULENAME
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="form-row align-items-center">
-              <div class="col-auto">
-                <input type="text" class="form-control" placeholder="File Extension">
-              </div>
-              <div class="col-auto">
-                <input type="text" class="form-control" placeholder="Frequency (seconds)">
-              </div>
-              <div class="col-auto">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="deletesource">
-                  <label class="form-check-label" for="deletesource">
-                    Delete Source
-                  </label>
-                </div>
-              </div>
-              <div class="col-auto">
-                <button class="btn btn-primary mb-2">Save</button>
-              </div>
-              <div class="col float-right">
-                <button class="btn btn-success mb-2 float-right">Run Now</button>
-              </div>
-            </div>
-          </form>
-          <br>
-          <div id="editor" style="height: 250px; width: 100%"></div>
-        </div>
-      </div>
-      <br>
-      <center><button type="button" class="btn btn-secondary btn-lg">+</button></center>
+    <div class="container" id="pagecontent">
     </div>
     <!-- Bootstrap core JavaScript -->
     <script src="/public/vendor/js/jquery.min.js"></script>
