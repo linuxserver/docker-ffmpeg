@@ -1,0 +1,30 @@
+---
+
+# jenkins variables
+project_name: docker-ffmpeg
+external_type: github_commit
+release_type: prerelease
+release_tag: latest
+ls_branch: web
+skip_package_check: true
+repo_vars:
+  - EXT_GIT_BRANCH = 'web'
+  - EXT_USER = 'linuxserver'
+  - EXT_REPO = 'docker-ffmpeg'
+  - BUILD_VERSION_ARG = 'FFMPEGWEB_COMMIT'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-ffmpeg'
+  - CONTAINER_NAME = 'ffmpeg'
+  - DOCKERHUB_IMAGE = 'lsiodev/ffmpeg-web'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/ffmpeg-web'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/ffmpeg-web'
+  - DIST_IMAGE = 'ubuntu'
+  - MULTIARCH='false'
+  - CI='true'
+  - CI_WEB='true'
+  - CI_PORT='8787'
+  - CI_SSL='false'
+  - CI_DELAY='120'
+  - CI_DOCKERENV='TZ=US/Pacific'
+  - CI_AUTH='user:password'
+  - CI_WEBPATH=''

@@ -9,7 +9,6 @@ COPY --from=c9files /buildout/ /
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG FFMPEGWEB_COMMIT
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thelamer"
 
@@ -46,16 +45,12 @@ RUN \
 	sudo && \
  npm install -g nodemon && \
  echo "**** install web app from git ****" && \
- if [ -z ${FFMPEGWEB_COMMIT+x} ]; then \
-	FFMPEGWEB_COMMIT=$(curl -sX GET https://api.github.com/repos/linuxserver/docker-ffmpeg/commits/web \
-	| awk '/sha/{print $4;exit}' FS='[""]'); \
- fi && \
  git clone \
 	https://github.com/linuxserver/docker-ffmpeg.git \
 	/app/ffmpeg-web && \
  cd /app/ffmpeg-web && \
  git \
-	checkout -f ${FFMPEGWEB_COMMIT} && \
+	checkout -f web && \
  pip3 install \
 	-r requirements.txt && \
  echo "**** permissions ****" && \
