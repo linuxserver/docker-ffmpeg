@@ -1,0 +1,23 @@
+---
+
+interval: 60
+
+commands:
+  - name: "test1"
+    extension: ".mkv"
+    command: |
+      ffmpeg -i "${INPUTFILE}" \
+      -vf scale=-1:720 \
+      -c:v h264 \
+      -c:a copy \
+      -b:v 4000k \
+      "${OUTPUTFILE}"
+  - name: "test2"
+    extension: ".mkv"
+    command: |
+      ffmpeg -i "${INPUTFILE}" \
+      -vf scale=-1:720 \
+      -c:v h264 \
+      -c:a copy \
+      -b:v 4000k \
+      "${OUTPUTFILE}"

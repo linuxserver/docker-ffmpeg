@@ -4,4 +4,4 @@
 cd /app/ffmpeg-web
 exec \
 	s6-setuidgid abc nodemon \
-	--exec python3 server.py > /applogs/app.log
+	--exec python3 server.py > /applogs/app.log 2>&1

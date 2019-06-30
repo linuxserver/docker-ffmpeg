@@ -41,6 +41,15 @@
             <div class="nav-link" style="cursor:pointer;" onclick="rendercommands()" >Example Commands</div>
           </li>
         </ul>
+        <form class="form-inline my-2 my-md-0" onsubmit="return false;">
+          <select class="custom-select form-control mr-sm-2" id="interval">
+            <option selected>Never</option>
+            <option value="30">30 seconds</option>
+            <option value="60">60 seconds</option>
+            <option value="300">5 minutes</option>
+          </select>
+          <button style="cursor:pointer;" onclick="saveall()" class="btn btn-primary my-2 my-sm-0" type="submit">Save Config</button>
+        </form>
       </div>
     </nav>
     <br>

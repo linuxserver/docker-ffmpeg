@@ -1,0 +1,18 @@
+---
+
+- category: "H.264 Downsampling"
+  - name: "720p 4mpbs"
+    description: "This can be used as a catch all for most H.264 720p encodes, if you want a higher bitrate then modify the 4000k to your suit your needs"
+    command: |
+      ffmpeg -i "${INPUTFILE}" \
+      -vf scale=-1:720 \
+      -c:v h264 \
+      -c:a copy \
+      -b:v 4000k \
+      "${OUTPUTFILE}"
+- category: "H.265 Downsampling"
+- category: "H.264 Downsampling Vaapi"
+- category: "H.265 Downsampling Vaapi"
+- category: "H.264 Downsampling Nvidia"
+- category: "H.265 Downsampling Nvidia"
+- category: "Audio Processing"

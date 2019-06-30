@@ -9,24 +9,25 @@ $(document).ready(function(){rendermain()})
 
 //// Main Page rendering ////
 function rendermain(){
+  $('#pagecontent').empty();
   $('#pagecontent').append('<center><div class="spinner-border" style="width: 6rem; height: 6rem;"></div></center>');
   socket.emit('getmain');
 }
 socket.on('sendmain', function(rules){
   $('#pagecontent').empty();
   var editor = [];
-  $(JSON.parse(rules)).each(function(i,data){
+  $(rules.commands).each(function(i,data){
     var name = data.name;
     var extension = data.extension;
     var command = data.command;
     $('#pagecontent').append('\
-      <div class="card">\
-        <div class="card-header">\
-          Process Rule ' + name + '\
-        </div>\
+      <div class="card" id="' + name + '">\
         <div class="card-body">\
           <form>\
             <div class="form-row align-items-center">\
+              <div class="col-auto">\
+                <input type="text" class="form-control" value="' + name + '" placeholder="File Extension">\
+              </div>\
               <div class="col-auto">\
                 <input type="text" class="form-control" value="' + extension + '" placeholder="File Extension">\
               </div>\
@@ -38,11 +39,8 @@ socket.on('sendmain', function(rules){
                   </label>\
                 </div>\
               </div>\
-              <div class="col-auto">\
-                <button class="btn btn-primary mb-2">Save</button>\
-              </div>\
               <div class="col float-right">\
-                <button class="btn btn-success mb-2 float-right">Run Now</button>\
+                <button class="btn btn-success mb-2 float-right">Run Single</button>\
               </div>\
             </div>\
           </form>\
@@ -59,12 +57,25 @@ socket.on('sendmain', function(rules){
         editor[i].setOptions({
           readOnly: false,
         });
-        editor[i].setValue(data.command, -1);
+        editor[i].setValue(command, -1);
     });
   }).promise().done(function(){
       $('#pagecontent').append('<center><button type="button" class="btn btn-secondary btn-lg">+</button></center>');
   });
 });
 
-
-
+//// Command Page rendering ////
+function rendercommands(){
+  $('#pagecontent').empty();
+  $('#pagecontent').append('<center><div class="spinner-border" style="width: 6rem; height: 6rem;"></div></center>');
+  socket.emit('getcommands');
+}
+socket.on('sendcommands', function(categories){
+  console.log(categories);
+  $('#pagecontent').empty();
+  var editor = [];
+  $('#pagecontent').append('<div id="cats"></div>')
+  $(categories).each(function(i,data){
+    var cat = data.category;
+  });
+});

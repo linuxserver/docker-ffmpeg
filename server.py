@@ -1,6 +1,7 @@
 from aiohttp import web
 import socketio
-import json
+import yaml
+import os
 
 sio = socketio.AsyncServer()
 app = web.Application()
@@ -13,11 +14,25 @@ async def index(request):
 app.router.add_get('/', index)
 app.router.add_static('/public/', path=str('./public/'))
 
-json = '[{"name":"test1","extension":".mkv","command":"ffmpeg -y -vaapi_device /dev/dri/renderD1339"},{"name":"test2","extension":".mkv","command":"ffmpeg -y -vaapi_device /dev/dri/renderD129"}]'
-
+# Send the current config to the user to render
 @sio.on('getmain')
 async def message(sid):
-  await sio.emit('sendmain', json, room=sid)
+  with open("./config.yml", 'r') as stream:
+    try:
+      config = yaml.safe_load(stream)
+      await sio.emit('sendmain', config, room=sid)
+    except yaml.YAMLError as e:
+      print(e)
+
+# Send the current command examples from github to the user to render
+@sio.on('getcommands')
+async def message(sid):
+  with open("./commands.yml", 'r') as stream:
+    try:
+      commands = yaml.safe_load(stream)
+      await sio.emit('sendcommands', commands, room=sid)
+    except yaml.YAMLError as e:
+      print(e)
 
 if __name__ == '__main__':
     web.run_app(app, port=8787)
