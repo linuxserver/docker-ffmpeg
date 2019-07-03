@@ -3,5 +3,8 @@
 # Run App in development mode
 cd /app/ffmpeg-web
 exec \
-	s6-setuidgid abc nodemon \
-	--exec python3 server.py > /applogs/app.log 2>&1
+  s6-setuidgid abc \
+    watchmedo auto-restart \
+      -d . \
+      -p './server.py' \
+      -- python3 server.py

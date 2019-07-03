@@ -41,9 +41,9 @@ RUN \
  echo "**** install stuff specific to the dev container ****" && \
  apt-get install -y \
 	git \
-	npm \
 	sudo && \
- npm install -g nodemon && \
+ pip3 install \
+	watchdog && \
  echo "**** install web app from git ****" && \
  git clone \
 	https://github.com/linuxserver/docker-ffmpeg.git \
