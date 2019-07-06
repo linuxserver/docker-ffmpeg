@@ -5,6 +5,7 @@ interval: 60
 commands:
   - name: "test1"
     extension: ".mkv"
+    delete: false
     command: |
       ffmpeg -i "${INPUTFILE}" \
       -vf scale=-1:720 \
@@ -14,6 +15,7 @@ commands:
       "${OUTPUTFILE}"
   - name: "test2"
     extension: ".mkv"
+    delete: true
     command: |
       ffmpeg -i "${INPUTFILE}" \
       -vf scale=-1:720 \

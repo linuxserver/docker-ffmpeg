@@ -23,6 +23,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/public/img/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <link href="public/vendor/css/xterm.min.css" rel="stylesheet">
     <link href="public/vendor/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
@@ -38,23 +39,36 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
+            <div class="nav-link" style="cursor:pointer;" onclick="renderconfig()" >Config</div>
+          </li>
+          <li class="nav-item active">
+            <div class="nav-link" style="cursor:pointer;" onclick="renderterminal()" >Terminal</div>
+          </li>
+          <li class="nav-item active">
             <div class="nav-link" style="cursor:pointer;" onclick="rendercommands()" >Example Commands</div>
           </li>
         </ul>
-        <form class="form-inline my-2 my-md-0" onsubmit="return false;">
-          <select class="custom-select form-control mr-sm-2" id="interval">
-            <option selected>Never</option>
-            <option value="30">30 seconds</option>
-            <option value="60">60 seconds</option>
-            <option value="300">5 minutes</option>
-          </select>
-          <button style="cursor:pointer;" onclick="saveall()" class="btn btn-primary my-2 my-sm-0" type="submit">Save Config</button>
+        <form class="form-inline my-2 my-md-0" onsubmit="return false;" id="headerform">
         </form>
       </div>
     </nav>
     <br>
     <!-- Body -->
-    <div class="container" id="pagecontent">
+    <div class="container" id="pagecontent"></div>
+    <div class="container" id="pagefooter"></div>
+    <!--FFmpeg Modal-->
+    <div id="modal" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:scroll;">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"><div id="modaltitle"></div></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body" style="overflow-x:auto">
+            <div id="modalbody"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Bootstrap core JavaScript -->
     <script src="/public/vendor/js/jquery.min.js"></script>
@@ -63,6 +77,7 @@
     <!-- Plugin JavaScript -->
     <script src="/public/vendor/js/socket.io.js"></script>
     <script src="/public/vendor/js/ace.js"></script>
+    <script src="/public/vendor/js/xterm.min.js"></script>
     <!-- Our JavaScript -->
     <script src="/public/ffmpeg-web.js"></script>
   </body>

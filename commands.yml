@@ -1,6 +1,7 @@
 ---
 
 - category: "H.264 Downsampling"
+  commands:
   - name: "720p 4mpbs"
     description: "This can be used as a catch all for most H.264 720p encodes, if you want a higher bitrate then modify the 4000k to your suit your needs"
     command: |
@@ -10,7 +11,35 @@
       -c:a copy \
       -b:v 4000k \
       "${OUTPUTFILE}"
+  - name: "1080p 8mpbs"
+    description: "This can be used as a catch all for most H.264 1080p encodes, if you want a higher bitrate then modify the 8000k to your suit your needs"
+    command: |
+      ffmpeg -i "${INPUTFILE}" \
+      -vf scale=-1:1080 \
+      -c:v h264 \
+      -c:a copy \
+      -b:v 8000k \
+      "${OUTPUTFILE}"
 - category: "H.265 Downsampling"
+  commands:
+  - name: "720p 2mpbs"
+    description: "This can be used as a catch all for most H.265 720p encodes, if you want a higher bitrate then modify the 2000k to your suit your needs"
+    command: |
+      ffmpeg -i "${INPUTFILE}" \
+      -vf scale=-1:720 \
+      -c:v h264 \
+      -c:a hevc \
+      -b:v 2000k \
+      "${OUTPUTFILE}"
+  - name: "1080p 4mpbs"
+    description: "This can be used as a catch all for most H.265 1080p encodes, if you want a higher bitrate then modify the 4000k to your suit your needs"
+    command: |
+      ffmpeg -i "${INPUTFILE}" \
+      -vf scale=-1:1080 \
+      -c:v hevc \
+      -c:a copy \
+      -b:v 4000k \
+      "${OUTPUTFILE}"
 - category: "H.264 Downsampling Vaapi"
 - category: "H.265 Downsampling Vaapi"
 - category: "H.264 Downsampling Nvidia"
