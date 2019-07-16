@@ -148,13 +148,19 @@ function saveall(){
 //// Terminal Page rendering ////
 function renderterminal(){
   pagepurge();
-  $('#pagecontent').append('<center><div class="spinner-border" style="width: 6rem; height: 6rem;"></div></center>');
-  socket.emit('getterminal');
+  socket.emit('giveterm');
+  $('#pagecontent').append('<div id="terminal-container"</div>');
+  var terminalContainer = document.getElementById('terminal-container');
+  var term = new Terminal({cursorBlink: true});
+  term.open(terminalContainer);
+  term.setOption('theme', { foreground: '#00ff00' });
+  socket.on('sendterm', function(data){
+    term.write(data);
+  });
+  term.on('data', function (data) {
+    socket.emit('termdata', data);
+  });
 }
-socket.on('sendterminal', function(data){
-  pagepurge();
-  $('#pagecontent').append('<center>Raw bash terminal here for users to test commands</center>');
-});
 
 ///////////////////////// test function client side //////////////////////////////////////
 socket.on('testout', function(out){
