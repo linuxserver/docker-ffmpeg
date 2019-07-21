@@ -1,25 +1,23 @@
----
-
-interval: 60
+enabled: false
 
 commands:
   - name: "test1"
     extension: ".mkv"
     delete: false
     command: |
-      ffmpeg -i "${INPUTFILE}" \
+      ffmpeg -i "INPUTFILE" \
       -vf scale=-1:720 \
       -c:v h264 \
       -c:a copy \
       -b:v 4000k \
-      "${OUTPUTFILE}"
+      "OUTPUTFILE"
   - name: "test2"
     extension: ".mkv"
     delete: true
     command: |
-      ffmpeg -i "${INPUTFILE}" \
+      ffmpeg -i "INPUTFILE" \
       -vf scale=-1:720 \
       -c:v h264 \
       -c:a copy \
       -b:v 4000k \
-      "${OUTPUTFILE}"
+      "OUTPUTFILE"

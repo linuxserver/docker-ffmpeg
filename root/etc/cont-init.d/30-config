@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bash
+
+# check if config file exists in /config
+[[ ! -f /config/config.yml ]] && \
+  cp /app/ffmpeg-web/config.yml /config/config.yml
+  
+# permissions
+chown -R abc:abc \
+  /config
+mkdir -p \
+  /in \
+  /out
+chown abc:abc \
+  /in \
+  /out
+

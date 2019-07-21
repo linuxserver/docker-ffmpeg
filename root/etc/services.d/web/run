@@ -1,5 +1,9 @@
 #!/usr/bin/with-contenv bash
 
+# Make log output for dev
+mkdir -p /applogs
+chown -R abc:abc /applogs
+
 # Run App in development mode
 cd /app/ffmpeg-web
 exec \
@@ -7,4 +11,5 @@ exec \
     watchmedo auto-restart \
       -d . \
       -p './server.py' \
-      -- python3 server.py
+      -- python3 server.py \
+      >> /applogs/applog.txt 2>&1

@@ -27,15 +27,22 @@ function renderconfig(){
 }
 socket.on('sendconfig', function(rules){
   pagepurge();
-  var interval = rules.interval;
+  var enabled = rules.enabled;
+  if (enabled){
+    var options = '<option selected value=1>on</option>\
+                   <option value=0>off</option>'
+  }
+  else{
+    var options = '<option selected value=0>off</option>\
+                   <option value=1>on</option>'
+  }
   $('#headerform').append('\
-    <select class="custom-select form-control mr-sm-2" id="interval">\
-      <option selected value="' + interval + '">' + interval + '</option>\
-      <option value"Never">Never</option>\
-      <option value="30">30 seconds</option>\
-      <option value="60">60 seconds</option>\
-      <option value="300">5 minutes</option>\
-    </select>\
+    <div class="form-group">\
+      <label for="email">Processing: </label>\
+      <select class="custom-select form-control mr-sm-2" id="enabled">\
+        ' + options + '\
+      </select>\
+    </div>\
     <button style="cursor:pointer;" onclick="saveall()" class="btn btn-primary my-2 my-sm-0" type="submit">Save Config</button>\
   ');
   var editor = [];
@@ -126,8 +133,14 @@ function addconfig(){
 }
 // Save all config data
 function saveall(){
-  var interval = $('#interval').val();
-  var dataset = {'interval':interval,'commands':[]};
+  var enabled = $('#enabled').val();
+  if (enabled == 0){
+    var enabled = false;
+  }
+  else{
+    var enabled = true;
+  }
+  var dataset = {'enabled':enabled,'commands':[]};
   var ids = $('.rule').map(function(){
       return this.id;
   }).get();
@@ -141,6 +154,7 @@ function saveall(){
     dataset.commands.push(single_command);
   }).promise().done(function(){
     socket.emit('saveconfig',dataset);
+    renderconfig();
   });
 }
 
