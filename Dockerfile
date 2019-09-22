@@ -13,7 +13,8 @@ LABEL maintainer="thelamer"
 # hardware env
 ENV \
  LIBVA_DRIVERS_PATH="/usr/lib/x86_64-linux-gnu/dri" \
- NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
+ NVIDIA_DRIVER_CAPABILITIES="compute,video,utility" \
+ NVIDIA_VISIBLE_DEVICES="all"
 
 RUN \
  echo "**** install runtime ****" && \
