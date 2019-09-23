@@ -6,7 +6,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
  DEBIAN_FRONTEND="noninteractive" \
- MAKEFLAGS="-j8"
+ MAKEFLAGS="-j4"
 
 # versions
 ENV \
@@ -464,7 +464,7 @@ RUN \
 	--enable-libfreetype \
 	--enable-libkvazaar \
 	--enable-libmp3lame \
-        --enable-libnpp \
+	--enable-libnpp \
 	--enable-libopencore-amrnb \
 	--enable-libopencore-amrwb \
 	--enable-libopenjpeg \
