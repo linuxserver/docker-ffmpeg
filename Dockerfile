@@ -26,8 +26,13 @@ RUN \
 	libglib2.0-0 \
 	libgomp1 \
 	libharfbuzz0b \
+	libnppig9.1 \
+	libnppicc9.1 \
+	libnppidei9.1 \
 	libv4l-0 \
 	libx11-6 \
+	libxcb-shape0 \
+	libxcb-xfixes0 \
 	libxcb1 \
 	libxext6 \
 	libxml2 && \
