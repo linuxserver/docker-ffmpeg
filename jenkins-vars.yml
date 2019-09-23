@@ -1,0 +1,20 @@
+---
+
+# jenkins variables
+project_name: docker-ffmpeg
+external_type: na
+custom_version_command: "echo 4.2.1-cli"
+release_type: stable
+release_tag: latest
+ls_branch: master
+repo_vars:
+  - BUILD_VERSION_ARG = 'FFMPEG_VERSION'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-ffmpeg'
+  - CONTAINER_NAME = 'ffmpeg'
+  - DOCKERHUB_IMAGE = 'linuxserver/ffmpeg'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/ffmpeg'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/ffmpeg'
+  - DIST_IMAGE = 'ubuntu'
+  - MULTIARCH='true'
+  - CI='false'
