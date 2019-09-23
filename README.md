@@ -98,7 +98,7 @@ docker run --rm -it \
   -i /config/input.mkv \
   -c:v h264_nvenc \
   -b:v 4M \
-  -vf scale_npp=1280:720 \
+  -vf scale=1280:720 \
   -c:a copy \
   /config/output.mkv
 ```
