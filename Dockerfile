@@ -6,7 +6,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
  DEBIAN_FRONTEND="noninteractive" \
- MAKEFLAGS="-j4"
+ MAKEFLAGS="-j8"
 
 # versions
 ENV \
@@ -60,6 +60,7 @@ RUN \
 	libx11-dev \
 	libxml2-dev \
 	make \
+	nvidia-cuda-toolkit \
 	nasm \
 	perl \
 	pkg-config \
@@ -463,6 +464,7 @@ RUN \
 	--enable-libfreetype \
 	--enable-libkvazaar \
 	--enable-libmp3lame \
+        --enable-libnpp \
 	--enable-libopencore-amrnb \
 	--enable-libopencore-amrwb \
 	--enable-libopenjpeg \
