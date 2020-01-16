@@ -11,28 +11,28 @@ ENV \
 # versions
 ENV \
  AOM=v1.0.0 \
- FDKAAC=0.1.5 \
- FFMPEG_HARD=4.2.1 \
- FONTCONFIG=2.13.91 \
+ FDKAAC=2.0.1 \
+ FFMPEG_HARD=4.2.2 \
+ FONTCONFIG=2.13.92 \
  FREETYPE=2.9.1 \
- FRIBIDI=0.19.7 \
- KVAZAAR=1.2.0 \
- LAME=3.99.5 \
+ FRIBIDI=1.0.8 \
+ KVAZAAR=1.3.0 \
+ LAME=3.100 \
  LIBASS=0.14.0 \
- LIBDRM=2.4.98 \
- LIBVA=2.4.1 \
+ LIBDRM=2.4.100 \
+ LIBVA=2.6.0 \
  LIBVDPAU=1.2 \
  LIBVIDSTAB=1.1.0 \
- NVCODEC=n9.0.18.1 \
- OGG=1.3.2 \
+ NVCODEC=n9.1.23.1 \
+ OGG=1.3.4 \
  OPENCOREAMR=0.1.5 \
  OPENJPEG=2.3.1 \
  OPUS=1.3 \
  THEORA=1.1.1 \
  VORBIS=1.3.6 \
- VPX=1.8.0 \
- X265=3.1.1 \
- XVID=1.3.4 
+ VPX=1.8.2 \
+ X265=3.2.1 \
+ XVID=1.3.7 
 
 RUN \
  echo "**** install build packages ****" && \
@@ -148,12 +148,12 @@ RUN \
  echo "**** grabbing fribidi ****" && \
  mkdir -p /tmp/fribidi && \
  curl -Lf \
-	https://github.com/fribidi/fribidi/archive/${FRIBIDI}.tar.gz | \
+	https://github.com/fribidi/fribidi/archive/v${FRIBIDI}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/fribidi
 RUN \
  echo "**** compiling fribidi ****" && \
  cd /tmp/fribidi && \
- ./bootstrap --no-config && \
+ ./autogen.sh && \
  ./configure \
 	--disable-static \
 	--enable-shared && \
@@ -178,7 +178,7 @@ RUN \
  echo "**** grabbing lame ****" && \
  mkdir -p /tmp/lame && \
  curl -Lf \
-	http://downloads.sourceforge.net/project/lame/lame/3.99/lame-${LAME}.tar.gz | \
+	http://downloads.sourceforge.net/project/lame/lame/3.100/lame-${LAME}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/lame
 RUN \
  echo "**** compiling lame ****" && \
@@ -396,7 +396,7 @@ RUN \
  echo "**** grabbing x264 ****" && \
  mkdir -p /tmp/x264 && \
  curl -Lf \
-	https://download.videolan.org/pub/videolan/x264/snapshots/last_stable_x264.tar.bz2 | \
+	https://code.videolan.org/videolan/x264/-/archive/master/x264-stable.tar.bz2 | \
 	tar -jx --strip-components=1 -C /tmp/x264
 RUN \
  echo "**** compiling x264 ****" && \
@@ -423,7 +423,7 @@ RUN \
  echo "**** grabbing xvid ****" && \
  mkdir -p /tmp/xvid && \
  curl -Lf \
-	http://downloads.xvid.org/downloads/xvidcore-${XVID}.tar.gz | \
+	https://downloads.xvid.com/downloads/xvidcore-${XVID}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/xvid
 RUN \
  echo "**** compiling xvid ****" && \
