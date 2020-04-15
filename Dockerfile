@@ -453,7 +453,7 @@ RUN \
 	--disable-debug \
 	--disable-doc \
 	--disable-ffplay \
-	--disable-ffprobe \
+	--enable-ffprobe \
 	--enable-avresample \
 	--enable-cuvid \
 	--enable-gpl \
@@ -493,6 +493,9 @@ RUN \
  mkdir -p /buildout/usr/local/bin && \
  cp \
 	/tmp/ffmpeg/ffmpeg \
+	/buildout/usr/local/bin && \
+ cp \
+	/tmp/ffmpeg/ffprobe \
 	/buildout/usr/local/bin && \
  mkdir -p /buildout/usr/lib && \
  ldd /tmp/ffmpeg/ffmpeg \
