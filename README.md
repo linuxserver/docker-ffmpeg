@@ -124,4 +124,5 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **16.06.20:** - Add support for libvmaf.
 * **01.08.19:** - Initial release.
