@@ -264,7 +264,7 @@ RUN \
 	/usr/share/automake-1.15/config.sub \
 	config.sub && \
  curl -fL \
-	'https://git.xiph.org/?p=theora.git;a=commitdiff_plain;h=7288b539c52e99168488dc3a343845c9365617c8' \
+	'https://gitlab.xiph.org/xiph/theora/-/commit/7288b539c52e99168488dc3a343845c9365617c8.diff' \
 	> png.patch && \
  patch ./examples/png2theora.c < png.patch && \
  ./configure \

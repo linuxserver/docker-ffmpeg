@@ -23,6 +23,7 @@ ENV \
  LIBVA=2.6.0 \
  LIBVDPAU=1.2 \
  LIBVIDSTAB=1.1.0 \
+ LIBVMAF=master \
  NVCODEC=n9.1.23.1 \
  OGG=1.3.4 \
  OPENCOREAMR=0.1.5 \
@@ -45,6 +46,7 @@ RUN \
 	cmake \
 	curl \
 	diffutils \
+	doxygen \
 	g++ \
 	gcc \
 	git \
@@ -61,13 +63,19 @@ RUN \
 	libxml2-dev \
 	make \
 	nasm \
+	ninja-build \
 	perl \
 	pkg-config \
 	python \
+	python3 \
+	python3-pip\
+	python3-setuptools \
+	python3-wheel \
 	x11proto-xext-dev \
 	xserver-xorg-dev \
 	yasm \
-	zlib1g-dev 
+	zlib1g-dev && \
+        pip3 install meson
 
 # compile 3rd party libs
 RUN \
@@ -257,6 +265,19 @@ RUN \
  make && \
  make install
 RUN \
+ echo "**** grabbing vmaf ****" && \
+ mkdir -p /tmp/vmaf && \
+ git clone \
+        --branch ${LIBVMAF} \
+        https://github.com/Netflix/vmaf.git \
+        /tmp/vmaf
+RUN \
+ echo "**** compiling libvmaf ****" && \
+ cd /tmp/vmaf/libvmaf && \
+ meson build --buildtype release && \
+ ninja -vC build && \
+ ninja -vC build install
+RUN \
  echo "**** grabbing ogg ****" && \
  mkdir -p /tmp/ogg && \
  curl -Lf \
@@ -334,7 +355,7 @@ RUN \
 	/usr/share/automake-1.15/config.sub \
 	config.sub && \
  curl -fL \
-	'https://git.xiph.org/?p=theora.git;a=commitdiff_plain;h=7288b539c52e99168488dc3a343845c9365617c8' \
+	'https://gitlab.xiph.org/xiph/theora/-/commit/7288b539c52e99168488dc3a343845c9365617c8.diff' \
 	> png.patch && \
  patch ./examples/png2theora.c < png.patch && \
  ./configure \
@@ -470,6 +491,7 @@ RUN \
 	--enable-libtheora \
 	--enable-libv4l2 \
 	--enable-libvidstab \
+	--enable-libvmaf \
 	--enable-libvorbis \
 	--enable-libvpx \
 	--enable-libxml2 \
