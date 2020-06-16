@@ -6,7 +6,7 @@ base-passwd3.5.44
 bash4.4.18-2ubuntu1.2
 bsdutils1:2.31.1-0.4ubuntu3.6
 bzip21.0.6-8.1ubuntu0.2
-ca-certificates20180409
+ca-certificates20190110~18.04.1
 coreutils8.28-1ubuntu1
 curl7.58.0-2ubuntu3.8
 dash0.5.8-2.10
@@ -77,7 +77,7 @@ libhx509-5-heimdal7.5.0+dfsg-1
 libicu6060.2-3ubuntu3.1
 libidn2-02.0.4-1.1ubuntu0.2
 libjpeg88c-2ubuntu8
-libjpeg-turbo81.5.2-0ubuntu5.18.04.3
+libjpeg-turbo81.5.2-0ubuntu5.18.04.4
 libk5crypto31.16-2ubuntu0.1
 libkeyutils11.5.9-9.2ubuntu2
 libkrb5-26-heimdal7.5.0+dfsg-1
@@ -115,14 +115,14 @@ libsemanage-common2.7-2build2
 libsensors41:3.4.0-4
 libsepol12.7-1
 libsmartcols12.31.1-0.4ubuntu3.6
-libsqlite3-03.22.0-1ubuntu0.3
+libsqlite3-03.22.0-1ubuntu0.4
 libss21.44.1-1ubuntu1.3
-libssl1.11.1.1-1ubuntu2.1~18.04.5
+libssl1.11.1.1-1ubuntu2.1~18.04.6
 libstdc++68.4.0-1ubuntu1~18.04
-libsystemd0237-3ubuntu10.40
+libsystemd0237-3ubuntu10.41
 libtasn1-64.13-2
 libtinfo56.1-1ubuntu1.18.04
-libudev1237-3ubuntu10.40
+libudev1237-3ubuntu10.41
 libunistring20.9.9-0ubuntu2
 libuuid12.31.1-0.4ubuntu3.6
 libv4l-01.14.2-1
@@ -145,7 +145,7 @@ mount2.31.1-0.4ubuntu3.6
 multiarch-support2.27-3ubuntu1
 ncurses-base6.1-1ubuntu1.18.04
 ncurses-bin6.1-1ubuntu1.18.04
-openssl1.1.1-1ubuntu2.1~18.04.5
+openssl1.1.1-1ubuntu2.1~18.04.6
 passwd1:4.5-1ubuntu2
 perl-base5.26.1-6ubuntu0.3
 procps2:3.3.12-3ubuntu1.2
