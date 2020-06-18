@@ -130,6 +130,7 @@ full_custom_readme: |
 
   ## Versions
 
+  * **17.06.20:** - Bump to 4.3.
   * **16.06.20:** - Add support for libvmaf.
   * **01.08.19:** - Initial release.
   {%- endraw %}
