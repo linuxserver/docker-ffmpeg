@@ -129,8 +129,8 @@ libv4l-01.14.2-1
 libv4lconvert01.14.2-1
 libva22.1.0-3
 libwind0-heimdal7.5.0+dfsg-1
-libx11-62:1.6.4-3ubuntu0.2
-libx11-data2:1.6.4-3ubuntu0.2
+libx11-62:1.6.4-3ubuntu0.3
+libx11-data2:1.6.4-3ubuntu0.3
 libxau61:1.0.8-1ubuntu1
 libxcb11.13-2~ubuntu18.04
 libxdmcp61:1.1.2-3
