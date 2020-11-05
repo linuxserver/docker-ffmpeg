@@ -346,7 +346,7 @@ RUN \
  echo "**** grabbing x265 ****" && \
  mkdir -p /tmp/x265 && \
  curl -Lf \
-	http://anduin.linuxfromscratch.org/BLFS/x265/x265_3.4.tar.gz | \
+	http://anduin.linuxfromscratch.org/BLFS/x265/x265_${X265}.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/x265
 RUN \
  echo "**** compiling x265 ****" && \
