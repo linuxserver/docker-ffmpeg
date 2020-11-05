@@ -6,7 +6,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
  DEBIAN_FRONTEND="noninteractive" \
- MAKEFLAGS="-j4"
+ MAKEFLAGS="-j8"
 
 # versions
 ENV \
@@ -346,13 +346,13 @@ RUN \
  echo "**** grabbing x265 ****" && \
  mkdir -p /tmp/x265 && \
  curl -Lf \
-	https://download.videolan.org/pub/videolan/x265/x265_${X265}.tar.gz | \
+	http://anduin.linuxfromscratch.org/BLFS/x265/x265_3.4.tar.gz | \
 	tar -zx --strip-components=1 -C /tmp/x265
 RUN \
  echo "**** compiling x265 ****" && \
  cd /tmp/x265/build/linux && \
  curl -fL \
-	https://sources.debian.org/data/main/x/x265/3.2.1-1/debian/patches/0001-Fix-arm-flags.patch \
+	https://sources.debian.org/data/main/x/x265/3.4-2/debian/patches/0001-Fix-arm-flags.patch \
 	> arm.patch && \
  patch ../../source/CMakeLists.txt < arm.patch && \
  cmake \
