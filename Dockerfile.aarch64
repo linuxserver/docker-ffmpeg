@@ -1,4 +1,4 @@
-FROM lsiobase/ubuntu:arm64v8-bionic as buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-bionic as buildstage
 
 # set version label
 ARG FFMPEG_VERSION
