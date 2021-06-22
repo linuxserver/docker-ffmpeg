@@ -135,7 +135,7 @@ libxau61:1.0.8-1ubuntu1
 libxcb11.13-2~ubuntu18.04
 libxdmcp61:1.1.2-3
 libxext62:1.3.3-1
-libxml22.9.4+dfsg1-6.1ubuntu1.3
+libxml22.9.4+dfsg1-6.1ubuntu1.4
 libzstd11.3.3+dfsg-2ubuntu1.2
 locales2.27-3ubuntu1.4
 login1:4.5-1ubuntu2
