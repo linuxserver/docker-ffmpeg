@@ -3,7 +3,7 @@
 # jenkins variables
 project_name: docker-ffmpeg
 external_type: na
-custom_version_command: "echo 4.3"
+custom_version_command: "echo 4.4"
 release_type: prerelease
 release_tag: bin
 ls_branch: bin
