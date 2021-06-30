@@ -206,57 +206,6 @@ pipeline {
         }
       }
     }
-    // Use helper containers to render templated files
-    stage('Update-Templates') {
-      when {
-        branch "bin"
-        environment name: 'CHANGE_ID', value: ''
-        expression {
-          env.CONTAINER_NAME != null
-        }
-      }
-      steps {
-        sh '''#! /bin/bash
-              set -e
-              TEMPDIR=$(mktemp -d)
-              docker pull ghcr.io/linuxserver/jenkins-builder:latest
-              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=bin -v ${TEMPDIR}:/ansible/jenkins ghcr.io/linuxserver/jenkins-builder:latest 
-              CURRENTHASH=$(grep -hs ^ ${TEMPLATED_FILES} | md5sum | cut -c1-8)
-              cd ${TEMPDIR}/docker-${CONTAINER_NAME}
-              NEWHASH=$(grep -hs ^ ${TEMPLATED_FILES} | md5sum | cut -c1-8)
-              if [[ "${CURRENTHASH}" != "${NEWHASH}" ]]; then
-                mkdir -p ${TEMPDIR}/repo
-                git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/repo/${LS_REPO}
-                cd ${TEMPDIR}/repo/${LS_REPO}
-                git checkout -f bin
-                cd ${TEMPDIR}/docker-${CONTAINER_NAME}
-                mkdir -p ${TEMPDIR}/repo/${LS_REPO}/.github/workflows
-                cp --parents ${TEMPLATED_FILES} ${TEMPDIR}/repo/${LS_REPO}/
-                cd ${TEMPDIR}/repo/${LS_REPO}/
-                git add ${TEMPLATED_FILES}
-                git commit -m 'Bot Updating Templated Files'
-                git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/${LS_USER}/${LS_REPO}.git --all
-                echo "true" > /tmp/${COMMIT_SHA}-${BUILD_NUMBER}
-              else
-                echo "false" > /tmp/${COMMIT_SHA}-${BUILD_NUMBER}
-              fi
-              mkdir -p ${TEMPDIR}/gitbook
-              git clone https://github.com/linuxserver/docker-documentation.git ${TEMPDIR}/gitbook/docker-documentation
-              if [[ "${BRANCH_NAME}" == "master" ]] && [[ (! -f ${TEMPDIR}/gitbook/docker-documentation/images/docker-${CONTAINER_NAME}.md) || ("$(md5sum ${TEMPDIR}/gitbook/docker-documentation/images/docker-${CONTAINER_NAME}.md | awk '{ print $1 }')" != "$(md5sum ${TEMPDIR}/docker-${CONTAINER_NAME}/docker-${CONTAINER_NAME}.md | awk '{ print $1 }')") ]]; then
-                cp ${TEMPDIR}/docker-${CONTAINER_NAME}/docker-${CONTAINER_NAME}.md ${TEMPDIR}/gitbook/docker-documentation/images/
-                cd ${TEMPDIR}/gitbook/docker-documentation/
-                git add images/docker-${CONTAINER_NAME}.md
-                git commit -m 'Bot Updating Documentation'
-                git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/linuxserver/docker-documentation.git --all
-              fi
-              rm -Rf ${TEMPDIR}'''
-        script{
-          env.FILES_UPDATED = sh(
-            script: '''cat /tmp/${COMMIT_SHA}-${BUILD_NUMBER}''',
-            returnStdout: true).trim()
-        }
-      }
-    }
     // Exit the build if the Templated files were just updated
     stage('Template-exit') {
       when {
