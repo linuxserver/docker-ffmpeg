@@ -1,6 +1,6 @@
 #! /bin/bash
 
-FULL_ARGS=$@
+FULL_ARGS=( "$@" )
 
 set_uidgid () {
   # setup abc based on file perms
@@ -13,12 +13,12 @@ set_uidgid () {
 run_ffmpeg () {
   # we do not have input file or it does not exist on disk just run as root
   if [ -z ${INPUT_FILE+x} ] || [ ! -f "${INPUT_FILE}" ]; then
-    /usr/local/bin/ffmpeg ${FULL_ARGS}
+    /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
   # we found the input file run as abc
   else
     set_uidgid
     s6-setuidgid abc \
-      /usr/local/bin/ffmpeg ${FULL_ARGS}
+      /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
   fi
   exit 0
 }
