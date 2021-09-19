@@ -64,6 +64,7 @@ RUN \
 	make \
 	nasm \
 	ninja-build \
+	ocl-icd-opencl-dev \
 	perl \
 	pkg-config \
 	python \
@@ -501,6 +502,7 @@ RUN \
 	--enable-nonfree \
 	--enable-nvdec \
 	--enable-nvenc \
+	--enable-opencl \
 	--enable-openssl \
 	--enable-small \
 	--enable-stripping \
@@ -512,20 +514,25 @@ RUN \
 RUN \
  echo "**** arrange files ****" && \
  ldconfig && \
- mkdir -p /buildout/usr/local/bin && \
+ mkdir -p \
+ 	/buildout/usr/local/bin \
+	/buildout/usr/lib \
+	/buildout/etc/OpenCL/vendors && \
  cp \
 	/tmp/ffmpeg/ffmpeg \
 	/buildout/usr/local/bin && \
  cp \
 	/tmp/ffmpeg/ffprobe \
 	/buildout/usr/local/bin && \
- mkdir -p /buildout/usr/lib && \
  ldd /tmp/ffmpeg/ffmpeg \
 	| awk '/local/ {print $3}' \
 	| xargs -i cp -L {} /buildout/usr/lib/ && \
  cp -a \
 	/usr/local/lib/libdrm_* \
-	/buildout/usr/lib/
+	/buildout/usr/lib/ && \
+ echo \
+ 	'libnvidia-opencl.so.1' > \
+	/buildout/etc/OpenCL/vendors/nvidia.icd
 
 # Storage layer consumed downstream
 FROM scratch
