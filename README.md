@@ -127,6 +127,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.08.21:** - Add support for libOpenCL.
 * **01.07.21:** - Bump to 4.4.
 * **17.06.20:** - Bump to 4.3.
 * **16.06.20:** - Add support for libvmaf.
