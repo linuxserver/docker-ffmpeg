@@ -29,8 +29,11 @@ RUN \
 	libv4l-0 \
 	libx11-6 \
 	libxcb1 \
+	libxcb-shape0 \
+	libxcb-xfixes0 \
 	libxext6 \
-	libxml2 && \
+	libxml2 \
+	ocl-icd-libopencl1 && \
  echo "**** clean up ****" && \
  rm -rf \
 	/var/lib/apt/lists/* \
