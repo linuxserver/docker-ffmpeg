@@ -50,7 +50,7 @@ libdrm-nouveau22.4.101-2~18.04.1
 libdrm-radeon12.4.101-2~18.04.1
 libedit23.1-20170329-1
 libelf10.170-0.4ubuntu0.1
-libexpat12.2.5-3ubuntu0.2
+libexpat12.2.5-3ubuntu0.4
 libext2fs21.44.1-1ubuntu1.3
 libfdisk12.31.1-0.4ubuntu3.7
 libffi63.2.1-8
