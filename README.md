@@ -3,12 +3,12 @@
 
 [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
 
-[![Blog](https://img.shields.io/static/v1.svg?style=flat-square&color=E68523&label=linuxserver.io&message=Blog)](https://blog.linuxserver.io "all the things you can do with our containers including How-To guides, opinions and much more!")
-[![Discord](https://img.shields.io/discord/354974912613449730.svg?style=flat-square&color=E68523&label=Discord&logo=discord&logoColor=FFFFFF)](https://discord.gg/YWrKVTn "realtime support / chat with the community and the team.")
-[![Discourse](https://img.shields.io/discourse/https/discourse.linuxserver.io/topics.svg?style=flat-square&color=E68523&logo=discourse&logoColor=FFFFFF)](https://discourse.linuxserver.io "post on our community forum.")
-[![Fleet](https://img.shields.io/static/v1.svg?style=flat-square&color=E68523&label=linuxserver.io&message=Fleet)](https://fleet.linuxserver.io "an online web interface which displays all of our maintained images.")
-[![Podcast](https://img.shields.io/static/v1.svg?style=flat-square&color=E68523&label=linuxserver.io&message=Podcast)](https://anchor.fm/linuxserverio "on hiatus. Coming back soon (late 2018).")
-[![Open Collective](https://img.shields.io/opencollective/all/linuxserver.svg?style=flat-square&color=E68523&label=Open%20Collective%20Supporters)](https://opencollective.com/linuxserver "please consider helping us by either donating or contributing to our budget")
+[![Blog](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Blog)](https://blog.linuxserver.io "all the things you can do with our containers including How-To guides, opinions and much more!")
+[![Discord](https://img.shields.io/discord/354974912613449730.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://discord.gg/YWrKVTn "realtime support / chat with the community and the team.")
+[![Discourse](https://img.shields.io/discourse/https/discourse.linuxserver.io/topics.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=discourse)](https://discourse.linuxserver.io "post on our community forum.")
+[![Fleet](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Fleet)](https://fleet.linuxserver.io "an online web interface which displays all of our maintained images.")
+[![GitHub](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub&logo=github)](https://github.com/linuxserver "view the source for all of our repositories.")
+[![Open Collective](https://img.shields.io/opencollective/all/linuxserver.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Supporters&logo=open%20collective)](https://opencollective.com/linuxserver "please consider helping us by either donating or contributing to our budget")
 
 The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring :-
 
@@ -26,13 +26,15 @@ Find us at:
 * [Podcast](https://anchor.fm/linuxserverio) - on hiatus. Coming back soon (late 2018).
 * [Open Collective](https://opencollective.com/linuxserver) - please consider helping us by either donating or contributing to our budget
 
-# [linuxserver/ffmpeg](https://github.com/linuxserver/docker-ffmpeg)
-[![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-ffmpeg.svg?style=flat-square&color=E68523)](https://github.com/linuxserver/docker-ffmpeg/releases)
-[![MicroBadger Layers](https://img.shields.io/microbadger/layers/linuxserver/ffmpeg.svg?style=flat-square&color=E68523)](https://microbadger.com/images/linuxserver/ffmpeg "Get your own version badge on microbadger.com")
-[![MicroBadger Size](https://img.shields.io/microbadger/image-size/linuxserver/ffmpeg.svg?style=flat-square&color=E68523)](https://microbadger.com/images/linuxserver/ffmpeg "Get your own version badge on microbadger.com")
-[![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/ffmpeg.svg?style=flat-square&color=E68523)](https://hub.docker.com/r/linuxserver/ffmpeg)
-[![Docker Stars](https://img.shields.io/docker/stars/linuxserver/ffmpeg.svg?style=flat-square&color=E68523)](https://hub.docker.com/r/linuxserver/ffmpeg)
-[![Build Status](https://ci.linuxserver.io/view/all/job/Docker-Pipeline-Builders/job/docker-ffmpeg/job/master/badge/icon?style=flat-square)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-ffmpeg/job/master/)
+[![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fffmpeg?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh/gateway/linuxserver-ci/docker/linuxserver%2Fffmpeg)
+[![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-ffmpeg)
+[![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-ffmpeg/releases)
+[![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub%20Package&logo=github)](https://github.com/linuxserver/docker-ffmpeg/packages)
+[![GitLab Container Registry](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitLab%20Registry&logo=gitlab)](https://gitlab.com/linuxserver.io/docker-ffmpeg/container_registry)
+[![Quay.io](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Quay.io)](https://quay.io/repository/linuxserver.io/ffmpeg)
+[![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/ffmpeg)
+[![Docker Stars](https://img.shields.io/docker/stars/linuxserver/ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/ffmpeg)
+[![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-ffmpeg%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-ffmpeg/job/master/)
 
 [FFmpeg](https://ffmpeg.org) - A complete, cross-platform solution to record, convert and stream audio and video.
 
@@ -41,17 +43,17 @@ Find us at:
 
 ## Supported Architectures
 
-Our images support multiple architectures such as `x86-64`, `arm64` and `armhf`. We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
+We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
 
-Simply pulling `linuxserver/ffmpeg` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
+Simply pulling `lscr.io/linuxserver/ffmpeg:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
 The architectures supported by this image are:
 
-| Architecture | Tag |
-| :----: | --- |
-| x86-64 | amd64-latest |
-| arm64 | arm64v8-latest |
-| armhf | arm32v7-latest |
+| Architecture | Available | Tag |
+| :----: | :----: | ---- |
+| x86-64 | ✅ | amd64-\<version tag\> |
+| arm64 | ✅ | arm64v8-\<version tag\> |
+| armhf| ✅ | arm32v7-\<version tag\> |
 
 ## Usage
 
@@ -127,6 +129,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **19.06.22:** - Rebase to Focal.
 * **26.08.21:** - Add support for libOpenCL.
 * **01.07.21:** - Bump to 4.4.
 * **17.06.20:** - Bump to 4.3.
