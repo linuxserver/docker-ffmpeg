@@ -1,5 +1,5 @@
 FROM ghcr.io/linuxserver/ffmpeg:arm64v8-bin as binstage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-bionic
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-focal
 
 # Add files from binstage
 COPY --from=binstage / /
