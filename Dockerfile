@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy as buildstage
 
 # set version label
@@ -42,7 +44,6 @@ RUN \
     autoconf \
     automake \
     bzip2 \
-    ca-certificates \
     cmake \
     diffutils \
     doxygen \

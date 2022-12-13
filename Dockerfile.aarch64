@@ -1,4 +1,6 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-focal as buildstage
+# syntax=docker/dockerfile:1
+
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy as buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -12,13 +14,13 @@ ENV \
 ENV \
   AOM=v1.0.0 \
   FDKAAC=2.0.1 \
-  FFMPEG_HARD=4.4 \
+  FFMPEG_HARD=5.1.2 \
   FREETYPE=2.9.1 \
   FRIBIDI=1.0.8 \
   KVAZAAR=2.0.0 \
   LAME=3.100 \
   LIBASS=0.14.0 \
-  LIBDRM=2.4.98 \
+  LIBDRM=2.4.114 \
   LIBVA=2.6.0 \
   LIBVDPAU=1.2 \
   LIBVIDSTAB=1.1.0 \
@@ -40,9 +42,7 @@ RUN \
     autoconf \
     automake \
     bzip2 \
-    ca-certificates \
     cmake \
-    curl \
     diffutils \
     g++ \
     gcc \
@@ -51,7 +51,7 @@ RUN \
     libexpat1-dev \
     libfontconfig1-dev \
     libxext-dev \
-    libgcc-7-dev \
+    libgcc-10-dev \
     libgomp1 \
     libpciaccess-dev \
     libssl-dev \
@@ -63,7 +63,7 @@ RUN \
     nasm \
     perl \
     pkg-config \
-    python \
+    python3 \
     x11proto-xext-dev \
     xserver-xorg-dev \
     yasm \
