@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:focal as buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy as buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -12,14 +12,14 @@ ENV \
 ENV \
   AOM=v1.0.0 \
   FDKAAC=2.0.1 \
-  FFMPEG_HARD=4.4 \
+  FFMPEG_HARD=5.1.2 \
   FONTCONFIG=2.13.92 \
   FREETYPE=2.9.1 \
   FRIBIDI=1.0.8 \
   KVAZAAR=2.0.0 \
   LAME=3.100 \
   LIBASS=0.14.0 \
-  LIBDRM=2.4.100 \
+  LIBDRM=2.4.114 \
   LIBVA=2.6.0 \
   LIBVDPAU=1.2 \
   LIBVIDSTAB=1.1.0 \
@@ -44,7 +44,6 @@ RUN \
     bzip2 \
     ca-certificates \
     cmake \
-    curl \
     diffutils \
     doxygen \
     g++ \
@@ -53,7 +52,7 @@ RUN \
     gperf \
     libexpat1-dev \
     libxext-dev \
-    libgcc-7-dev \
+    libgcc-10-dev \
     libgomp1 \
     libpciaccess-dev \
     libssl-dev \
@@ -67,7 +66,6 @@ RUN \
     ocl-icd-opencl-dev \
     perl \
     pkg-config \
-    python \
     python3 \
     python3-pip\
     python3-setuptools \
@@ -224,16 +222,16 @@ RUN \
   echo "**** grabbing libdrm ****" && \
   mkdir -p /tmp/libdrm && \
   curl -Lf \
-    https://dri.freedesktop.org/libdrm/libdrm-${LIBDRM}.tar.gz | \
-    tar -zx --strip-components=1 -C /tmp/libdrm
+    https://dri.freedesktop.org/libdrm/libdrm-${LIBDRM}.tar.xz | \
+    tar -xJ --strip-components=1 -C /tmp/libdrm
 RUN \
   echo "**** compiling libdrm ****" && \
   cd /tmp/libdrm && \
-  ./configure \
-    --disable-static \
-    --enable-shared && \
-  make && \
-  make install
+  meson \
+      -Dvalgrind=disabled \
+      . build && \
+  ninja -C build && \
+  ninja -C build install
 RUN \
   echo "**** grabbing libva ****" && \
   mkdir -p /tmp/libva && \
@@ -476,7 +474,6 @@ RUN \
     --disable-doc \
     --disable-ffplay \
     --enable-ffprobe \
-    --enable-avresample \
     --enable-cuvid \
     --enable-gpl \
     --enable-libaom \
@@ -528,7 +525,7 @@ RUN \
     | awk '/local/ {print $3}' \
     | xargs -i cp -L {} /buildout/usr/lib/ && \
   cp -a \
-    /usr/local/lib/libdrm_* \
+    /usr/local/lib/*/libdrm_* \
     /buildout/usr/lib/ && \
   echo \
     'libnvidia-opencl.so.1' > \
