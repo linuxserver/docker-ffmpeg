@@ -129,6 +129,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **14.12.22:** - Rebase to Jammy, bump to 5.1.2.
 * **19.06.22:** - Rebase to Focal.
 * **26.08.21:** - Add support for libOpenCL.
 * **01.07.21:** - Bump to 4.4.

@@ -1,5 +1,7 @@
+# syntax=docker/dockerfile:1
+
 FROM ghcr.io/linuxserver/ffmpeg:arm64v8-bin as binstage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-focal
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy
 
 # Add files from binstage
 COPY --from=binstage / /
