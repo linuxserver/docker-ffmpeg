@@ -18,7 +18,7 @@ jobs:
           fi
           echo "**** External trigger running off of bin branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_FFMPEG_BIN\". ****"
           echo "**** Retrieving external version ****"
-          EXT_RELEASE=$(echo 4.4)
+          EXT_RELEASE=$(echo 5.1.2)
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "**** Can't retrieve external version, exiting ****"
             FAILURE_REASON="Can't retrieve external version for ffmpeg branch bin"
