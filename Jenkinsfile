@@ -414,7 +414,8 @@ pipeline {
       }
       steps {
         echo "Running on node: ${NODE_NAME}"
-        sh "docker build \
+        sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
+        sh "docker buildx build \
           --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
           --label \"org.opencontainers.image.authors=linuxserver.io\" \
           --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-ffmpeg/packages\" \
@@ -427,7 +428,7 @@ pipeline {
           --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
           --label \"org.opencontainers.image.title=Ffmpeg\" \
           --label \"org.opencontainers.image.description=ffmpeg image by linuxserver.io\" \
-          --no-cache --pull -t ${IMAGE}:${META_TAG} \
+          --no-cache --pull -t ${IMAGE}:${META_TAG} --platform=linux/amd64 \
           --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
       }
     }
@@ -444,7 +445,8 @@ pipeline {
         stage('Build X86') {
           steps {
             echo "Running on node: ${NODE_NAME}"
-            sh "docker build \
+            sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
+            sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
               --label \"org.opencontainers.image.authors=linuxserver.io\" \
               --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-ffmpeg/packages\" \
@@ -457,7 +459,7 @@ pipeline {
               --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
               --label \"org.opencontainers.image.title=Ffmpeg\" \
               --label \"org.opencontainers.image.description=ffmpeg image by linuxserver.io\" \
-              --no-cache --pull -t ${IMAGE}:amd64-${META_TAG} \
+              --no-cache --pull -t ${IMAGE}:amd64-${META_TAG} --platform=linux/amd64 \
               --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
           }
         }
@@ -471,7 +473,8 @@ pipeline {
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
                '''
-            sh "docker build \
+            sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile.armhf"
+            sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
               --label \"org.opencontainers.image.authors=linuxserver.io\" \
               --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-ffmpeg/packages\" \
@@ -484,7 +487,7 @@ pipeline {
               --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
               --label \"org.opencontainers.image.title=Ffmpeg\" \
               --label \"org.opencontainers.image.description=ffmpeg image by linuxserver.io\" \
-              --no-cache --pull -f Dockerfile.armhf -t ${IMAGE}:arm32v7-${META_TAG} \
+              --no-cache --pull -f Dockerfile.armhf -t ${IMAGE}:arm32v7-${META_TAG} --platform=linux/arm/v7 \
               --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
             sh "docker tag ${IMAGE}:arm32v7-${META_TAG} ghcr.io/linuxserver/lsiodev-buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}"
             retry(5) {
@@ -505,7 +508,8 @@ pipeline {
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
                '''
-            sh "docker build \
+            sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile.aarch64"
+            sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
               --label \"org.opencontainers.image.authors=linuxserver.io\" \
               --label \"org.opencontainers.image.url=https://github.com/linuxserver/docker-ffmpeg/packages\" \
@@ -518,7 +522,7 @@ pipeline {
               --label \"org.opencontainers.image.ref.name=${COMMIT_SHA}\" \
               --label \"org.opencontainers.image.title=Ffmpeg\" \
               --label \"org.opencontainers.image.description=ffmpeg image by linuxserver.io\" \
-              --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} \
+              --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} --platform=linux/arm64 \
               --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
             sh "docker tag ${IMAGE}:arm64v8-${META_TAG} ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
             retry(5) {
