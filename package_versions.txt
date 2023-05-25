@@ -68,8 +68,8 @@ libfreetype6         2.11.1+dfsg-1ubuntu0.2                   deb
 libgcc-s1            12.1.0-2ubuntu1~22.04                    deb   
 libgcrypt20          1.9.4-3ubuntu3                           deb   
 libgl1-amber-dri     21.3.7-0ubuntu1                          deb   
-libgl1-mesa-dri      22.2.5-0ubuntu0.1~22.04.1                deb   
-libglapi-mesa        22.2.5-0ubuntu0.1~22.04.1                deb   
+libgl1-mesa-dri      22.2.5-0ubuntu0.1~22.04.2                deb   
+libglapi-mesa        22.2.5-0ubuntu0.1~22.04.2                deb   
 libglib2.0-0         2.72.4-0ubuntu2                          deb   
 libglib2.0-data      2.72.4-0ubuntu2                          deb   
 libgmp10             2:6.2.1+dfsg-3ubuntu1                    deb   
