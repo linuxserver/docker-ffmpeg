@@ -487,7 +487,6 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
-    --enable-libsrt \
     --enable-libtheora \
     --enable-libv4l2 \
     --enable-libvidstab \
