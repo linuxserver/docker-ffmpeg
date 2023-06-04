@@ -14,7 +14,7 @@ ENV \
 ENV \
   AOM=v1.0.0 \
   FDKAAC=2.0.1 \
-  FFMPEG_HARD=5.1.2 \
+  FFMPEG_HARD=6.0 \
   FONTCONFIG=2.13.92 \
   FREETYPE=2.9.1 \
   FRIBIDI=1.0.8 \
@@ -487,6 +487,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-libsrt \
     --enable-libtheora \
     --enable-libv4l2 \
     --enable-libvidstab \
