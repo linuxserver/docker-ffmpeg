@@ -34,7 +34,7 @@ ENV \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.0 \
-  X265=3.4 \
+  X265=3.5 \
   XVID=1.3.7 
 
 RUN \
@@ -232,7 +232,7 @@ RUN \
 RUN \
   echo "**** compiling libdrm ****" && \
   cd /tmp/libdrm && \
-  meson \
+  meson setup \
       -Dvalgrind=disabled \
       . build && \
   ninja -C build && \
@@ -273,7 +273,7 @@ RUN \
 RUN \
   echo "**** compiling libvmaf ****" && \
   cd /tmp/vmaf/libvmaf && \
-  meson build --buildtype release && \
+  meson setup build --buildtype release && \
   ninja -vC build && \
   ninja -vC build install
 RUN \
@@ -432,7 +432,7 @@ RUN \
   echo "**** grabbing x265 ****" && \
   mkdir -p /tmp/x265 && \
   curl -Lf \
-    http://anduin.linuxfromscratch.org/BLFS/x265/x265_${X265}.tar.gz | \
+    https://bitbucket.org/multicoreware/x265_git/downloads/x265_${X265}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/x265
 RUN \
   echo "**** compiling x265 ****" && \

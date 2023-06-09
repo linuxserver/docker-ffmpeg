@@ -349,9 +349,6 @@ RUN \
     --branch ${X265} \
     --depth 1 https://bitbucket.org/multicoreware/x265_git.git \
     /tmp/x265
-  #curl -Lf \
-  #  https://bitbucket.org/multicoreware/x265_git/downloads/x265_${X265}.tar.gz | \
-  #  tar -zx --strip-components=1 -C /tmp/x265
 RUN \
   echo "**** compiling x265 ****" && \
   cd /tmp/x265/build/linux && \
