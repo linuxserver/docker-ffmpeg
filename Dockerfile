@@ -12,28 +12,28 @@ ENV \
 
 # versions
 ENV \
-  AOM=v1.0.0 \
-  FDKAAC=2.0.1 \
-  FFMPEG_HARD=5.1.2 \
-  FONTCONFIG=2.13.92 \
-  FREETYPE=2.9.1 \
-  FRIBIDI=1.0.8 \
-  KVAZAAR=2.0.0 \
+  AOM=v3.6.1 \
+  FDKAAC=2.0.2 \
+  FFMPEG_HARD=6.0 \
+  FONTCONFIG=2.14.2 \
+  FREETYPE=2.12.1 \
+  FRIBIDI=1.0.13 \
+  KVAZAAR=2.2.0 \
   LAME=3.100 \
-  LIBASS=0.14.0 \
-  LIBDRM=2.4.114 \
-  LIBVA=2.6.0 \
-  LIBVDPAU=1.2 \
-  LIBVIDSTAB=1.1.0 \
-  LIBVMAF=master \
-  NVCODEC=n9.1.23.1 \
-  OGG=1.3.4 \
-  OPENCOREAMR=0.1.5 \
-  OPENJPEG=2.3.1 \
-  OPUS=1.3 \
+  LIBASS=0.17.1 \
+  LIBDRM=2.4.115 \
+  LIBVA=2.18.0 \
+  LIBVDPAU=1.5 \
+  LIBVIDSTAB=1.1.1 \
+  LIBVMAF=2.3.1 \
+  NVCODEC=n12.0.16.0 \
+  OGG=1.3.5 \
+  OPENCOREAMR=0.1.6 \
+  OPENJPEG=2.5.0 \
+  OPUS=1.3.1 \
   THEORA=1.1.1 \
-  VORBIS=1.3.6 \
-  VPX=1.10.0 \
+  VORBIS=1.3.7 \
+  VPX=1.13.0 \
   X265=3.4 \
   XVID=1.3.7 
 
@@ -55,6 +55,7 @@ RUN \
     libxext-dev \
     libgcc-10-dev \
     libgomp1 \
+    libharfbuzz-dev \
     libpciaccess-dev \
     libssl-dev \
     libtool \
@@ -67,15 +68,18 @@ RUN \
     ocl-icd-opencl-dev \
     perl \
     pkg-config \
-    python3 \
-    python3-pip\
-    python3-setuptools \
-    python3-wheel \
+    python3-venv \
     x11proto-xext-dev \
     xserver-xorg-dev \
+    xxd \
     yasm \
     zlib1g-dev && \
-  pip3 install meson
+  python3 -m venv /lsiopy && \
+  pip install -U --no-cache-dir \
+    pip \
+    setuptools \
+    wheel && \
+  pip install --no-cache-dir meson
 
 # compile 3rd party libs
 RUN \
@@ -252,25 +256,20 @@ RUN \
   echo "**** grabbing libvdpau ****" && \
   mkdir -p /tmp/libvdpau && \
   git clone \
-    --branch libvdpau-${LIBVDPAU} \
+    --branch ${LIBVDPAU} \
     --depth 1 https://gitlab.freedesktop.org/vdpau/libvdpau.git \
     /tmp/libvdpau
 RUN \
   echo "**** compiling libvdpau ****" && \
   cd /tmp/libvdpau && \
-  ./autogen.sh && \
-  ./configure \
-    --disable-static \
-    --enable-shared && \
-  make && \
-  make install
+  meson setup -Ddocumentation=false build && \
+  ninja -C build install
 RUN \
   echo "**** grabbing vmaf ****" && \
   mkdir -p /tmp/vmaf && \
-  git clone \
-    --branch ${LIBVMAF} \
-    https://github.com/Netflix/vmaf.git \
-    /tmp/vmaf
+  curl -Lf \
+    https://github.com/Netflix/vmaf/archive/refs/tags/v${LIBVMAF}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/vmaf
 RUN \
   echo "**** compiling libvmaf ****" && \
   cd /tmp/vmaf/libvmaf && \
@@ -469,6 +468,7 @@ RUN \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
 RUN \
   echo "**** compiling ffmpeg ****" && \
+  export PKG_CONFIG_PATH="/usr/local/lib64/pkgconfig" && \
   cd /tmp/ffmpeg && \
     ./configure \
     --disable-debug \
@@ -514,7 +514,7 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
-    /buildout/usr/lib/x86_64-linux-gnu \
+    /buildout/usr/local/lib64 \
     /buildout/etc/OpenCL/vendors && \
   cp \
     /tmp/ffmpeg/ffmpeg \
@@ -524,10 +524,10 @@ RUN \
     /buildout/usr/local/bin && \
   ldd /tmp/ffmpeg/ffmpeg \
     | awk '/local/ {print $3}' \
-    | xargs -i cp -L {} /buildout/usr/lib/ && \
+    | xargs -i cp -L {} /buildout/usr/local/lib64/ && \
   cp -a \
-    /usr/local/lib/x86_64-linux-gnu/libdrm_* \
-    /buildout/usr/lib/x86_64-linux-gnu/ && \
+    /usr/local/lib64/libdrm_* \
+    /buildout/usr/local/lib64/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
