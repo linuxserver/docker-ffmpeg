@@ -347,7 +347,7 @@ RUN \
   mkdir -p /tmp/x265 && \
   git clone \
     --branch ${X265} \
-    --depth 1 https://bitbucket.org/multicoreware/x265_git.git \
+    https://bitbucket.org/multicoreware/x265_git.git \
     /tmp/x265
 RUN \
   echo "**** compiling x265 ****" && \
