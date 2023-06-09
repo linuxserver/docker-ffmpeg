@@ -514,6 +514,7 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
+    /buildout/usr/lib \
     /buildout/usr/local/lib64 \
     /buildout/etc/OpenCL/vendors && \
   cp \
@@ -524,10 +525,16 @@ RUN \
     /buildout/usr/local/bin && \
   ldd /tmp/ffmpeg/ffmpeg \
     | awk '/local/ {print $3}' \
-    | xargs -i cp -L {} /buildout/usr/local/lib64/ && \
+    | xargs -i cp -L {} /buildout/usr/lib/ && \
   cp -a \
     /usr/local/lib64/libdrm_* \
     /buildout/usr/local/lib64/ && \
+  cp -a \
+    /usr/local/lib64/libvmaf* \
+    /buildout/usr/lib/ && \
+  cp -a \
+    /usr/local/lib64/libvdpau* \
+    /buildout/usr/lib/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
