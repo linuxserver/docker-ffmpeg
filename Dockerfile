@@ -233,8 +233,9 @@ RUN \
   echo "**** compiling libdrm ****" && \
   cd /tmp/libdrm && \
   meson setup \
-      -Dvalgrind=disabled \
-      . build && \
+    --prefix=/usr/local --libdir=lib \
+    -Dvalgrind=disabled \
+    . build && \
   ninja -C build && \
   ninja -C build install
 RUN \
@@ -262,7 +263,10 @@ RUN \
 RUN \
   echo "**** compiling libvdpau ****" && \
   cd /tmp/libvdpau && \
-  meson setup -Ddocumentation=false build && \
+  meson setup \
+    --prefix=/usr/local --libdir=lib \
+    -Ddocumentation=false \
+    build && \
   ninja -C build install
 RUN \
   echo "**** grabbing vmaf ****" && \
@@ -273,7 +277,10 @@ RUN \
 RUN \
   echo "**** compiling libvmaf ****" && \
   cd /tmp/vmaf/libvmaf && \
-  meson setup build --buildtype release && \
+  meson setup \
+    --prefix=/usr/local --libdir=lib \
+    --buildtype release \
+    build && \
   ninja -vC build && \
   ninja -vC build install
 RUN \
@@ -468,7 +475,6 @@ RUN \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
 RUN \
   echo "**** compiling ffmpeg ****" && \
-  export PKG_CONFIG_PATH="/usr/local/lib64/pkgconfig" && \
   cd /tmp/ffmpeg && \
     ./configure \
     --disable-debug \
@@ -515,7 +521,6 @@ RUN \
   mkdir -p \
     /buildout/usr/local/bin \
     /buildout/usr/lib \
-    /buildout/usr/local/lib64 \
     /buildout/etc/OpenCL/vendors && \
   cp \
     /tmp/ffmpeg/ffmpeg \
@@ -526,15 +531,6 @@ RUN \
   ldd /tmp/ffmpeg/ffmpeg \
     | awk '/local/ {print $3}' \
     | xargs -i cp -L {} /buildout/usr/lib/ && \
-  cp -a \
-    /usr/local/lib64/libdrm_* \
-    /buildout/usr/local/lib64/ && \
-  cp -a \
-    /usr/local/lib64/libvmaf* \
-    /buildout/usr/lib/ && \
-  cp -a \
-    /usr/local/lib64/libvdpau* \
-    /buildout/usr/lib/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
