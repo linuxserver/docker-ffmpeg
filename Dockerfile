@@ -8,7 +8,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
   DEBIAN_FRONTEND="noninteractive" \
-  MAKEFLAGS="-j4"
+  MAKEFLAGS="-j8"
 
 # versions
 ENV \
@@ -233,7 +233,7 @@ RUN \
   echo "**** compiling libdrm ****" && \
   cd /tmp/libdrm && \
   meson setup \
-    --prefix=/usr/local --libdir=lib \
+    --prefix=/usr/local/lib --libdir=x86_64-linux-gnu \
     -Dvalgrind=disabled \
     . build && \
   ninja -C build && \
@@ -520,7 +520,7 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
-    /buildout/usr/lib \
+    /buildout/usr/local/lib/x86_64-linux-gnu \
     /buildout/etc/OpenCL/vendors && \
   cp \
     /tmp/ffmpeg/ffmpeg \
@@ -528,9 +528,12 @@ RUN \
   cp \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
-  ldd /tmp/ffmpeg/ffmpeg \
-    | awk '/local/ {print $3}' \
-    | xargs -i cp -L {} /buildout/usr/lib/ && \
+  cp -a \
+    /usr/local/lib/lib* \
+    /buildout/usr/local/lib/ && \
+  cp -a \
+    /usr/local/lib/x86_64-linux-gnu/lib* \
+    /buildout/usr/local/lib/x86_64-linux-gnu/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
