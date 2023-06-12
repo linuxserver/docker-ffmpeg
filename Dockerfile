@@ -233,7 +233,7 @@ RUN \
   echo "**** compiling libdrm ****" && \
   cd /tmp/libdrm && \
   meson setup \
-    --prefix=/usr/local/lib --libdir=x86_64-linux-gnu \
+    --prefix=/usr --libdir=/usr/local/lib/x86_64-linux-gnu \
     -Dvalgrind=disabled \
     . build && \
   ninja -C build && \
@@ -264,7 +264,7 @@ RUN \
   echo "**** compiling libvdpau ****" && \
   cd /tmp/libvdpau && \
   meson setup \
-    --prefix=/usr/local --libdir=lib \
+    --prefix=/usr --libdir=/usr/local/lib \
     -Ddocumentation=false \
     build && \
   ninja -C build install
@@ -278,7 +278,7 @@ RUN \
   echo "**** compiling libvmaf ****" && \
   cd /tmp/vmaf/libvmaf && \
   meson setup \
-    --prefix=/usr/local --libdir=lib \
+    --prefix=/usr --libdir=/usr/local/lib \
     --buildtype release \
     build && \
   ninja -vC build && \
