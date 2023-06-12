@@ -8,7 +8,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
   DEBIAN_FRONTEND="noninteractive" \
-  MAKEFLAGS="-j8"
+  MAKEFLAGS="-j4"
 
 # versions
 ENV \
