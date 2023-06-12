@@ -430,7 +430,7 @@ RUN \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
   cp -a \
-    /usr/local/lib/lib* \
+    /usr/local/lib/lib*so* \
     /buildout/usr/local/lib/
 
 # Storage layer consumed downstream

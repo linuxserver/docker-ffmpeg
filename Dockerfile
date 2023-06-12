@@ -529,10 +529,10 @@ RUN \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
   cp -a \
-    /usr/local/lib/lib* \
+    /usr/local/lib/lib*so* \
     /buildout/usr/local/lib/ && \
   cp -a \
-    /usr/local/lib/x86_64-linux-gnu/lib* \
+    /usr/local/lib/x86_64-linux-gnu/lib*so* \
     /buildout/usr/local/lib/x86_64-linux-gnu/ && \
   echo \
     'libnvidia-opencl.so.1' > \
