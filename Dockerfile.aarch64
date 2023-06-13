@@ -375,7 +375,7 @@ RUN \
   if [ -z ${FFMPEG_VERSION+x} ]; then \
     FFMPEG=${FFMPEG_HARD}; \
   else \
-    FFMPEG=${FFMPEG_VERSION}; \
+    FFMPEG=${FFMPEG_VERSION%-cli}; \
   fi && \
   echo "**** grabbing ffmpeg ****" && \
   mkdir -p /tmp/ffmpeg && \
