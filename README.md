@@ -128,7 +128,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **09.06.23:** - Bump to 6.0, update shared libraries, deprecate armhf.
+* **13.06.23:** - Bump to 6.0, update shared libraries, deprecate armhf, combine bin stage.
 * **14.12.22:** - Rebase to Jammy, bump to 5.1.2.
 * **19.06.22:** - Rebase to Focal.
 * **26.08.21:** - Add support for libOpenCL.
