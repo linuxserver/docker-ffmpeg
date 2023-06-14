@@ -25,12 +25,15 @@ ENV \
   LAME=3.100 \
   LIBASS=0.17.1 \
   LIBDRM=2.4.115 \
+  LIBMFX=22.5.4 \
   LIBVA=2.18.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=2.3.1 \
+  LIBVPL=2023.3.0 \
   NVCODEC=n12.0.16.0 \
   OGG=1.3.5 \
+  ONEVPL=23.1.5 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.3.1 \
@@ -56,6 +59,7 @@ RUN \
     gperf \
     libexpat1-dev \
     libxext-dev \
+    libxfixes-dev \
     libgcc-10-dev \
     libgomp1 \
     libharfbuzz-dev \
@@ -63,7 +67,11 @@ RUN \
     libssl-dev \
     libtool \
     libv4l-dev \
+    libwayland-dev \
     libx11-dev \
+    libx11-xcb-dev \
+    libxcb-dri3-dev \
+    libxcb-present-dev \
     libxml2-dev \
     make \
     nasm \
@@ -72,6 +80,7 @@ RUN \
     perl \
     pkg-config \
     python3-venv \
+    wayland-protocols \
     x11proto-xext-dev \
     xserver-xorg-dev \
     xxd \
@@ -82,7 +91,7 @@ RUN \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir meson
+  pip install --no-cache-dir meson cmake
 
 # compile 3rd party libs
 RUN \
@@ -257,8 +266,12 @@ RUN \
     --enable-shared && \
   make && \
   make install && \
-  strip -d /usr/local/lib/libva.so && \
-  strip -d /usr/local/lib/libva-drm.so
+  strip -d \
+    /usr/local/lib/libva.so \
+    /usr/local/lib/libva-drm.so \
+    /usr/local/lib/libva-glx.so \
+    /usr/local/lib/libva-wayland.so \
+    /usr/local/lib/libva-x11.so
 RUN \
   echo "**** grabbing gmmlib ****" && \
   mkdir -p /tmp/gmmlib && \
@@ -291,6 +304,60 @@ RUN \
   make && \
   make install && \
   strip -d /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
+RUN \
+  echo "**** grabbing libvpl ****" && \
+  mkdir -p /tmp/libvpl && \
+  curl -Lf \
+    https://github.com/oneapi-src/oneVPL/archive/refs/tags/v${LIBVPL}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/libvpl
+RUN \
+  echo "**** compiling libvpl ****" && \
+  mkdir -p /tmp/libvpl/build && \
+  cd /tmp/libvpl/build && \
+  cmake .. && \ 
+  cmake --build . --config Release && \
+  cmake --build . --config Release --target install && \
+  strip -d /usr/local/lib/libvpl.so
+RUN \
+  echo "**** grabbing onevpl ****" && \
+  mkdir -p /tmp/onevpl && \
+  curl -Lf \
+    https://github.com/oneapi-src/oneVPL-intel-gpu/archive/refs/tags/intel-onevpl-${ONEVPL}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/onevpl
+RUN \
+  echo "**** compiling onevpl ****" && \
+  mkdir -p /tmp/onevpl/build && \
+  cd /tmp/onevpl/build && \
+  cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+    .. && \ 
+  make && \
+  make install && \
+  strip -d /usr/local/lib/libmfx-gen.so
+RUN \
+  echo "**** grabbing libmfx ****" && \
+  mkdir -p /tmp/libmfx && \
+  curl -Lf \
+    https://github.com/Intel-Media-SDK/MediaSDK/archive/refs/tags/intel-mediasdk-${LIBMFX}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/libmfx
+RUN \
+  echo "**** compiling libmfx ****" && \
+  mkdir -p /tmp/libmfx/build && \
+  cd /tmp/libmfx/build && \
+  cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+    -DBUILD_SAMPLES=OFF \
+    -DENABLE_X11_DRI3=ON \
+    -DBUILD_DISPATCHER=OFF \
+    -DBUILD_TUTORIALS=OFF \
+    .. && \ 
+  make && \
+  make install && \
+  strip -d \
+    /usr/local/lib/libmfxhw64.so \
+    /usr/local/lib/mfx/libmfx_*.so
 RUN \
   echo "**** grabbing libvdpau ****" && \
   mkdir -p /tmp/libvdpau && \
@@ -537,6 +604,7 @@ RUN \
     --enable-libvidstab \
     --enable-libvmaf \
     --enable-libvorbis \
+    --enable-libvpl \
     --enable-libvpx \
     --enable-libxml2 \
     --enable-libx264 \
@@ -559,6 +627,9 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
+    /buildout/usr/local/lib/libmfx-gen \
+    /buildout/usr/local/lib/mfx \
+    /buildout/usr/local/lib/vpl \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
     /buildout/etc/OpenCL/vendors && \
   cp \
@@ -570,6 +641,15 @@ RUN \
   cp -a \
     /usr/local/lib/lib*so* \
     /buildout/usr/local/lib/ && \
+  cp -a \
+    /usr/local/lib/libmfx-gen/*.so \
+    /buildout/usr/local/lib/libmfx-gen/ && \
+  cp -a \
+    /usr/local/lib/mfx/*.so \
+    /buildout/usr/local/lib/mfx/ && \
+  cp -a \
+    /usr/local/lib/vpl/*.so \
+    /buildout/usr/local/lib/vpl/ && \
   cp -a \
     /usr/local/lib/x86_64-linux-gnu/lib*so* \
     /buildout/usr/local/lib/x86_64-linux-gnu/ && \
@@ -597,6 +677,7 @@ ARG DEBIAN_FRONTEND="noninteractive"
 # hardware env
 ENV \
   LIBVA_DRIVERS_PATH="/usr/local/lib/x86_64-linux-gnu/dri" \
+  LD_LIBRARY_PATH="/usr/local/lib" \
   NVIDIA_DRIVER_CAPABILITIES="compute,video,utility" \
   NVIDIA_VISIBLE_DEVICES="all"
 
@@ -609,11 +690,15 @@ RUN \
     libgomp1 \
     libharfbuzz0b \
     libv4l-0 \
+    libwayland-client0 \
     libx11-6 \
+    libx11-xcb1 \
     libxcb1 \
+    libxcb-dri3-0 \
     libxcb-shape0 \
     libxcb-xfixes0 \
     libxext6 \
+    libxfixes3 \
     libxml2 \
     ocl-icd-libopencl1 && \
   echo "**** clean up ****" && \

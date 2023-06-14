@@ -71,7 +71,13 @@ RUN \
     xserver-xorg-dev \
     xxd \
     yasm \
-    zlib1g-dev
+    zlib1g-dev && \
+  python3 -m venv /lsiopy && \
+  pip install -U --no-cache-dir \
+    pip \
+    setuptools \
+    wheel && \
+  pip install --no-cache-dir cmake
 
 # compile 3rd party libs
 RUN \
