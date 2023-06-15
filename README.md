@@ -58,8 +58,16 @@ The architectures supported by this image are:
 
 Unlike most of our container library this image is meant to be run ephemerally from the command line parsing user input for a custom FFmpeg command. You will need to understand some Docker basics to use this image and be familiar with how to construct an FFmpeg command. In the commands below we will be bind mounting our current working directory from the CLI to /config, the assumption is that input.mkv is in your current working directory.
 
-If an input file is detected we will run FFmpeg as that user/group so the output file will match it's permissions.
+If an input file is detected we will run FFmpeg as that user/group so the output file will match its permissions.
 The image supports Hardware acceleration on x86 pay close attention to the variables for the examples below.
+
+### Included Intel Drivers (latest versions compiled):
+- iHD Driver: Supports gen8+
+- Libva (VAAPI): Supports gen5+ but is limited to gen8+ due to iHD driver
+- Qsv Dispatcher: OneVPL (supports both OneVPL and MSDK runtimes and should automatically switch)
+- Qsv Runtime:
+  - OneVPL: Supports gen12+
+  - MSDK (libmfx): Supports gen8 - gen12
 
 ### Basic Transcode
 
@@ -75,7 +83,7 @@ docker run --rm -it \
   /config/output.mkv
 ```
 
-### Hardware accelerated (VAAPI)
+### Hardware accelerated (VAAPI) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/VAAPI))
 
 ```
 docker run --rm -it \
@@ -91,7 +99,22 @@ docker run --rm -it \
   /config/output.mkv
 ```
 
-### Nvidia Hardware accelerated
+### Hardware accelerated (QSV) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/QuickSync))
+
+```
+docker run --rm -it \
+  --device=/dev/dri:/dev/dri \
+  -v $(pwd):/config \
+  linuxserver/ffmpeg \
+  -hwaccel qsv \
+  -c:v h264_qsv \
+  -i /config/input.mkv \
+  -c:v h264_qsv \
+  -global_quality 25 \
+  /config/output.mkv
+```
+
+### Nvidia Hardware accelerated ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#CUDANVENCNVDEC))
 
 ```
 docker run --rm -it \
@@ -128,6 +151,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **14.06.23:** - Switch to latest iHD for Intel, add qsv support.
 * **13.06.23:** - Bump to 6.0, update shared libraries, deprecate armhf, combine bin stage.
 * **14.12.22:** - Rebase to Jammy, bump to 5.1.2.
 * **19.06.22:** - Rebase to Focal.
