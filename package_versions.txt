@@ -128,9 +128,9 @@ libuuid1             2.37.2-4ubuntu3                          deb
 libv4l-0             1.22.1-2build1                           deb   
 libv4lconvert0       1.22.1-2build1                           deb   
 libwayland-client0   1.20.0-1ubuntu0.1                        deb   
-libx11-6             2:1.7.5-1                                deb   
-libx11-data          2:1.7.5-1                                deb   
-libx11-xcb1          2:1.7.5-1                                deb   
+libx11-6             2:1.7.5-1ubuntu0.2                       deb   
+libx11-data          2:1.7.5-1ubuntu0.2                       deb   
+libx11-xcb1          2:1.7.5-1ubuntu0.2                       deb   
 libxau6              1:1.0.9-1build5                          deb   
 libxcb-dri3-0        1.14-3ubuntu3                            deb   
 libxcb-shape0        1.14-3ubuntu3                            deb   
