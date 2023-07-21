@@ -62,6 +62,7 @@ RUN \
     libv4l-dev \
     libx11-dev \
     libxml2-dev \
+    libwebp-dev \
     make \
     nasm \
     perl \
@@ -417,6 +418,7 @@ RUN \
     --enable-libx264 \
     --enable-libx265 \
     --enable-libxvid \
+    --enable-libwebp \
     --enable-nonfree \
     --enable-openssl \
     --enable-small \
@@ -467,7 +469,10 @@ RUN \
     libx11-6 \
     libxcb1 \
     libxext6 \
-    libxml2 && \
+    libxml2 \
+    libwebp7 \
+    libwebpmux3 \
+    libwebpdemux2 && \
   echo "**** clean up ****" && \
   rm -rf \
     /var/lib/apt/lists/* \

@@ -73,6 +73,7 @@ RUN \
     libxcb-dri3-dev \
     libxcb-present-dev \
     libxml2-dev \
+    libwebp-dev \
     make \
     nasm \
     ninja-build \
@@ -610,6 +611,7 @@ RUN \
     --enable-libx264 \
     --enable-libx265 \
     --enable-libxvid \
+    --enable-libwebp \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
@@ -700,6 +702,9 @@ RUN \
     libxext6 \
     libxfixes3 \
     libxml2 \
+    libwebp7 \
+    libwebpmux3 \
+    libwebpdemux2 \
     ocl-icd-libopencl1 && \
   echo "**** clean up ****" && \
   rm -rf \
