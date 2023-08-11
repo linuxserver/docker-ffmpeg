@@ -57,6 +57,7 @@ RUN \
     gcc \
     git \
     gperf \
+    i965-va-driver-shaders \
     libexpat1-dev \
     libxext-dev \
     libxfixes-dev \
@@ -689,6 +690,7 @@ RUN \
     libglib2.0-0 \
     libgomp1 \
     libharfbuzz0b \
+    libpciaccess0 \
     libv4l-0 \
     libwayland-client0 \
     libx11-6 \

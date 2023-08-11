@@ -62,8 +62,9 @@ If an input file is detected we will run FFmpeg as that user/group so the output
 The image supports Hardware acceleration on x86 pay close attention to the variables for the examples below.
 
 ### Included Intel Drivers (latest versions compiled):
-- iHD Driver: Supports gen8+
-- Libva (VAAPI): Supports gen5+ but is limited to gen8+ due to iHD driver
+- iHD Driver: Supports gen8+ (default for Intel)
+- i965 Driver: Supports gen5+ (for gen5-gen9.5 it can be enabled by setting env var `LIBVA_DRIVER_NAME=i965` in docker arguments)
+- Libva (VAAPI): Supports gen5+ with i965 driver and gen8+ with iHD driver
 - Qsv Dispatcher: OneVPL (supports both OneVPL and MSDK runtimes and should automatically switch)
 - Qsv Runtime:
   - OneVPL: Supports gen12+
@@ -151,6 +152,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **11.08.23:** - Add optional i965 driver for gen5+ support.
 * **14.06.23:** - Switch to latest iHD for Intel, add qsv support.
 * **13.06.23:** - Bump to 6.0, update shared libraries, deprecate armhf, combine bin stage.
 * **14.12.22:** - Rebase to Jammy, bump to 5.1.2.
