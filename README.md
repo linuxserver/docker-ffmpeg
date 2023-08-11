@@ -152,6 +152,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **11.08.23:** - Add optional i965 driver for gen5+ support.
 * **14.06.23:** - Switch to latest iHD for Intel, add qsv support.
 * **13.06.23:** - Bump to 6.0, update shared libraries, deprecate armhf, combine bin stage.
 * **14.12.22:** - Rebase to Jammy, bump to 5.1.2.
