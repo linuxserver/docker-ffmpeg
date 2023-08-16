@@ -41,7 +41,8 @@ ENV \
   VORBIS=1.3.7 \
   VPX=1.13.0 \
   X265=3.5 \
-  XVID=1.3.7 
+  XVID=1.3.7 \
+  WEBP=1.3.1
 
 RUN \
   echo "**** install build packages ****" && \
@@ -74,7 +75,6 @@ RUN \
     libxcb-dri3-dev \
     libxcb-present-dev \
     libxml2-dev \
-    libwebp-dev \
     make \
     nasm \
     ninja-build \
@@ -566,6 +566,18 @@ RUN \
   ./configure && \ 
   make && \
   make install
+RUN \
+  echo "**** grabbing webp ****" && \
+  mkdir -p /tmp/webp && \
+  curl -Lf \
+    https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${WEBP}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/webp
+RUN \
+  echo "**** compiling webp ****" && \
+  cd /tmp/webp && \
+  ./configure && \
+  make && \
+  make install
 
 # main ffmpeg build
 RUN \
@@ -704,9 +716,6 @@ RUN \
     libxext6 \
     libxfixes3 \
     libxml2 \
-    libwebp7 \
-    libwebpmux3 \
-    libwebpdemux2 \
     ocl-icd-libopencl1 && \
   echo "**** clean up ****" && \
   rm -rf \
