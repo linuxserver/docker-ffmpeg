@@ -40,9 +40,9 @@ ENV \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.0 \
+  WEBP=1.3.1 \
   X265=3.5 \
-  XVID=1.3.7 \
-  WEBP=1.3.1
+  XVID=1.3.7
 
 RUN \
   echo "**** install build packages ****" && \
@@ -60,8 +60,6 @@ RUN \
     gperf \
     i965-va-driver-shaders \
     libexpat1-dev \
-    libxext-dev \
-    libxfixes-dev \
     libgcc-10-dev \
     libgomp1 \
     libharfbuzz-dev \
@@ -74,6 +72,8 @@ RUN \
     libx11-xcb-dev \
     libxcb-dri3-dev \
     libxcb-present-dev \
+    libxext-dev \
+    libxfixes-dev \
     libxml2-dev \
     make \
     nasm \
@@ -528,6 +528,18 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing webp ****" && \
+  mkdir -p /tmp/webp && \
+  curl -Lf \
+    https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${WEBP}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/webp
+RUN \
+  echo "**** compiling webp ****" && \
+  cd /tmp/webp && \
+  ./configure && \
+  make && \
+  make install
+RUN \
   echo "**** grabbing x264 ****" && \
   mkdir -p /tmp/x264 && \
   curl -Lf \
@@ -566,18 +578,6 @@ RUN \
   ./configure && \ 
   make && \
   make install
-RUN \
-  echo "**** grabbing webp ****" && \
-  mkdir -p /tmp/webp && \
-  curl -Lf \
-    https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${WEBP}.tar.gz | \
-    tar -zx --strip-components=1 -C /tmp/webp
-RUN \
-  echo "**** compiling webp ****" && \
-  cd /tmp/webp && \
-  ./configure && \
-  make && \
-  make install
 
 # main ffmpeg build
 RUN \
@@ -600,8 +600,8 @@ RUN \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
-    --enable-ffprobe \
     --enable-cuvid \
+    --enable-ffprobe \
     --enable-gpl \
     --enable-libaom \
     --enable-libass \
@@ -620,11 +620,11 @@ RUN \
     --enable-libvorbis \
     --enable-libvpl \
     --enable-libvpx \
-    --enable-libxml2 \
+    --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-libxml2 \
     --enable-libxvid \
-    --enable-libwebp \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
@@ -709,10 +709,10 @@ RUN \
     libwayland-client0 \
     libx11-6 \
     libx11-xcb1 \
-    libxcb1 \
     libxcb-dri3-0 \
     libxcb-shape0 \
     libxcb-xfixes0 \
+    libxcb1 \
     libxext6 \
     libxfixes3 \
     libxml2 \
