@@ -152,6 +152,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **16.08.23:** - Added support for WebP formats.
 * **11.08.23:** - Add optional i965 driver for gen5+ support.
 * **14.06.23:** - Switch to latest iHD for Intel, add qsv support.
 * **13.06.23:** - Bump to 6.0, update shared libraries, deprecate armhf, combine bin stage.
