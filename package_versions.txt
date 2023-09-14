@@ -144,7 +144,7 @@ libxfixes3           1:6.0.0-1                                deb
 libxml2              2.9.13+dfsg-1ubuntu0.3                   deb     
 libxxhash0           0.8.1-1                                  deb     
 libzstd1             1.4.8+dfsg-3build1                       deb     
-locales              2.35-0ubuntu3.1                          deb     
+locales              2.35-0ubuntu3.3                          deb     
 login                1:4.8.1-2ubuntu2.1                       deb     
 logsave              1.46.5-2ubuntu1.1                        deb     
 lsb-base             11.1.0ubuntu4                            deb     
