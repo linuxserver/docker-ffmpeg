@@ -1,5 +1,4 @@
 ---
-
 # project information
 project_name: ffmpeg
 full_custom_readme: |
@@ -12,15 +11,15 @@ full_custom_readme: |
   [![Fleet](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Fleet)](https://fleet.linuxserver.io "an online web interface which displays all of our maintained images.")
   [![GitHub](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub&logo=github)](https://github.com/linuxserver "view the source for all of our repositories.")
   [![Open Collective](https://img.shields.io/opencollective/all/linuxserver.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Supporters&logo=open%20collective)](https://opencollective.com/linuxserver "please consider helping us by either donating or contributing to our budget")
-  
+
   The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring :-
-  
+
    * regular and timely application updates
    * easy user mappings (PGID, PUID)
    * custom base image with s6 overlay
    * weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
    * regular security updates
-  
+
   Find us at:
   * [Blog](https://blog.linuxserver.io) - all the things you can do with our containers including How-To guides, opinions and much more!
   * [Discord](https://discord.gg/YWrKVTn) - realtime support / chat with the community and the team.
@@ -37,12 +36,12 @@ full_custom_readme: |
   [![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/ffmpeg)
   [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/ffmpeg)
   [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-ffmpeg%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-ffmpeg/job/master/)
-  
+
   [FFmpeg](https://ffmpeg.org) - A complete, cross-platform solution to record, convert and stream audio and video.
-  
-  
+
+
   [![ffmpeg](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ffmpeg.png)](https://ffmpeg.org)
-  
+
   ## Supported Architectures
 
   We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
@@ -56,9 +55,9 @@ full_custom_readme: |
   | x86-64 | ✅ | amd64-\<version tag\> |
   | arm64 | ✅ | arm64v8-\<version tag\> |
   | armhf| ❌ | arm32v7-\<version tag\> |
-  
+
   ## Usage
-  
+
   Unlike most of our container library this image is meant to be run ephemerally from the command line parsing user input for a custom FFmpeg command. You will need to understand some Docker basics to use this image and be familiar with how to construct an FFmpeg command. In the commands below we will be bind mounting our current working directory from the CLI to /config, the assumption is that input.mkv is in your current working directory.
 
   If an input file is detected we will run FFmpeg as that user/group so the output file will match its permissions.
@@ -88,7 +87,7 @@ full_custom_readme: |
   ```
 
   ### Hardware accelerated (VAAPI) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/VAAPI))
-  
+
   ```
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
@@ -104,7 +103,7 @@ full_custom_readme: |
   ```
 
   ### Hardware accelerated (QSV) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/QuickSync))
-  
+
   ```
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
@@ -135,7 +134,7 @@ full_custom_readme: |
   ```
 
   ## Building locally
-  
+
   If you want to make local modifications to these images for development purposes or just to customize the logic:
   ```
   git clone https://github.com/linuxserver/docker-ffmpeg.git
@@ -145,7 +144,7 @@ full_custom_readme: |
     --pull \
     -t linuxserver/ffmpeg:latest .
   ```
-  
+
   The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
   ```
   docker run --rm --privileged multiarch/qemu-user-static:register --reset
@@ -155,6 +154,7 @@ full_custom_readme: |
 
   ## Versions
 
+  * **06.10.23:** - Added support for SVT-AV1.
   * **16.08.23:** - Added support for WebP formats.
   * **11.08.23:** - Add optional i965 driver for gen5+ support.
   * **14.06.23:** - Switch to latest iHD for Intel, add qsv support.
