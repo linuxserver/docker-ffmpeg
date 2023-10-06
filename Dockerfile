@@ -617,7 +617,7 @@ RUN \
 RUN \
   echo "**** compiling ffmpeg ****" && \
   cd /tmp/ffmpeg && \
-  ./configure \
+    ./configure \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
