@@ -471,7 +471,11 @@ RUN \
     svtav1_build && \
   cd svtav1_build && \
   cmake \
-    -DCMAKE_BUILD_TYPE=Release .. && \
+    -DCMAKE_BUILD_TYPE=Release .. \
+    -DCBUILD_SHARED_LIBS=OFF \
+    -DBUILD_DEC=OFF \
+    -DSV_AV1_LTO=ON \
+    -DNATIVE=ON && \
   make && \
   make install
 RUN \
