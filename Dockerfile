@@ -37,6 +37,7 @@ ENV \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.3.1 \
+  SVTAV1=v1.7.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.0 \
@@ -168,7 +169,7 @@ RUN \
   ./configure \
     --disable-static \
     --enable-shared && \
-  make && \
+   make && \
   make install 
 RUN \
   echo "**** grabbing fribidi ****" && \
@@ -454,6 +455,26 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing SVT-AV1 ****" && \
+  mkdir -p /tmp/svtav1 /usr/local/svtav1 && \
+  git clone \
+    --branch ${SVTAV1} \
+    --depth 1 https://gitlab.com/AOMediaCodec/SVT-AV1.git \
+    /tmp/svtav1
+RUN \
+  echo "**** compiling SVT-AV1 ****" && \
+  cd /tmp/svtav1 && \
+  rm -rf \
+    CMakeCache.txt \
+    CMakeFiles && \
+  mkdir -p \
+    svtav1_build && \
+  cd svtav1_build && \
+  cmake \
+    -DCMAKE_BUILD_TYPE=Release .. && \
+  make && \
+  make install
+RUN \
   echo "**** grabbing theora ****" && \
   mkdir -p /tmp/theora && \
   curl -Lf \
@@ -596,7 +617,7 @@ RUN \
 RUN \
   echo "**** compiling ffmpeg ****" && \
   cd /tmp/ffmpeg && \
-    ./configure \
+  ./configure \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
@@ -632,6 +653,7 @@ RUN \
     --enable-openssl \
     --enable-small \
     --enable-stripping \
+    --enable-libsvtav1 \
     --enable-vaapi \
     --enable-vdpau \
     --enable-version3 && \
