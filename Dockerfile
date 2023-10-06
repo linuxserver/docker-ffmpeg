@@ -169,7 +169,7 @@ RUN \
   ./configure \
     --disable-static \
     --enable-shared && \
-   make && \
+  make && \
   make install 
 RUN \
   echo "**** grabbing fribidi ****" && \
