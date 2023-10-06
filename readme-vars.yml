@@ -155,7 +155,7 @@ full_custom_readme: |
 
   ## Versions
 
-  * **05.10.23:** - Update various libraries.
+  * **05.10.23:** - Add support for SVT-AV1. Update various libraries.
   * **16.08.23:** - Added support for WebP formats.
   * **11.08.23:** - Add optional i965 driver for gen5+ support.
   * **14.06.23:** - Switch to latest iHD for Intel, add qsv support.

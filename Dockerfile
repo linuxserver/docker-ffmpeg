@@ -37,6 +37,7 @@ ENV \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.3.1 \
+  SVTAV1=1.7.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.1 \
@@ -145,7 +146,7 @@ RUN \
 RUN \
   echo "**** grabbing freetype ****" && \
   mkdir -p /tmp/freetype && \
-  curl -Lf \
+  curl -Lf --retry 10 --retry-max-time 60 --retry-connrefused \
     https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/freetype
 RUN \
@@ -454,6 +455,18 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing SVT-AV1 ****" && \
+  mkdir -p /tmp/svt-av1 && \
+  curl -Lf \
+    https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${SVTAV1}/SVT-AV1-v${SVTAV1}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/svt-av1
+RUN \
+  echo "**** compiling SVT-AV1 ****" && \
+  cd /tmp/svt-av1/Build && \
+  cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release && \
+  make && \
+  make install
+RUN \
   echo "**** grabbing theora ****" && \
   mkdir -p /tmp/theora && \
   curl -Lf \
@@ -613,6 +626,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-libsvtav1 \
     --enable-libtheora \
     --enable-libv4l2 \
     --enable-libvidstab \
