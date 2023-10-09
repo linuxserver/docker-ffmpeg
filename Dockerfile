@@ -13,34 +13,35 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.6.1 \
+  AOM=v3.7.0 \
   FDKAAC=2.0.2 \
   FFMPEG_HARD=6.0 \
   FONTCONFIG=2.14.2 \
-  FREETYPE=2.12.1 \
+  FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
-  GMMLIB=22.3.5 \
-  IHD=23.1.6 \
+  GMMLIB=22.3.7 \
+  IHD=23.2.4 \
   KVAZAAR=2.2.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
-  LIBDRM=2.4.115 \
+  LIBDRM=2.4.116 \
   LIBMFX=22.5.4 \
-  LIBVA=2.18.0 \
+  LIBVA=2.19.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=2.3.1 \
-  LIBVPL=2023.3.0 \
+  LIBVPL=2023.3.1 \
   NVCODEC=n12.0.16.0 \
   OGG=1.3.5 \
-  ONEVPL=23.1.5 \
+  ONEVPL=23.2.4 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.3.1 \
+  SVTAV1=1.7.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
-  VPX=1.13.0 \
-  WEBP=1.3.1 \
+  VPX=1.13.1 \
+  WEBP=1.3.2 \
   X265=3.5 \
   XVID=1.3.7
 
@@ -146,7 +147,7 @@ RUN \
   echo "**** grabbing freetype ****" && \
   mkdir -p /tmp/freetype && \
   curl -Lf \
-    https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE}.tar.gz | \
+    https://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE}/freetype-${FREETYPE}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/freetype
 RUN \
   echo "**** compiling freetype ****" && \
@@ -204,7 +205,7 @@ RUN \
   echo "**** grabbing lame ****" && \
   mkdir -p /tmp/lame && \
   curl -Lf \
-    http://downloads.sourceforge.net/project/lame/lame/3.100/lame-${LAME}.tar.gz | \
+    http://downloads.sourceforge.net/project/lame/lame/${LAME}/lame-${LAME}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/lame
 RUN \
   echo "**** compiling lame ****" && \
@@ -454,6 +455,18 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing SVT-AV1 ****" && \
+  mkdir -p /tmp/svt-av1 && \
+  curl -Lf \
+    https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${SVTAV1}/SVT-AV1-v${SVTAV1}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/svt-av1
+RUN \
+  echo "**** compiling SVT-AV1 ****" && \
+  cd /tmp/svt-av1/Build && \
+  cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release && \
+  make && \
+  make install
+RUN \
   echo "**** grabbing theora ****" && \
   mkdir -p /tmp/theora && \
   curl -Lf \
@@ -613,6 +626,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-libsvtav1 \
     --enable-libtheora \
     --enable-libv4l2 \
     --enable-libvidstab \
