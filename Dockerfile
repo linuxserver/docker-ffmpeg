@@ -644,7 +644,6 @@ RUN \
     --enable-nvenc \
     --enable-opencl \
     --enable-openssl \
-    --enable-small \
     --enable-stripping \
     --enable-vaapi \
     --enable-vdpau \
