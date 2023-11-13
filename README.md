@@ -151,6 +151,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **13.11.23:** - Bump FFmpeg to 6.1.
 * **02.11.23:** - Remove `--enable-small` from ffmpeg build options to add back some features.
 * **05.10.23:** - Add support for SVT-AV1. Update various libraries.
 * **16.08.23:** - Added support for WebP formats.
