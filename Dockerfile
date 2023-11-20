@@ -37,10 +37,12 @@ ENV \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.3.1 \
+  SHADERC=v2023.7 \
   SVTAV1=1.7.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.1 \
+  VULKANHEADERS=vulkan-sdk-1.3.268.0 \
   WEBP=1.3.2 \
   X265=3.5 \
   XVID=1.3.7
@@ -455,6 +457,24 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing shaderc ****" && \
+  mkdir -p /tmp/shaderc && \
+  git clone \
+    --branch ${SHADERC} \
+    --depth 1 https://github.com/google/shaderc.git \
+    /tmp/shaderc
+RUN \
+  echo "**** compiling shaderc ****" && \
+  cd /tmp/shaderc && \
+  ./utils/git-sync-deps && \
+  mkdir -p build && \
+  cd build && \
+  cmake -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    .. && \
+  ninja install
+RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
   curl -Lf \
@@ -541,6 +561,18 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing vulkan headers ****" && \
+  mkdir -p /tmp/vulkan-headers && \
+  git clone \
+    --branch ${VULKANHEADERS} \
+    --depth 1 https://github.com/KhronosGroup/Vulkan-Headers.git \
+    /tmp/vulkan-headers
+RUN \
+  echo "**** compiling vulkan headers ****" && \
+  cd /tmp/vulkan-headers && \
+  cmake -S . -B build/ && \
+  cmake --install build --prefix /usr/local
+RUN \
   echo "**** grabbing webp ****" && \
   mkdir -p /tmp/webp && \
   curl -Lf \
@@ -626,6 +658,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-libshaderc \
     --enable-libsvtav1 \
     --enable-libtheora \
     --enable-libv4l2 \
@@ -647,7 +680,8 @@ RUN \
     --enable-stripping \
     --enable-vaapi \
     --enable-vdpau \
-    --enable-version3 && \
+    --enable-version3 \
+    --enable-vulkan && \
   make
 
 RUN \
