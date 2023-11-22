@@ -70,4 +70,12 @@ do
     fi
 done
 
+## vulkan support ##
+if [[ "${ENABLE_VULKAN}" = "true" ]]; then
+    echo "**** Installing Vulkan dependencies ****"
+    apt-get update
+    apt-get install -y libvulkan1
+    echo "**** Vulkan dependencies installed ****"
+fi
+
 run_ffmpeg
