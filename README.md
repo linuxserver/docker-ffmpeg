@@ -132,7 +132,7 @@ docker run --rm -it \
 
 ### Vulkan support
 
-Preliminary Vulkan support has been added to x86_64, which can be enabled by setting the environment variable `VULKAN_SUPPORT=true`. When enabled, the container will download and install the Vulkan loader and dependencies from the Ubuntu repo prior to running FFmpeg on container start.
+Preliminary Vulkan support has been added to x86_64, which can be enabled by setting the environment variable `ENABLE_VULKAN=true`. When enabled, the container will download and install the Vulkan loader and dependencies from the Ubuntu repo prior to running FFmpeg on container start.
 
 Some Vulkan extensions may not yet be available due to installing an older version of MESA and Vulkan loader from the Ubuntu repository.
 
