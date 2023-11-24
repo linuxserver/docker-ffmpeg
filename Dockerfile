@@ -13,34 +13,36 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.7.0 \
+  AOM=v3.7.1 \
   FDKAAC=2.0.2 \
   FFMPEG_HARD=6.1 \
   FONTCONFIG=2.14.2 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
-  GMMLIB=22.3.7 \
-  IHD=23.2.4 \
+  GMMLIB=22.3.12 \
+  IHD=23.3.5 \
   KVAZAAR=2.2.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
-  LIBDRM=2.4.116 \
+  LIBDRM=2.4.118 \
   LIBMFX=22.5.4 \
-  LIBVA=2.19.0 \
+  LIBVA=2.20.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=2.3.1 \
   LIBVPL=2023.3.1 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
-  ONEVPL=23.2.4 \
+  ONEVPL=23.3.4 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
-  OPUS=1.3.1 \
+  OPUS=1.4 \
+  SHADERC=v2023.7 \
   SVTAV1=1.7.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.1 \
+  VULKANSDK=vulkan-sdk-1.3.268.0 \
   WEBP=1.3.2 \
   X265=3.5 \
   XVID=1.3.7
@@ -443,7 +445,7 @@ RUN \
   echo "**** grabbing opus ****" && \
   mkdir -p /tmp/opus && \
   curl -Lf \
-    https://archive.mozilla.org/pub/opus/opus-${OPUS}.tar.gz | \
+    https://downloads.xiph.org/releases/opus/opus-${OPUS}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/opus
 RUN \
   echo "**** compiling opus ****" && \
@@ -454,6 +456,24 @@ RUN \
     --enable-shared && \
   make && \
   make install
+RUN \
+  echo "**** grabbing shaderc ****" && \
+  mkdir -p /tmp/shaderc && \
+  git clone \
+    --branch ${SHADERC} \
+    --depth 1 https://github.com/google/shaderc.git \
+    /tmp/shaderc
+RUN \
+  echo "**** compiling shaderc ****" && \
+  cd /tmp/shaderc && \
+  ./utils/git-sync-deps && \
+  mkdir -p build && \
+  cd build && \
+  cmake -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    .. && \
+  ninja install
 RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
@@ -541,6 +561,18 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing vulkan headers ****" && \
+  mkdir -p /tmp/vulkan-headers && \
+  git clone \
+    --branch ${VULKANSDK} \
+    --depth 1 https://github.com/KhronosGroup/Vulkan-Headers.git \
+    /tmp/vulkan-headers
+RUN \
+  echo "**** compiling vulkan headers ****" && \
+  cd /tmp/vulkan-headers && \
+  cmake -S . -B build/ && \
+  cmake --install build --prefix /usr/local
+RUN \
   echo "**** grabbing webp ****" && \
   mkdir -p /tmp/webp && \
   curl -Lf \
@@ -626,6 +658,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-libshaderc \
     --enable-libsvtav1 \
     --enable-libtheora \
     --enable-libv4l2 \
@@ -647,7 +680,8 @@ RUN \
     --enable-stripping \
     --enable-vaapi \
     --enable-vdpau \
-    --enable-version3 && \
+    --enable-version3 \
+    --enable-vulkan && \
   make
 
 RUN \
