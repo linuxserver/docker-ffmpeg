@@ -31,6 +31,7 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=2.3.1 \
   LIBVPL=2023.3.1 \
+  MESA=23.2.1 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
   ONEVPL=23.3.4 \
@@ -78,6 +79,7 @@ RUN \
     libxext-dev \
     libxfixes-dev \
     libxml2-dev \
+    libxrandr-dev \
     make \
     nasm \
     ninja-build \
@@ -91,12 +93,13 @@ RUN \
     xxd \
     yasm \
     zlib1g-dev && \
+  apt-get build-dep mesa -y && \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir meson cmake
+  pip install --no-cache-dir meson cmake mako
 
 # compile 3rd party libs
 RUN \
@@ -278,6 +281,22 @@ RUN \
     /usr/local/lib/libva-wayland.so \
     /usr/local/lib/libva-x11.so
 RUN \
+  echo "**** grabbing mesa ****" && \
+  mkdir -p /tmp/mesa && \
+  curl -Lf \
+    https://archive.mesa3d.org/mesa-${MESA}.tar.xz | \
+    tar -xJ --strip-components=1 -C /tmp/mesa
+RUN \
+  echo "**** compiling mesa ****" && \
+  cd /tmp/mesa && \
+  meson setup \
+    -Dprefix="/usr/local" \
+    -Dbuildtype=release \
+    -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec \
+    builddir/ && \
+  meson compile -C builddir/ && \
+  meson install -C builddir/
+RUN \
   echo "**** grabbing gmmlib ****" && \
   mkdir -p /tmp/gmmlib && \
   curl -Lf \
@@ -304,11 +323,11 @@ RUN \
   mkdir -p /tmp/ihd/build && \
   cd /tmp/ihd/build && \
   cmake \
-    -DLIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri/ \
+    -DLIBVA_DRIVERS_PATH=/usr/local/lib/x86_64-linux-gnu/dri/ \
     .. && \
   make && \
   make install && \
-  strip -d /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
+  strip -d /usr/local/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
 RUN \
   echo "**** grabbing libvpl ****" && \
   mkdir -p /tmp/libvpl && \
@@ -573,6 +592,25 @@ RUN \
   cmake -S . -B build/ && \
   cmake --install build --prefix /usr/local
 RUN \
+  echo "**** grabbing vulkan loader ****" && \
+  mkdir -p /tmp/vulkan-loader && \
+  git clone \
+    --branch ${VULKANSDK} \
+    --depth 1 https://github.com/KhronosGroup/Vulkan-Loader.git \
+    /tmp/vulkan-loader
+RUN \
+  echo "**** compiling vulkan loader ****" && \
+  cd /tmp/vulkan-loader && \
+  mkdir -p build && \
+  cd build && \
+  cmake \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D VULKAN_HEADERS_INSTALL_DIR=/usr/local/lib/x86_64-linux-gnu \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    .. && \
+  make && \
+  make install
+RUN \
   echo "**** grabbing webp ****" && \
   mkdir -p /tmp/webp && \
   curl -Lf \
@@ -693,6 +731,7 @@ RUN \
     /buildout/usr/local/lib/mfx \
     /buildout/usr/local/lib/vpl \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
+    /buildout/usr/local/share/vulkan \
     /buildout/etc/OpenCL/vendors && \
   cp \
     /tmp/ffmpeg/ffmpeg \
@@ -716,8 +755,14 @@ RUN \
     /usr/local/lib/x86_64-linux-gnu/lib*so* \
     /buildout/usr/local/lib/x86_64-linux-gnu/ && \
   cp -a \
-    /usr/lib/x86_64-linux-gnu/dri/*.so \
+    /usr/local/lib/x86_64-linux-gnu/dri/*.so \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
+  cp -a \
+    /usr/lib/x86_64-linux-gnu/dri/i965* \
+    /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
+  cp -a \
+    /usr/local/share/vulkan/* \
+    /buildout/usr/local/share/vulkan/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
@@ -747,21 +792,30 @@ RUN \
   echo "**** install runtime ****" && \
     apt-get update && \
     apt-get install -y \
+    libedit2 \
+    libelf1 \
     libexpat1 \
     libglib2.0-0 \
     libgomp1 \
     libharfbuzz0b \
+    libllvm15 \
+    libmpdec3 \
     libpciaccess0 \
     libv4l-0 \
     libwayland-client0 \
     libx11-6 \
     libx11-xcb1 \
     libxcb-dri3-0 \
+    libxcb-present0 \
+    libxcb-randr0 \
     libxcb-shape0 \
+    libxcb-shm0 \
+    libxcb-sync1 \
     libxcb-xfixes0 \
     libxcb1 \
     libxext6 \
     libxfixes3 \
+    libxshmfence1 \
     libxml2 \
     ocl-icd-libopencl1 && \
   echo "**** clean up ****" && \
