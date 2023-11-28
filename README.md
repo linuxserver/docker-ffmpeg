@@ -132,9 +132,20 @@ docker run --rm -it \
 
 ### Vulkan support
 
-Preliminary Vulkan support has been added to x86_64, which can be enabled by setting the environment variable `ENABLE_VULKAN=true`. When enabled, the container will download and install the Vulkan loader and dependencies from the Ubuntu repo prior to running FFmpeg on container start.
+Vulkan support has been added to x86_64 (tested with Intel iGPU) ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#Vulkan)).
 
-Some Vulkan extensions may not yet be available due to installing an older version of MESA and Vulkan loader from the Ubuntu repository.
+```
+docker run --rm -it \
+  --device=/dev/dri:/dev/dri \
+  -v $(pwd):/config \
+  -e ANV_VIDEO_DECODE=1 \
+  linuxserver/ffmpeg \
+  -init_hw_device "vulkan=vk:0" \
+  -hwaccel vulkan \
+  -hwaccel_output_format vulkan \
+  -i /config/input.mkv \
+  -f null - -benchmark
+```
 
 ## Building locally
 
@@ -157,6 +168,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **25.11.23:** - Compile Mesa from source. Add proper Vulkan support (env var `ENABLE_VULKAN=true` no longer needed)(tested with Intel).
 * **22.11.23:** - Add shaderc and (preliminary) Vulkan support (via env var `ENABLE_VULKAN=true`) to x86_64. Bump Intel drivers and other libs.
 * **13.11.23:** - Bump FFmpeg to 6.1.
 * **02.11.23:** - Remove `--enable-small` from ffmpeg build options to add back some features.
