@@ -132,7 +132,7 @@ docker run --rm -it \
 
 ### Vulkan support
 
-Vulkan support has been added to x86_64 (tested with Intel iGPU) ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#Vulkan)).
+Vulkan support has been added to x86_64 (tested with Intel and AMD iGPU) ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#Vulkan)).
 
 ```
 docker run --rm -it \
@@ -146,6 +146,11 @@ docker run --rm -it \
   -i /config/input.mkv \
   -f null - -benchmark
 ```
+
+**Note:** Vulkan supports three drivers:
+  - ANV: To enable for Intel, set the env var `ANV_VIDEO_DECODE=1`
+  - RADV: To enable on AMD, set the env var `RADV_PERFTEST=video_decode`
+  - NVIDIA: To enable on Nvidia, install Nvidia Vulkan Beta drivers on the host per [this article](https://lynne.ee/vulkan-video-decoding.html#driver-support)
 
 ## Building locally
 
@@ -168,6 +173,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **05.12.23:** - Bump Mesa. Fix vdpau. Fix AMD VAAPI.
 * **25.11.23:** - Compile Mesa from source. Add proper Vulkan support (env var `ENABLE_VULKAN=true` no longer needed)(tested with Intel).
 * **22.11.23:** - Add shaderc and (preliminary) Vulkan support (via env var `ENABLE_VULKAN=true`) to x86_64. Bump Intel drivers and other libs.
 * **13.11.23:** - Bump FFmpeg to 6.1.

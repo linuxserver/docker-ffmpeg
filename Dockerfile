@@ -31,7 +31,7 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=2.3.1 \
   LIBVPL=2023.3.1 \
-  MESA=23.2.1 \
+  MESA=23.3.0 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
   ONEVPL=23.3.4 \
@@ -281,6 +281,22 @@ RUN \
     /usr/local/lib/libva-wayland.so \
     /usr/local/lib/libva-x11.so
 RUN \
+  echo "**** grabbing libvdpau ****" && \
+  mkdir -p /tmp/libvdpau && \
+  git clone \
+    --branch ${LIBVDPAU} \
+    --depth 1 https://gitlab.freedesktop.org/vdpau/libvdpau.git \
+    /tmp/libvdpau
+RUN \
+  echo "**** compiling libvdpau ****" && \
+  cd /tmp/libvdpau && \
+  meson setup \
+    --prefix=/usr --libdir=/usr/local/lib \
+    -Ddocumentation=false \
+    build && \
+  ninja -C build install && \
+  strip -d /usr/local/lib/libvdpau.so
+RUN \
   echo "**** grabbing mesa ****" && \
   mkdir -p /tmp/mesa && \
   curl -Lf \
@@ -382,22 +398,6 @@ RUN \
   strip -d \
     /usr/local/lib/libmfxhw64.so \
     /usr/local/lib/mfx/libmfx_*.so
-RUN \
-  echo "**** grabbing libvdpau ****" && \
-  mkdir -p /tmp/libvdpau && \
-  git clone \
-    --branch ${LIBVDPAU} \
-    --depth 1 https://gitlab.freedesktop.org/vdpau/libvdpau.git \
-    /tmp/libvdpau
-RUN \
-  echo "**** compiling libvdpau ****" && \
-  cd /tmp/libvdpau && \
-  meson setup \
-    --prefix=/usr --libdir=/usr/local/lib \
-    -Ddocumentation=false \
-    build && \
-  ninja -C build install && \
-  strip -d /usr/local/lib/libvdpau.so
 RUN \
   echo "**** grabbing vmaf ****" && \
   mkdir -p /tmp/vmaf && \
@@ -731,7 +731,9 @@ RUN \
     /buildout/usr/local/lib/mfx \
     /buildout/usr/local/lib/vpl \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
+    /buildout/usr/local/lib/x86_64-linux-gnu/vdpau \
     /buildout/usr/local/share/vulkan \
+    /buildout/usr/share/libdrm \
     /buildout/etc/OpenCL/vendors && \
   cp \
     /tmp/ffmpeg/ffmpeg \
@@ -758,8 +760,14 @@ RUN \
     /usr/local/lib/x86_64-linux-gnu/dri/*.so \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
   cp -a \
+    /usr/local/lib/x86_64-linux-gnu/vdpau/*.so \
+    /buildout/usr/local/lib/x86_64-linux-gnu/vdpau/ && \
+  cp -a \
     /usr/lib/x86_64-linux-gnu/dri/i965* \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
+  cp -a \
+    /usr/share/libdrm/amdgpu.ids \
+    /buildout/usr/share/libdrm/ && \
   cp -a \
     /usr/local/share/vulkan/* \
     /buildout/usr/local/share/vulkan/ && \
@@ -805,6 +813,7 @@ RUN \
     libwayland-client0 \
     libx11-6 \
     libx11-xcb1 \
+    libxcb-dri2-0 \
     libxcb-dri3-0 \
     libxcb-present0 \
     libxcb-randr0 \
