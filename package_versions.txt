@@ -139,6 +139,7 @@ libx11-6             2:1.7.5-1ubuntu0.3                       deb
 libx11-data          2:1.7.5-1ubuntu0.3                       deb     
 libx11-xcb1          2:1.7.5-1ubuntu0.3                       deb     
 libxau6              1:1.0.9-1build5                          deb     
+libxcb-dri2-0        1.14-3ubuntu3                            deb     
 libxcb-dri3-0        1.14-3ubuntu3                            deb     
 libxcb-present0      1.14-3ubuntu3                            deb     
 libxcb-randr0        1.14-3ubuntu3                            deb     
