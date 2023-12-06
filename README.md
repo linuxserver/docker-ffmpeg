@@ -173,6 +173,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **06.12.23:** - Add libplacebo and libdobi to x86_64.
 * **05.12.23:** - Bump Mesa. Fix vdpau. Fix AMD VAAPI.
 * **25.11.23:** - Compile Mesa from source. Add proper Vulkan support (env var `ENABLE_VULKAN=true` no longer needed)(tested with Intel).
 * **22.11.23:** - Add shaderc and (preliminary) Vulkan support (via env var `ENABLE_VULKAN=true`) to x86_64. Bump Intel drivers and other libs.

@@ -24,8 +24,10 @@ ENV \
   KVAZAAR=2.2.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
+  LIBDOVI=2.1.0 \
   LIBDRM=2.4.118 \
   LIBMFX=22.5.4 \
+  LIBPLACEBO=6.338.1 \
   LIBVA=2.20.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
@@ -55,6 +57,7 @@ RUN \
     autoconf \
     automake \
     bzip2 \
+    cargo \
     cmake \
     diffutils \
     doxygen \
@@ -494,6 +497,31 @@ RUN \
     .. && \
   ninja install
 RUN \
+  echo "**** grabbing libdovi ****" && \
+  mkdir -p /tmp/libdovi && \
+  git clone \
+    --branch ${LIBDOVI} \
+    https://github.com/quietvoid/dovi_tool.git \
+    /tmp/libdovi
+RUN \
+  echo "**** compiling libdovi ****" && \
+  cd /tmp/libdovi/dolby_vision && \
+  cargo install cargo-c@0.9.27+cargo-0.74.0 --locked && \
+  cargo cinstall --release && \
+  strip -d /usr/local/lib/libdovi.so
+RUN \
+  echo "**** grabbing libplacebo ****" && \
+  mkdir -p /tmp/libplacebo && \
+  git clone \
+    --branch v${LIBPLACEBO} \
+    --recursive https://code.videolan.org/videolan/libplacebo \
+    /tmp/libplacebo
+RUN \
+  echo "**** compiling libplacebo ****" && \
+  cd /tmp/libplacebo && \
+  meson build --buildtype release && \
+  ninja -C build install
+RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
   curl -Lf \
@@ -696,6 +724,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-libplacebo \
     --enable-libshaderc \
     --enable-libsvtav1 \
     --enable-libtheora \
