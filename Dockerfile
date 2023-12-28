@@ -41,7 +41,7 @@ ENV \
   OPENJPEG=2.5.0 \
   OPUS=1.4 \
   SHADERC=v2023.7 \
-  SVTAV1=1.7.0 \
+  SVTAV1=1.8.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.1 \
