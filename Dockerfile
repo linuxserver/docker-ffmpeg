@@ -40,6 +40,7 @@ ENV \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.4 \
+  RAV1E=0.7.0 \
   SHADERC=v2023.7 \
   SVTAV1=1.8.0 \
   THEORA=1.1.1 \
@@ -479,6 +480,19 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing rav1e ****" && \
+  mkdir -p /tmp/rav1e && \
+  git clone \
+    --branch v${RAV1E} \
+    https://github.com/xiph/rav1e.git \
+    /tmp/rav1e
+RUN \
+  echo "**** compiling rav1e ****" && \
+  cd /tmp/rav1e && \
+  cargo install cargo-c@0.9.27+cargo-0.74.0 --locked && \
+  cargo cinstall --release && \
+  strip -d /usr/local/lib/librav1e.so
+RUN \
   echo "**** grabbing shaderc ****" && \
   mkdir -p /tmp/shaderc && \
   git clone \
@@ -725,6 +739,7 @@ RUN \
     --enable-libopenjpeg \
     --enable-libopus \
     --enable-libplacebo \
+    --enable-librav1e \
     --enable-libshaderc \
     --enable-libsvtav1 \
     --enable-libtheora \
