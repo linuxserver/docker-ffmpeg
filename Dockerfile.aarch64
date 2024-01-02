@@ -13,15 +13,15 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.7.1 \
-  FDKAAC=2.0.2 \
+  AOM=v3.8.0 \
+  FDKAAC=2.0.3 \
   FFMPEG_HARD=6.1 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
   KVAZAAR=2.2.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
-  LIBDRM=2.4.118 \
+  LIBDRM=2.4.119 \
   LIBVA=2.20.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
@@ -30,7 +30,8 @@ ENV \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.4 \
-  SVTAV1=1.7.0 \
+  RAV1E=0.7.0 \
+  SVTAV1=1.8.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.1 \
@@ -46,6 +47,7 @@ RUN \
     autoconf \
     automake \
     bzip2 \
+    cargo \
     cmake \
     diffutils \
     g++ \
@@ -261,6 +263,19 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing rav1e ****" && \
+  mkdir -p /tmp/rav1e && \
+  git clone \
+    --branch v${RAV1E} \
+    https://github.com/xiph/rav1e.git \
+    /tmp/rav1e
+RUN \
+  echo "**** compiling rav1e ****" && \
+  cd /tmp/rav1e && \
+  cargo install cargo-c@0.9.27+cargo-0.74.0 --locked && \
+  cargo cinstall --release && \
+  strip -d /usr/local/lib/librav1e.so
+RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
   curl -Lf \
@@ -434,6 +449,7 @@ RUN \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
     --enable-libopus \
+    --enable-librav1e \
     --enable-libsvtav1 \
     --enable-libtheora \
     --enable-libv4l2 \

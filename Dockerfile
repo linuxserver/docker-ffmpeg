@@ -13,8 +13,8 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.7.1 \
-  FDKAAC=2.0.2 \
+  AOM=v3.8.0 \
+  FDKAAC=2.0.3 \
   FFMPEG_HARD=6.1 \
   FONTCONFIG=2.14.2 \
   FREETYPE=2.13.2 \
@@ -25,23 +25,24 @@ ENV \
   LAME=3.100 \
   LIBASS=0.17.1 \
   LIBDOVI=2.1.0 \
-  LIBDRM=2.4.118 \
+  LIBDRM=2.4.119 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=6.338.1 \
   LIBVA=2.20.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
-  LIBVMAF=2.3.1 \
-  LIBVPL=2023.3.1 \
-  MESA=23.3.0 \
+  LIBVMAF=3.0.0 \
+  LIBVPL=2.10.1 \
+  MESA=23.3.2 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
   ONEVPL=23.3.4 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.0 \
   OPUS=1.4 \
+  RAV1E=0.7.0 \
   SHADERC=v2023.7 \
-  SVTAV1=1.7.0 \
+  SVTAV1=1.8.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.13.1 \
@@ -479,6 +480,19 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing rav1e ****" && \
+  mkdir -p /tmp/rav1e && \
+  git clone \
+    --branch v${RAV1E} \
+    https://github.com/xiph/rav1e.git \
+    /tmp/rav1e
+RUN \
+  echo "**** compiling rav1e ****" && \
+  cd /tmp/rav1e && \
+  cargo install cargo-c@0.9.27+cargo-0.74.0 --locked && \
+  cargo cinstall --release && \
+  strip -d /usr/local/lib/librav1e.so
+RUN \
   echo "**** grabbing shaderc ****" && \
   mkdir -p /tmp/shaderc && \
   git clone \
@@ -725,6 +739,7 @@ RUN \
     --enable-libopenjpeg \
     --enable-libopus \
     --enable-libplacebo \
+    --enable-librav1e \
     --enable-libshaderc \
     --enable-libsvtav1 \
     --enable-libtheora \
