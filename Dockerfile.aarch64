@@ -47,6 +47,7 @@ RUN \
     autoconf \
     automake \
     bzip2 \
+    cargo \
     cmake \
     diffutils \
     g++ \
