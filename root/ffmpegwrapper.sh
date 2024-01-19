@@ -20,7 +20,6 @@ run_ffmpeg () {
     s6-setuidgid abc \
       /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
   fi
-  exit 0
 }
 
 # look for input file value
