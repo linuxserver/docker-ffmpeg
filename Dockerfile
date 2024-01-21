@@ -67,6 +67,7 @@ RUN \
     git \
     gperf \
     i965-va-driver-shaders \
+    libasound2-dev \
     libexpat1-dev \
     libgcc-10-dev \
     libgomp1 \
@@ -725,6 +726,7 @@ RUN \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
+    --enable-alsa \
     --enable-cuvid \
     --enable-ffprobe \
     --enable-gpl \
@@ -844,6 +846,7 @@ RUN \
   echo "**** install runtime ****" && \
     apt-get update && \
     apt-get install -y \
+    libasound2 \
     libedit2 \
     libelf1 \
     libexpat1 \

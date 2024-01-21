@@ -54,6 +54,7 @@ RUN \
     gcc \
     git \
     gperf \
+    libasound2-dev \
     libexpat1-dev \
     libfontconfig1-dev \
     libgcc-10-dev \
@@ -437,6 +438,7 @@ RUN \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
+    --enable-alsa \
     --enable-ffprobe \
     --enable-gpl \
     --enable-libaom \
@@ -501,6 +503,7 @@ RUN \
   echo "**** install runtime ****" && \
   apt-get update && \
   apt-get install -y \
+    libasound2 \
     libexpat1 \
     libfontconfig1 \
     libglib2.0-0 \
