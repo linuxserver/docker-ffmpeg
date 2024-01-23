@@ -58,7 +58,6 @@ RUN \
     autoconf \
     automake \
     bzip2 \
-    cargo \
     cmake \
     diffutils \
     doxygen \
@@ -99,6 +98,13 @@ RUN \
     yasm \
     zlib1g-dev && \
   apt-get build-dep mesa -y && \
+  mkdir -p /tmp/rust && \
+  RUST_VERSION=$(curl -fsX GET https://api.github.com/repos/rust-lang/rust/releases/latest | jq -r '.tag_name') && \
+  curl -fo /tmp/rust.tar.gz -L "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
+  tar xf /tmp/rust.tar.gz -C /tmp/rust --strip-components=1 && \
+  cd /tmp/rust && \
+  ./install.sh && \
+  cargo install cargo-c && \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
@@ -490,7 +496,6 @@ RUN \
 RUN \
   echo "**** compiling rav1e ****" && \
   cd /tmp/rav1e && \
-  cargo install cargo-c@0.9.27+cargo-0.74.0 --locked && \
   cargo cinstall --release && \
   strip -d /usr/local/lib/librav1e.so
 RUN \
@@ -521,7 +526,6 @@ RUN \
 RUN \
   echo "**** compiling libdovi ****" && \
   cd /tmp/libdovi/dolby_vision && \
-  cargo install cargo-c@0.9.27+cargo-0.74.0 --locked && \
   cargo cinstall --release && \
   strip -d /usr/local/lib/libdovi.so
 RUN \
