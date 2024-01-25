@@ -35,7 +35,7 @@ do
 done
 
 ## hardware support ##
-FILES=$(find /dev/dri /dev/dvb -type c -print 2>/dev/null)
+FILES=$(find /dev/dri /dev/dvb /dev/snd -type c -print 2>/dev/null)
 
 for i in $FILES
 do

@@ -173,6 +173,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **21.01.24:** - Add alsa support.
 * **18.01.24:** - Let the wrapper pass the ffmpeg exit code to docker run. Bump various libs.
 * **01.01.24:** - Add rav1e support. Bump libaom, fdkaac, libdrm, libvmaf, libvpl, mesa and svt-av1.
 * **06.12.23:** - Add libplacebo and libdobi to x86_64.
