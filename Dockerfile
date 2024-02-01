@@ -33,7 +33,7 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.10.1 \
-  MESA=23.3.3 \
+  MESA=24.0.0 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
   ONEVPL=23.4.3 \
@@ -319,7 +319,7 @@ RUN \
   meson setup \
     -Dprefix="/usr/local" \
     -Dbuildtype=release \
-    -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec \
+    -Dvideo-codecs=all \
     builddir/ && \
   meson compile -C builddir/ && \
   meson install -C builddir/
