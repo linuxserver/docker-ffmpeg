@@ -274,7 +274,7 @@ RUN \
   echo "**** grabbing libva ****" && \
   mkdir -p /tmp/libva && \
   curl -Lf \
-    https://github.com/intel/libva/archive/${LIBVA}.tar.gz | \
+    https://github.com/intel/libva/archive/refs/tags/${LIBVA}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/libva
 RUN \
   echo "**** compiling libva ****" && \
