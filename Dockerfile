@@ -59,6 +59,11 @@ RUN \
     automake \
     bzip2 \
     cmake \
+    clang \
+    clang-tools \
+    libclang1 \
+    clang-format \
+    clangd \
     diffutils \
     doxygen \
     g++ \
@@ -76,6 +81,13 @@ RUN \
     libtool \
     libv4l-dev \
     libwayland-dev \
+    libllvm-ocaml-dev \
+    libllvm12 \
+    llvm \
+    llvm-dev \
+    llvm-runtime \
+    lldb \
+    lld \
     libx11-dev \
     libx11-xcb-dev \
     libxcb-dri3-dev \
@@ -763,6 +775,7 @@ RUN \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
+    --enable-cuda-llvm \
     --enable-opencl \
     --enable-openssl \
     --enable-stripping \
