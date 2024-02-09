@@ -21,7 +21,7 @@ ENV \
   FRIBIDI=1.0.13 \
   GMMLIB=22.3.15 \
   IHD=23.4.3 \
-  KVAZAAR=2.3.0 \
+  KVAZAAR=2.2.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
   LIBDOVI=2.1.0 \
