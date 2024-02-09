@@ -59,6 +59,7 @@ RUN \
     automake \
     bzip2 \
     cmake \
+    clang \
     diffutils \
     doxygen \
     g++ \
@@ -763,6 +764,7 @@ RUN \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
+    --enable-cuda-llvm \
     --enable-opencl \
     --enable-openssl \
     --enable-stripping \
@@ -774,6 +776,7 @@ RUN \
 
 RUN \
   echo "**** arrange files ****" && \
+  /usr/local/lib/rustlib/uninstall.sh && \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
