@@ -173,6 +173,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **08.02.24:** - Enable cuda-llvm, clean up rustc.
 * **01.02.24:** - Bump Mesa to v24.
 * **21.01.24:** - Add alsa support.
 * **18.01.24:** - Let the wrapper pass the ffmpeg exit code to docker run. Bump various libs.

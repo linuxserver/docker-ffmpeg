@@ -60,10 +60,6 @@ RUN \
     bzip2 \
     cmake \
     clang \
-    clang-tools \
-    libclang1 \
-    clang-format \
-    clangd \
     diffutils \
     doxygen \
     g++ \
@@ -81,13 +77,6 @@ RUN \
     libtool \
     libv4l-dev \
     libwayland-dev \
-    libllvm-ocaml-dev \
-    libllvm12 \
-    llvm \
-    llvm-dev \
-    llvm-runtime \
-    lldb \
-    lld \
     libx11-dev \
     libx11-xcb-dev \
     libxcb-dri3-dev \
@@ -787,6 +776,7 @@ RUN \
 
 RUN \
   echo "**** arrange files ****" && \
+  /usr/local/lib/rustlib/uninstall.sh && 
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
