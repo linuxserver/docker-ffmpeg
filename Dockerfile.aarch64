@@ -13,12 +13,12 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.8.0 \
+  AOM=v3.8.1 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=6.1 \
+  FFMPEG_HARD=6.1.1 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
-  KVAZAAR=2.2.0 \
+  KVAZAAR=2.3.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
   LIBDRM=2.4.120 \
