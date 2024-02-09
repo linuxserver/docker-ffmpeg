@@ -177,7 +177,6 @@ pinentry-curses      1.1.1-1build2                            deb
 procps               2:3.3.17-6ubuntu2                        deb     
 publicsuffix         20211207.1025-1                          deb     
 readline-common      8.1.2-1                                  deb     
-rust                 1.76.0                                   binary  
 sed                  4.8-1ubuntu2                             deb     
 sensible-utils       0.0.17                                   deb     
 shared-mime-info     2.1-2                                    deb     
