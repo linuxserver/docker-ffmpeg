@@ -776,7 +776,7 @@ RUN \
 
 RUN \
   echo "**** arrange files ****" && \
-  /usr/local/lib/rustlib/uninstall.sh && 
+  /usr/local/lib/rustlib/uninstall.sh && \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
