@@ -709,7 +709,7 @@ RUN \
   cd /tmp/xvid/build/generic && \
   ./configure && \ 
   make && \
-  make install && \
+  make install
 RUN \
   echo "**** grabbing zimg ****" && \
   mkdir -p /tmp/zimg && \
