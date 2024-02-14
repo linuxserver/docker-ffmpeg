@@ -37,7 +37,8 @@ ENV \
   VPX=1.14.0 \
   WEBP=1.3.2 \
   X265=master \
-  XVID=1.3.7
+  XVID=1.3.7 \
+  ZIMG=3.0.5
 # x265 aarch64 build fixes not in a release yet https://bitbucket.org/multicoreware/x265_git/issues/604/linux-arm-aarch64-build-failing-for-high
 
 RUN \
@@ -421,6 +422,22 @@ RUN \
   ./configure && \ 
   make && \
   make install
+RUN \
+  echo "**** grabbing zimg ****" && \
+  mkdir -p /tmp/zimg && \
+  git clone \
+    --branch release-${ZIMG} --depth 1 \
+    https://github.com/sekrit-twc/zimg.git \
+    /tmp/zimg
+RUN \
+  echo "**** compiling zimg ****" && \
+  cd /tmp/zimg && \
+  ./autogen.sh && \
+  ./configure \
+    --disable-static \
+    --enable-shared && \
+  make && \
+  make install
 
 # main ffmpeg build
 RUN \
@@ -463,11 +480,12 @@ RUN \
     --enable-libvidstab \
     --enable-libvorbis \
     --enable-libvpx \
+    --enable-libwebp \
     --enable-libxml2 \
     --enable-libx264 \
     --enable-libx265 \
     --enable-libxvid \
-    --enable-libwebp \
+    --enable-libzimg \
     --enable-nonfree \
     --enable-openssl \
     --enable-stripping \

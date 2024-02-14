@@ -49,7 +49,8 @@ ENV \
   VULKANSDK=vulkan-sdk-1.3.275.0 \
   WEBP=1.3.2 \
   X265=3.5 \
-  XVID=1.3.7
+  XVID=1.3.7 \
+  ZIMG=3.0.5
 
 RUN \
   echo "**** install build packages ****" && \
@@ -709,6 +710,22 @@ RUN \
   ./configure && \ 
   make && \
   make install
+RUN \
+  echo "**** grabbing zimg ****" && \
+  mkdir -p /tmp/zimg && \
+  git clone \
+    --branch release-${ZIMG} --depth 1 \
+    https://github.com/sekrit-twc/zimg.git \
+    /tmp/zimg
+RUN \
+  echo "**** compiling zimg ****" && \
+  cd /tmp/zimg && \
+  ./autogen.sh && \
+  ./configure \
+    --disable-static \
+    --enable-shared && \
+  make && \
+  make install
 
 # main ffmpeg build
 RUN \
@@ -761,6 +778,7 @@ RUN \
     --enable-libx265 \
     --enable-libxml2 \
     --enable-libxvid \
+    --enable-libzimg \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
