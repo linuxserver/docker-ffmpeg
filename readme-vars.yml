@@ -177,6 +177,7 @@ full_custom_readme: |
 
   ## Versions
 
+  * **16.03.24:** - Bump libaom, mesa, openjpeg, opus, shaderc and svtav1.
   * **11.02.24:** - Add Zimg support.
   * **09.02.24:** - Bump ffmpeg to 6.1.1, bump other deps.
   * **08.02.24:** - Enable cuda-llvm, clean up rustc.

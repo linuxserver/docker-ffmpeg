@@ -13,7 +13,7 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.8.1 \
+  AOM=v3.8.2 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=6.1.1 \
   FONTCONFIG=2.15.0 \
@@ -33,16 +33,16 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.10.1 \
-  MESA=24.0.0 \
+  MESA=24.0.3 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
   ONEVPL=23.4.3 \
   OPENCOREAMR=0.1.6 \
-  OPENJPEG=2.5.0 \
-  OPUS=1.4 \
+  OPENJPEG=2.5.2 \
+  OPUS=1.5.1 \
   RAV1E=0.7.1 \
-  SHADERC=v2023.8 \
-  SVTAV1=1.8.0 \
+  SHADERC=v2024.0 \
+  SVTAV1=2.0.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPX=1.14.0 \
