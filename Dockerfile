@@ -751,10 +751,12 @@ RUN \
     --enable-alsa \
     --enable-cuvid \
     --enable-ffprobe \
+    --enable-fribidi \
     --enable-gpl \
     --enable-libaom \
     --enable-libass \
     --enable-libfdk_aac \
+    --enable-libfontconfig \
     --enable-libfreetype \
     --enable-libharfbuzz \
     --enable-libkvazaar \

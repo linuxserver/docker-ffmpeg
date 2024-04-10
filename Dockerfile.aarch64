@@ -16,6 +16,7 @@ ENV \
   AOM=v3.8.2 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.0 \
+  FONTCONFIG=2.15.0 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
   KVAZAAR=2.2.0 \
@@ -56,7 +57,6 @@ RUN \
     gperf \
     libasound2-dev \
     libexpat1-dev \
-    libfontconfig1-dev \
     libgcc-10-dev \
     libgomp1 \
     libharfbuzz-dev \
@@ -141,6 +141,20 @@ RUN \
     --enable-shared && \
   make && \
   make install
+RUN \
+  echo "**** grabbing fontconfig ****" && \
+  mkdir -p /tmp/fontconfig && \
+  curl -Lf \
+    https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/fontconfig
+RUN \
+  echo "**** compiling fontconfig ****" && \
+  cd /tmp/fontconfig && \
+  ./configure \
+    --disable-static \
+    --enable-shared && \
+  make && \
+  make install 
 RUN \
   echo "**** grabbing fribidi ****" && \
   mkdir -p /tmp/fribidi && \
@@ -462,10 +476,12 @@ RUN \
     --disable-ffplay \
     --enable-alsa \
     --enable-ffprobe \
+    --enable-fribidi \
     --enable-gpl \
     --enable-libaom \
     --enable-libass \
     --enable-libfdk_aac \
+    --enable-libfontconfig \
     --enable-libfreetype \
     --enable-libharfbuzz \
     --enable-libkvazaar \
@@ -530,7 +546,6 @@ RUN \
   apt-get install -y \
     libasound2 \
     libexpat1 \
-    libfontconfig1 \
     libglib2.0-0 \
     libgomp1 \
     libharfbuzz0b \
