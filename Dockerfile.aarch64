@@ -16,8 +16,10 @@ ENV \
   AOM=v3.8.2 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.0 \
+  FONTCONFIG=2.15.0 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
+  HARFBUZZ=8.4.0 \
   KVAZAAR=2.2.0 \
   LAME=3.100 \
   LIBASS=0.17.1 \
@@ -55,9 +57,10 @@ RUN \
     git \
     gperf \
     libasound2-dev \
+    libcairo2-dev \
     libexpat1-dev \
-    libfontconfig1-dev \
     libgcc-10-dev \
+    libglib2.0-dev \
     libgomp1 \
     libharfbuzz-dev \
     libpciaccess-dev \
@@ -69,6 +72,7 @@ RUN \
     libxml2-dev \
     make \
     nasm \
+    ninja-build \
     perl \
     pkg-config \
     python3-venv \
@@ -89,7 +93,7 @@ RUN \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir cmake
+  pip install --no-cache-dir cmake meson
 
 # compile 3rd party libs
 RUN \
@@ -126,7 +130,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libfdk-aac.so
 RUN \
   echo "**** grabbing freetype ****" && \
   mkdir -p /tmp/freetype && \
@@ -140,7 +145,23 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libfreetype.so
+RUN \
+  echo "**** grabbing fontconfig ****" && \
+  mkdir -p /tmp/fontconfig && \
+  curl -Lf \
+    https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/fontconfig
+RUN \
+  echo "**** compiling fontconfig ****" && \
+  cd /tmp/fontconfig && \
+  ./configure \
+    --disable-static \
+    --enable-shared && \
+  make && \
+  make install && \
+  strip -d /usr/local/lib/libfontconfig.so
 RUN \
   echo "**** grabbing fribidi ****" && \
   mkdir -p /tmp/fribidi && \
@@ -155,7 +176,20 @@ RUN \
     --disable-static \
     --enable-shared && \
   make -j 1 && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libfribidi.so
+RUN \
+  echo "**** grabbing harfbuzz ****" && \
+  mkdir -p /tmp/harfbuzz && \
+  curl -Lf \
+    https://github.com/harfbuzz/harfbuzz/archive/${HARFBUZZ}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/harfbuzz
+RUN \
+  echo "**** compiling harfbuzz ****" && \
+  cd /tmp/harfbuzz && \
+  meson build && \
+  ninja -C build install && \
+  strip -d /usr/local/lib/libharfbuzz*.so
 RUN \
   echo "**** grabbing kvazaar ****" && \
   mkdir -p /tmp/kvazaar && \
@@ -170,7 +204,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libkvazaar.so
 RUN \
   echo "**** grabbing lame ****" && \
   mkdir -p /tmp/lame && \
@@ -207,7 +242,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libass.so
 RUN \
   echo "**** grabbing ogg ****" && \
   mkdir -p /tmp/ogg && \
@@ -235,7 +271,8 @@ RUN \
     --disable-static \
     --enable-shared  && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libopencore-amr*.so
 RUN \
   echo "**** grabbing openjpeg ****" && \
   mkdir -p /tmp/openjpeg && \
@@ -269,7 +306,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libopus.so
 RUN \
   echo "**** grabbing rav1e ****" && \
   mkdir -p /tmp/rav1e && \
@@ -380,7 +418,8 @@ RUN \
   cd /tmp/webp && \
   ./configure && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libweb*.so
 RUN \
   echo "**** grabbing x264 ****" && \
   mkdir -p /tmp/x264 && \
@@ -466,7 +505,10 @@ RUN \
     --enable-libaom \
     --enable-libass \
     --enable-libfdk_aac \
+    --enable-libfontconfig \
     --enable-libfreetype \
+    --enable-libfribidi \
+    --enable-libharfbuzz \
     --enable-libkvazaar \
     --enable-libmp3lame \
     --enable-libopencore-amrnb \
@@ -498,7 +540,9 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
-    /buildout/usr/local/lib && \
+    /buildout/usr/local/etc/fonts \
+    /buildout/usr/local/lib \
+    /buildout/usr/share/fonts && \
   cp \
     /tmp/ffmpeg/ffmpeg \
     /buildout/usr/local/bin && \
@@ -506,8 +550,14 @@ RUN \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
   cp -a \
+    /usr/local/etc/fonts/* \
+    /buildout/usr/local/etc/fonts/ && \
+  cp -a \
     /usr/local/lib/lib*so* \
-    /buildout/usr/local/lib/
+    /buildout/usr/local/lib/ && \
+  cp -a \
+    /usr/share/fonts/* \
+    /buildout/usr/share/fonts/
 
 # runtime stage
 FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy
@@ -529,10 +579,8 @@ RUN \
   apt-get install -y \
     libasound2 \
     libexpat1 \
-    libfontconfig1 \
     libglib2.0-0 \
     libgomp1 \
-    libharfbuzz0b \
     libv4l-0 \
     libx11-6 \
     libxcb1 \

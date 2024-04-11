@@ -20,6 +20,7 @@ ENV \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.13 \
   GMMLIB=22.3.15 \
+  HARFBUZZ=8.4.0 \
   IHD=23.4.3 \
   KVAZAAR=2.2.0 \
   LAME=3.100 \
@@ -69,10 +70,11 @@ RUN \
     gperf \
     i965-va-driver-shaders \
     libasound2-dev \
+    libcairo2-dev \
     libexpat1-dev \
     libgcc-10-dev \
+    libglib2.0-dev \
     libgomp1 \
-    libharfbuzz-dev \
     libpciaccess-dev \
     libssl-dev \
     libtool \
@@ -149,7 +151,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libfdk-aac.so
 RUN \
   echo "**** grabbing ffnvcodec ****" && \
   mkdir -p /tmp/ffnvcodec && \
@@ -174,7 +177,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libfreetype.so
 RUN \
   echo "**** grabbing fontconfig ****" && \
   mkdir -p /tmp/fontconfig && \
@@ -188,7 +192,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install 
+  make install && \
+  strip -d /usr/local/lib/libfontconfig.so
 RUN \
   echo "**** grabbing fribidi ****" && \
   mkdir -p /tmp/fribidi && \
@@ -203,7 +208,20 @@ RUN \
     --disable-static \
     --enable-shared && \
   make -j 1 && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libfribidi.so
+RUN \
+  echo "**** grabbing harfbuzz ****" && \
+  mkdir -p /tmp/harfbuzz && \
+  curl -Lf \
+    https://github.com/harfbuzz/harfbuzz/archive/${HARFBUZZ}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/harfbuzz
+RUN \
+  echo "**** compiling harfbuzz ****" && \
+  cd /tmp/harfbuzz && \
+  meson build && \
+  ninja -C build install && \
+  strip -d /usr/local/lib/x86_64-linux-gnu/libharfbuzz*.so
 RUN \
   echo "**** grabbing kvazaar ****" && \
   mkdir -p /tmp/kvazaar && \
@@ -218,7 +236,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libkvazaar.so
 RUN \
   echo "**** grabbing lame ****" && \
   mkdir -p /tmp/lame && \
@@ -255,7 +274,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libass.so
 RUN \
   echo "**** grabbing libdrm ****" && \
   mkdir -p /tmp/libdrm && \
@@ -453,7 +473,8 @@ RUN \
     --disable-static \
     --enable-shared  && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libopencore-amr*.so
 RUN \
   echo "**** grabbing openjpeg ****" && \
   mkdir -p /tmp/openjpeg && \
@@ -487,7 +508,8 @@ RUN \
     --disable-static \
     --enable-shared && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libopus.so
 RUN \
   echo "**** grabbing rav1e ****" && \
   mkdir -p /tmp/rav1e && \
@@ -670,7 +692,8 @@ RUN \
   cd /tmp/webp && \
   ./configure && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libweb*.so
 RUN \
   echo "**** grabbing x264 ****" && \
   mkdir -p /tmp/x264 && \
@@ -755,7 +778,10 @@ RUN \
     --enable-libaom \
     --enable-libass \
     --enable-libfdk_aac \
+    --enable-libfontconfig \
     --enable-libfreetype \
+    --enable-libfribidi \
+    --enable-libharfbuzz \
     --enable-libkvazaar \
     --enable-libmp3lame \
     --enable-libopencore-amrnb \
@@ -798,12 +824,14 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
+    /buildout/usr/local/etc/fonts \
     /buildout/usr/local/lib/libmfx-gen \
     /buildout/usr/local/lib/mfx \
     /buildout/usr/local/lib/vpl \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
     /buildout/usr/local/lib/x86_64-linux-gnu/vdpau \
     /buildout/usr/local/share/vulkan \
+    /buildout/usr/share/fonts \
     /buildout/usr/share/libdrm \
     /buildout/etc/OpenCL/vendors && \
   cp \
@@ -812,6 +840,9 @@ RUN \
   cp \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
+  cp -a \
+    /usr/local/etc/fonts/* \
+    /buildout/usr/local/etc/fonts/ && \
   cp -a \
     /usr/local/lib/lib*so* \
     /buildout/usr/local/lib/ && \
@@ -839,6 +870,9 @@ RUN \
   cp -a \
     /usr/share/libdrm/amdgpu.ids \
     /buildout/usr/share/libdrm/ && \
+  cp -a \
+    /usr/share/fonts/* \
+    /buildout/usr/share/fonts/ && \
   cp -a \
     /usr/local/share/vulkan/* \
     /buildout/usr/local/share/vulkan/ && \
@@ -877,7 +911,6 @@ RUN \
     libexpat1 \
     libglib2.0-0 \
     libgomp1 \
-    libharfbuzz0b \
     libllvm15 \
     libmpdec3 \
     libpciaccess0 \
