@@ -63,7 +63,6 @@ libelf1              0.186-1build1                            deb
 libexpat1            2.4.7-1ubuntu0.3                         deb       
 libext2fs2           1.46.5-2ubuntu1.1                        deb       
 libffi8              3.4.2-4                                  deb       
-libfreetype6         2.11.1+dfsg-1ubuntu0.2                   deb       
 libgcc-s1            12.3.0-1ubuntu1~22.04                    deb       
 libgcrypt20          1.9.4-3ubuntu3                           deb       
 libglib2.0-0         2.72.4-0ubuntu2.2                        deb       
@@ -72,9 +71,7 @@ libgmp10             2:6.2.1+dfsg-3ubuntu1                    deb
 libgnutls30          3.7.3-4ubuntu1.4                         deb       
 libgomp1             12.3.0-1ubuntu1~22.04                    deb       
 libgpg-error0        1.43-3                                   deb       
-libgraphite2-3       1.3.14-1build2                           deb       
 libgssapi-krb5-2     1.19.2-2ubuntu0.3                        deb       
-libharfbuzz0b        2.7.4-1ubuntu3.1                         deb       
 libhogweed6          3.7.3-1build2                            deb       
 libicu70             70.1-2                                   deb       
 libidn2-0            2.3.2-2build1                            deb       
@@ -109,7 +106,6 @@ libpam0g             1.4.0-11ubuntu2.4                        deb
 libpciaccess0        0.16-3                                   deb       
 libpcre2-8-0         10.39-3ubuntu0.1                         deb       
 libpcre3             2:8.39-13ubuntu0.22.04.1                 deb       
-libpng16-16          1.6.37-3build5                           deb       
 libprocps8           2:3.3.17-6ubuntu2.1                      deb       
 libpsl5              0.21.0-1.2build2                         deb       
 libreadline8         8.1.2-1                                  deb       
