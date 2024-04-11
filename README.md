@@ -173,6 +173,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **10.04.24:** - Compile ffmpeg with `libfribidi`, `libharfbuzz` and `libfontconfig`, compile libharfbuzz.
 * **05.04.24:** - Bump ffmpeg to 7.0, bump libdovi, libva, mesa and vulkan-sdk.
 * **16.03.24:** - Bump libaom, mesa, openjpeg, opus, shaderc and svtav1.
 * **11.02.24:** - Add Zimg support.
