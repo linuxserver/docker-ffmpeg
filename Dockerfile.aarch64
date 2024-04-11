@@ -540,7 +540,9 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
-    /buildout/usr/local/lib && \
+    /buildout/usr/local/etc/fonts \
+    /buildout/usr/local/lib \
+    /buildout/usr/share/fonts && \
   cp \
     /tmp/ffmpeg/ffmpeg \
     /buildout/usr/local/bin && \
@@ -548,8 +550,14 @@ RUN \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
   cp -a \
+    /usr/local/etc/fonts/* \
+    /buildout/usr/local/etc/fonts/ && \
+  cp -a \
     /usr/local/lib/lib*so* \
-    /buildout/usr/local/lib/
+    /buildout/usr/local/lib/ && \
+  cp -a \
+    /usr/share/fonts/* \
+    /buildout/usr/share/fonts/
 
 # runtime stage
 FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy

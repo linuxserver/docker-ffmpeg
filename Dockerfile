@@ -824,12 +824,14 @@ RUN \
   ldconfig && \
   mkdir -p \
     /buildout/usr/local/bin \
+    /buildout/usr/local/etc/fonts \
     /buildout/usr/local/lib/libmfx-gen \
     /buildout/usr/local/lib/mfx \
     /buildout/usr/local/lib/vpl \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
     /buildout/usr/local/lib/x86_64-linux-gnu/vdpau \
     /buildout/usr/local/share/vulkan \
+    /buildout/usr/share/fonts \
     /buildout/usr/share/libdrm \
     /buildout/etc/OpenCL/vendors && \
   cp \
@@ -838,6 +840,9 @@ RUN \
   cp \
     /tmp/ffmpeg/ffprobe \
     /buildout/usr/local/bin && \
+  cp -a \
+    /usr/local/etc/fonts/* \
+    /buildout/usr/local/etc/fonts/ && \
   cp -a \
     /usr/local/lib/lib*so* \
     /buildout/usr/local/lib/ && \
@@ -865,6 +870,9 @@ RUN \
   cp -a \
     /usr/share/libdrm/amdgpu.ids \
     /buildout/usr/share/libdrm/ && \
+  cp -a \
+    /usr/share/fonts/* \
+    /buildout/usr/share/fonts/ && \
   cp -a \
     /usr/local/share/vulkan/* \
     /buildout/usr/local/share/vulkan/ && \
