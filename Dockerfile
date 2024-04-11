@@ -935,7 +935,10 @@ RUN \
   echo "**** clean up ****" && \
   rm -rf \
     /var/lib/apt/lists/* \
-    /var/tmp/*
+    /var/tmp/* && \
+  echo "**** quick test ffmpeg ****" && \
+  ldd /usr/local/bin/ffmpeg && \
+  /usr/local/bin/ffmpeg -version
 
 COPY /root /
 
