@@ -71,6 +71,7 @@ RUN \
     i965-va-driver-shaders \
     libasound2-dev \
     libcairo2-dev \
+    libdrm-dev \
     libexpat1-dev \
     libgcc-10-dev \
     libglib2.0-dev \
@@ -777,6 +778,7 @@ RUN \
     --enable-gpl \
     --enable-libaom \
     --enable-libass \
+    --enable-libdrm \
     --enable-libfdk_aac \
     --enable-libfontconfig \
     --enable-libfreetype \
