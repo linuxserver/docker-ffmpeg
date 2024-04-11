@@ -573,7 +573,6 @@ RUN \
     libexpat1 \
     libglib2.0-0 \
     libgomp1 \
-    libharfbuzz0b \
     libv4l-0 \
     libx11-6 \
     libxcb1 \

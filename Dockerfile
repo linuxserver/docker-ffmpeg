@@ -903,7 +903,6 @@ RUN \
     libexpat1 \
     libglib2.0-0 \
     libgomp1 \
-    libharfbuzz0b \
     libllvm15 \
     libmpdec3 \
     libpciaccess0 \
