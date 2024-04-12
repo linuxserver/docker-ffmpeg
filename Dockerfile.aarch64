@@ -77,7 +77,6 @@ RUN \
     pkg-config \
     python3-venv \
     x11proto-xext-dev \
-    xserver-xorg-dev \
     xxd \
     yasm \
     zlib1g-dev && \
@@ -499,6 +498,7 @@ RUN \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
+    --disable-libdrm \
     --enable-alsa \
     --enable-ffprobe \
     --enable-gpl \
@@ -584,12 +584,16 @@ RUN \
     libv4l-0 \
     libx11-6 \
     libxcb1 \
+    libxcb-shm0 \
     libxext6 \
     libxml2 && \
   echo "**** clean up ****" && \
   rm -rf \
     /var/lib/apt/lists/* \
-    /var/tmp/*
+    /var/tmp/* && \
+  echo "**** quick test ffmpeg ****" && \
+  ldd /usr/local/bin/ffmpeg && \
+  /usr/local/bin/ffmpeg -version
 
 COPY /root /
 
