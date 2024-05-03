@@ -802,6 +802,7 @@ RUN \
     --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-libxcb \
     --enable-libxml2 \
     --enable-libxvid \
     --enable-libzimg \

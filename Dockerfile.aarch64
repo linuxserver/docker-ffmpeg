@@ -526,6 +526,7 @@ RUN \
     --enable-libxml2 \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-libxcb \
     --enable-libxvid \
     --enable-libzimg \
     --enable-nonfree \
