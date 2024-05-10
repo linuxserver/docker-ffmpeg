@@ -13,43 +13,44 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.8.2 \
+  AOM=v3.9.0 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.0 \
   FONTCONFIG=2.15.0 \
   FREETYPE=2.13.2 \
-  FRIBIDI=1.0.13 \
-  GMMLIB=22.3.15 \
+  FRIBIDI=1.0.14 \
+  GMMLIB=22.3.18 \
   HARFBUZZ=8.4.0 \
-  IHD=23.4.3 \
-  KVAZAAR=2.2.0 \
+  IHD=24.1.5 \
+  KVAZAAR=2.3.1 \
   LAME=3.100 \
   LIBASS=0.17.1 \
   LIBDOVI=2.1.1 \
   LIBDRM=2.4.120 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=6.338.2 \
+  LIBPNG=1.6.43 \
   LIBVA=2.21.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
-  LIBVPL=2.10.1 \
-  MESA=24.0.4 \
+  LIBVPL=2.11.0 \
+  MESA=24.0.7 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
-  ONEVPL=23.4.3 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.2 \
-  OPUS=1.5.1 \
+  OPUS=1.5.2 \
   RAV1E=0.7.1 \
-  SHADERC=v2024.0 \
+  SHADERC=v2024.1 \
   SVTAV1=2.0.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
+  VPLGPURT=24.1.5 \
   VPX=1.14.0 \
   VULKANSDK=vulkan-sdk-1.3.280.0 \
-  WEBP=1.3.2 \
-  X265=3.5 \
+  WEBP=1.4.0 \
+  X265=3.6 \
   XVID=1.3.7 \
   ZIMG=3.0.5
 
@@ -392,15 +393,15 @@ RUN \
   cmake --build . --config Release --target install && \
   strip -d /usr/local/lib/libvpl.so
 RUN \
-  echo "**** grabbing onevpl ****" && \
-  mkdir -p /tmp/onevpl && \
+  echo "**** grabbing vpl-gpu-rt ****" && \
+  mkdir -p /tmp/vpl-gpu-rt && \
   curl -Lf \
-    https://github.com/oneapi-src/oneVPL-intel-gpu/archive/refs/tags/intel-onevpl-${ONEVPL}.tar.gz | \
-    tar -zx --strip-components=1 -C /tmp/onevpl
+    https://github.com/intel/vpl-gpu-rt/archive/refs/tags/intel-onevpl-${ONEVPL}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/vpl-gpu-rt
 RUN \
   echo "**** compiling onevpl ****" && \
-  mkdir -p /tmp/onevpl/build && \
-  cd /tmp/onevpl/build && \
+  mkdir -p /tmp/vpl-gpu-rt/build && \
+  cd /tmp/vpl-gpu-rt/build && \
   cmake \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
@@ -487,7 +488,7 @@ RUN \
   rm -Rf \
     thirdparty/libpng/* && \
   curl -Lf \
-    https://download.sourceforge.net/libpng/libpng-1.6.37.tar.gz | \
+    https://download.sourceforge.net/libpng/libpng-${LIBPNG}.tar.gz | \
     tar -zx --strip-components=1 -C thirdparty/libpng/ && \
   cmake \
     -DBUILD_STATIC_LIBS=0 \
