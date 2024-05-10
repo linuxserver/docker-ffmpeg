@@ -399,7 +399,7 @@ RUN \
     https://github.com/intel/vpl-gpu-rt/archive/refs/tags/intel-onevpl-${VPLGPURT}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/vpl-gpu-rt
 RUN \
-  echo "**** compiling onevpl ****" && \
+  echo "**** compiling vpl-gpu-rt ****" && \
   mkdir -p /tmp/vpl-gpu-rt/build && \
   cd /tmp/vpl-gpu-rt/build && \
   cmake \
@@ -828,7 +828,6 @@ RUN \
     /buildout/usr/local/etc/fonts \
     /buildout/usr/local/lib/libmfx-gen \
     /buildout/usr/local/lib/mfx \
-    /buildout/usr/local/lib/vpl \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
     /buildout/usr/local/lib/x86_64-linux-gnu/vdpau \
     /buildout/usr/local/share/vulkan \
@@ -853,9 +852,6 @@ RUN \
   cp -a \
     /usr/local/lib/mfx/*.so \
     /buildout/usr/local/lib/mfx/ && \
-  cp -a \
-    /usr/local/lib/vpl/*.so \
-    /buildout/usr/local/lib/vpl/ && \
   cp -a \
     /usr/local/lib/x86_64-linux-gnu/lib*so* \
     /buildout/usr/local/lib/x86_64-linux-gnu/ && \
