@@ -382,7 +382,7 @@ RUN \
   echo "**** grabbing libvpl ****" && \
   mkdir -p /tmp/libvpl && \
   curl -Lf \
-    https://github.com/oneapi-src/oneVPL/archive/refs/tags/v${LIBVPL}.tar.gz | \
+    https://github.com/intel/libvpl/archive/refs/tags/v${LIBVPL}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/libvpl
 RUN \
   echo "**** compiling libvpl ****" && \
@@ -396,7 +396,7 @@ RUN \
   echo "**** grabbing vpl-gpu-rt ****" && \
   mkdir -p /tmp/vpl-gpu-rt && \
   curl -Lf \
-    https://github.com/intel/vpl-gpu-rt/archive/refs/tags/intel-onevpl-${ONEVPL}.tar.gz | \
+    https://github.com/intel/vpl-gpu-rt/archive/refs/tags/intel-onevpl-${VPLGPURT}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/vpl-gpu-rt
 RUN \
   echo "**** compiling onevpl ****" && \
