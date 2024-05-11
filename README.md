@@ -115,6 +115,7 @@ docker run --rm -it \
 ```
 
 ### Nvidia Hardware accelerated ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#CUDANVENCNVDEC))
+*Nvidia support requires [Nvidia container toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) and the Nvidia drivers installed on the host*
 
 ```
 docker run --rm -it \
@@ -173,6 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **09.05.24:** - Bump libaom, fribidi, kvazaar, various Intel drivers and libs, Mesa, opus, shaderc, webp and x265.
 * **11.04.24:** - Explicitly disable libdrm on aarch64, add new lib `libxcb-shm0`. Add quick test at the end of build.
 * **10.04.24:** - Compile ffmpeg with `libfribidi`, `libharfbuzz` and `libfontconfig`, compile libharfbuzz.
 * **05.04.24:** - Bump ffmpeg to 7.0, bump libdovi, libva, mesa and vulkan-sdk.
