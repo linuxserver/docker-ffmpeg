@@ -43,7 +43,7 @@ ENV \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
   SHADERC=v2024.1 \
-  SVTAV1=2.0.0 \
+  SVTAV1=2.1.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPLGPURT=24.1.5 \
