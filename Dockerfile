@@ -9,7 +9,8 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
   DEBIAN_FRONTEND="noninteractive" \
-  MAKEFLAGS="-j4"
+  MAKEFLAGS="-j4" \
+  PATH="/root/.cargo/bin:${PATH}"
 
 # versions
 ENV \
@@ -35,7 +36,7 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.11.0 \
-  MESA=24.0.7 \
+  MESA=24.1.0 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -109,13 +110,13 @@ RUN \
   tar xf /tmp/rust.tar.gz -C /tmp/rust --strip-components=1 && \
   cd /tmp/rust && \
   ./install.sh && \
-  cargo install cargo-c && \
+  cargo install cargo-c cbindgen && \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir meson cmake mako
+  pip install --no-cache-dir meson cmake mako ply
 
 # compile 3rd party libs
 RUN \
