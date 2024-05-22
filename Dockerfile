@@ -110,7 +110,7 @@ RUN \
   tar xf /tmp/rust.tar.gz -C /tmp/rust --strip-components=1 && \
   cd /tmp/rust && \
   ./install.sh && \
-  cargo install cargo-c cbindgen syn paste && \
+  cargo install cargo-c cbindgen && \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
