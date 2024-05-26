@@ -174,7 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **26.05.24:** - Rebase to Ubuntu Noble.
+* **26.05.24:** - Rebase to Ubuntu Noble. Bump libass, libharfbuzz and vulkan-sdk.
 * **22.05.24:** - Bump Mesa to 24.1.0.
 * **20.05.24:** - Bump libsvtav1.
 * **09.05.24:** - Bump libaom, fribidi, kvazaar, various Intel drivers and libs, Mesa, opus, shaderc, webp and x265.

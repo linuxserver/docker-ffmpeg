@@ -9,7 +9,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
   DEBIAN_FRONTEND="noninteractive" \
-  MAKEFLAGS="-j4" \
+  MAKEFLAGS="-j10" \
   PATH="/root/.cargo/bin:${PATH}"
 
 # versions
@@ -21,13 +21,14 @@ ENV \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.14 \
   GMMLIB=22.3.18 \
-  HARFBUZZ=8.4.0 \
+  HARFBUZZ=8.5.0 \
   IHD=24.1.5 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
-  LIBASS=0.17.1 \
+  LIBASS=0.17.2 \
   LIBDOVI=2.1.1 \
   LIBDRM=2.4.120 \
+  LIBGL=1.7.0 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=6.338.2 \
   LIBPNG=1.6.43 \
@@ -49,7 +50,7 @@ ENV \
   VORBIS=1.3.7 \
   VPLGPURT=24.1.5 \
   VPX=1.14.0 \
-  VULKANSDK=vulkan-sdk-1.3.280.0 \
+  VULKANSDK=vulkan-sdk-1.3.283.0 \
   WEBP=1.4.0 \
   X265=3.6 \
   XVID=1.3.7 \
@@ -84,7 +85,6 @@ RUN \
     libelf-dev \
     libexpat1-dev \
     libgcc-10-dev \
-    libgl-dev \
     libglib2.0-dev \
     libgomp1 \
     libllvmspirvlib-18-dev \
@@ -114,6 +114,7 @@ RUN \
     perl \
     pkg-config \
     python3-venv \
+    x11proto-gl-dev \
     x11proto-xext-dev \
     xxd \
     yasm \
@@ -292,6 +293,27 @@ RUN \
   make && \
   make install && \
   strip -d /usr/local/lib/libass.so
+RUN \
+  echo "**** grabbing libgl ****" && \
+  mkdir -p /tmp/libgl && \
+  curl -Lf \
+  https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v${LIBGL}/libglvnd-v${LIBGL}.tar.gz | \
+    tar -xz --strip-components=1 -C /tmp/libgl
+RUN \
+  echo "**** compiling libgl ****" && \
+  cd /tmp/libgl && \
+  meson setup \
+    --buildtype=release \
+    build && \
+  ninja -C build install && \
+  strip -d \
+    /usr/local/lib/x86_64-linux-gnu/libEGL.so \
+    /usr/local/lib/x86_64-linux-gnu/libGLdispatch.so \
+    /usr/local/lib/x86_64-linux-gnu/libGLESv1_CM.so \
+    /usr/local/lib/x86_64-linux-gnu/libGLESv2.so \
+    /usr/local/lib/x86_64-linux-gnu/libGL.so \
+    /usr/local/lib/x86_64-linux-gnu/libGLX.so \
+    /usr/local/lib/x86_64-linux-gnu/libOpenGL.so
 RUN \
   echo "**** grabbing libdrm ****" && \
   mkdir -p /tmp/libdrm && \
