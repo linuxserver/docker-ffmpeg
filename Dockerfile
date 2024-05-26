@@ -9,7 +9,7 @@ ARG FFMPEG_VERSION
 # common env
 ENV \
   DEBIAN_FRONTEND="noninteractive" \
-  MAKEFLAGS="-j10" \
+  MAKEFLAGS="-j4" \
   PATH="/root/.cargo/bin:${PATH}"
 
 # versions
