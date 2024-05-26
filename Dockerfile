@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy as buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:noble as buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -57,15 +57,19 @@ ENV \
 
 RUN \
   echo "**** install build packages ****" && \
-  apt-get update && \ 
-  apt-get install -y \
+  apt-get update && \
+  apt-get install --no-install-recommends -y \
     autoconf \
     automake \
+    bindgen \
+    bison \
+    build-essential \
     bzip2 \
     cmake \
     clang \
     diffutils \
     doxygen \
+    flex \
     g++ \
     gcc \
     git \
@@ -73,37 +77,47 @@ RUN \
     i965-va-driver-shaders \
     libasound2-dev \
     libcairo2-dev \
+    libclang-18-dev \
+    libclang-cpp18-dev \
+    libclc-18 \
+    libclc-18-dev \
+    libelf-dev \
     libexpat1-dev \
     libgcc-10-dev \
+    libgl-dev \
     libglib2.0-dev \
     libgomp1 \
+    libllvmspirvlib-18-dev \
     libpciaccess-dev \
     libssl-dev \
     libtool \
     libv4l-dev \
     libwayland-dev \
+    libwayland-egl-backend-dev \
     libx11-dev \
     libx11-xcb-dev \
+    libxcb-dri2-0-dev \
     libxcb-dri3-dev \
+    libxcb-glx0-dev \
     libxcb-present-dev \
     libxext-dev \
     libxfixes-dev \
     libxml2-dev \
     libxrandr-dev \
+    libxshmfence-dev \
+    libxxf86vm-dev \
+    llvm-18-dev \
+    llvm-spirv-18 \
     make \
     nasm \
-    ninja-build \
     ocl-icd-opencl-dev \
     perl \
     pkg-config \
     python3-venv \
-    wayland-protocols \
     x11proto-xext-dev \
-    xserver-xorg-dev \
     xxd \
     yasm \
     zlib1g-dev && \
-  apt-get build-dep mesa -y && \
   mkdir -p /tmp/rust && \
   RUST_VERSION=$(curl -fsX GET https://api.github.com/repos/rust-lang/rust/releases/latest | jq -r '.tag_name') && \
   curl -fo /tmp/rust.tar.gz -L "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
@@ -116,7 +130,7 @@ RUN \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir meson cmake mako ply
+  pip install --no-cache-dir cmake mako meson ninja ply
 
 # compile 3rd party libs
 RUN \
@@ -331,6 +345,24 @@ RUN \
     build && \
   ninja -C build install && \
   strip -d /usr/local/lib/libvdpau.so
+  RUN \
+    echo "**** grabbing shaderc ****" && \
+    mkdir -p /tmp/shaderc && \
+    git clone \
+      --branch ${SHADERC} \
+      --depth 1 https://github.com/google/shaderc.git \
+      /tmp/shaderc
+  RUN \
+    echo "**** compiling shaderc ****" && \
+    cd /tmp/shaderc && \
+    ./utils/git-sync-deps && \
+    mkdir -p build && \
+    cd build && \
+    cmake -GNinja \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_INSTALL_PREFIX=/usr/local \
+      .. && \
+    ninja install
 RUN \
   echo "**** grabbing mesa ****" && \
   mkdir -p /tmp/mesa && \
@@ -524,24 +556,6 @@ RUN \
   cd /tmp/rav1e && \
   cargo cinstall --release && \
   strip -d /usr/local/lib/librav1e.so
-RUN \
-  echo "**** grabbing shaderc ****" && \
-  mkdir -p /tmp/shaderc && \
-  git clone \
-    --branch ${SHADERC} \
-    --depth 1 https://github.com/google/shaderc.git \
-    /tmp/shaderc
-RUN \
-  echo "**** compiling shaderc ****" && \
-  cd /tmp/shaderc && \
-  ./utils/git-sync-deps && \
-  mkdir -p build && \
-  cd build && \
-  cmake -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr/local \
-    .. && \
-  ninja install
 RUN \
   echo "**** grabbing libdovi ****" && \
   mkdir -p /tmp/libdovi && \
@@ -879,7 +893,7 @@ RUN \
     /buildout/etc/OpenCL/vendors/nvidia.icd
 
 # runtime stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy
+FROM ghcr.io/linuxserver/baseimage-ubuntu:noble
 
 # Add files from binstage
 COPY --from=buildstage /buildout/ /
@@ -903,14 +917,13 @@ RUN \
   echo "**** install runtime ****" && \
     apt-get update && \
     apt-get install -y \
-    libasound2 \
+    libasound2t64 \
     libedit2 \
     libelf1 \
     libexpat1 \
     libglib2.0-0 \
     libgomp1 \
-    libllvm15 \
-    libmpdec3 \
+    libllvm18 \
     libpciaccess0 \
     libv4l-0 \
     libwayland-client0 \
