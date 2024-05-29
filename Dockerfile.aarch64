@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy as buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-noble as buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -20,10 +20,10 @@ ENV \
   FONTCONFIG=2.15.0 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.14 \
-  HARFBUZZ=8.4.0 \
+  HARFBUZZ=8.5.0 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
-  LIBASS=0.17.1 \
+  LIBASS=0.17.2 \
   LIBDRM=2.4.120 \
   LIBPNG=1.6.43 \
   LIBVA=2.21.0 \
@@ -73,7 +73,6 @@ RUN \
     libxml2-dev \
     make \
     nasm \
-    ninja-build \
     perl \
     pkg-config \
     python3-venv \
@@ -93,7 +92,7 @@ RUN \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir cmake meson
+  pip install --no-cache-dir cmake meson ninja
 
 # compile 3rd party libs
 RUN \
@@ -560,7 +559,7 @@ RUN \
     /buildout/usr/share/fonts/
 
 # runtime stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-noble
 
 # Add files from binstage
 COPY --from=buildstage /buildout/ /
@@ -577,7 +576,7 @@ RUN \
   echo "**** install runtime ****" && \
   apt-get update && \
   apt-get install -y \
-    libasound2 \
+    libasound2t64 \
     libexpat1 \
     libglib2.0-0 \
     libgomp1 \
