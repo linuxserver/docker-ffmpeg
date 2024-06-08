@@ -20,7 +20,7 @@ jobs:
           echo "**** External trigger running off of master branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_FFMPEG_MASTER\". ****"
           echo "External trigger running off of master branch. To disable this trigger, set a Github secret named \`PAUSE_EXTERNAL_TRIGGER_FFMPEG_MASTER\`" >> $GITHUB_STEP_SUMMARY
           echo "**** Retrieving external version ****"
-          EXT_RELEASE=$(echo 7.0-cli)
+          EXT_RELEASE=$(echo 7.0.1-cli)
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "**** Can't retrieve external version, exiting ****"
             FAILURE_REASON="Can't retrieve external version for ffmpeg branch master"

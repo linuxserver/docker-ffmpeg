@@ -174,6 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **08.06.24:** - Bump ffmpeg, fribidi, libdrm, mesa and vpx.
 * **26.05.24:** - Rebase to Ubuntu Noble. Bump libass, libharfbuzz and vulkan-sdk.
 * **22.05.24:** - Bump Mesa to 24.1.0.
 * **20.05.24:** - Bump libsvtav1.

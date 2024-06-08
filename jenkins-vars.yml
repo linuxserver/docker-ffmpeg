@@ -3,7 +3,7 @@
 # jenkins variables
 project_name: docker-ffmpeg
 external_type: na
-custom_version_command: "echo 7.0-cli"
+custom_version_command: "echo 7.0.1-cli"
 release_type: stable
 release_tag: latest
 ls_branch: master
