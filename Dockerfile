@@ -577,7 +577,7 @@ RUN \
   echo "**** compiling rav1e ****" && \
   cd /tmp/rav1e && \
   cargo cinstall --release && \
-  strip -d /usr/local/lib/librav1e.so
+  strip -d /usr/local/lib/x86_64-linux-gnu/librav1e.so
 RUN \
   echo "**** grabbing libdovi ****" && \
   mkdir -p /tmp/libdovi && \
