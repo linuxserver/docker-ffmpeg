@@ -14,7 +14,7 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.9.0 \
+  AOM=v3.9.1 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.0.1 \
   FONTCONFIG=2.15.0 \
@@ -37,7 +37,7 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.11.0 \
-  MESA=24.1.1 \
+  MESA=24.1.2 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -577,7 +577,7 @@ RUN \
   echo "**** compiling rav1e ****" && \
   cd /tmp/rav1e && \
   cargo cinstall --release && \
-  strip -d /usr/local/lib/librav1e.so
+  strip -d /usr/local/lib/x86_64-linux-gnu/librav1e.so
 RUN \
   echo "**** grabbing libdovi ****" && \
   mkdir -p /tmp/libdovi && \
@@ -589,7 +589,7 @@ RUN \
   echo "**** compiling libdovi ****" && \
   cd /tmp/libdovi/dolby_vision && \
   cargo cinstall --release && \
-  strip -d /usr/local/lib/libdovi.so
+  strip -d /usr/local/lib/x86_64-linux-gnu/libdovi.so
 RUN \
   echo "**** grabbing libplacebo ****" && \
   mkdir -p /tmp/libplacebo && \
