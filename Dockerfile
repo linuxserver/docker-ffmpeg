@@ -589,7 +589,7 @@ RUN \
   echo "**** compiling libdovi ****" && \
   cd /tmp/libdovi/dolby_vision && \
   cargo cinstall --release && \
-  strip -d /usr/local/lib/libdovi.so
+  strip -d /usr/local/lib/x86_64-linux-gnu/libdovi.so
 RUN \
   echo "**** grabbing libplacebo ****" && \
   mkdir -p /tmp/libplacebo && \
