@@ -20,24 +20,25 @@ ENV \
   FONTCONFIG=2.15.0 \
   FREETYPE=2.13.2 \
   FRIBIDI=1.0.15 \
-  GMMLIB=22.3.18 \
-  HARFBUZZ=8.5.0 \
-  IHD=24.1.5 \
+  GMMLIB=22.3.20 \
+  HARFBUZZ=9.0.0 \
+  IHD=24.2.5 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
-  LIBASS=0.17.2 \
+  LIBASS=0.17.3 \
+  LIBDAV1D=1.4.3 \
   LIBDOVI=2.1.1 \
-  LIBDRM=2.4.121 \
+  LIBDRM=2.4.122 \
   LIBGL=1.7.0 \
   LIBMFX=22.5.4 \
-  LIBPLACEBO=6.338.2 \
+  LIBPLACEBO=7.349.0 \
   LIBPNG=1.6.43 \
-  LIBVA=2.21.0 \
+  LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
-  LIBVPL=2.11.0 \
-  MESA=24.1.2 \
+  LIBVPL=2.12.0 \
+  MESA=24.1.5 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -45,12 +46,12 @@ ENV \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
   SHADERC=v2024.1 \
-  SVTAV1=2.1.0 \
+  SVTAV1=2.1.2 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
-  VPLGPURT=24.1.5 \
+  VPLGPURT=24.2.5 \
   VPX=1.14.1 \
-  VULKANSDK=vulkan-sdk-1.3.283.0 \
+  VULKANSDK=vulkan-sdk-1.3.290.0 \
   WEBP=1.4.0 \
   X265=3.6 \
   XVID=1.3.7 \
@@ -293,6 +294,19 @@ RUN \
   make && \
   make install && \
   strip -d /usr/local/lib/libass.so
+RUN \
+  echo "**** grabbing libdav1d ****" && \
+  mkdir -p /tmp/libdav1d && \
+  git clone \
+    --branch ${LIBDAV1D} \
+    https://code.videolan.org/videolan/dav1d \
+    /tmp/libdav1d
+RUN \
+  echo "**** compiling libdav1d ****" && \
+  mkdir -p /tmp/libdav1d/build && \
+  cd /tmp/libdav1d/build && \
+  meson setup .. && \
+  ninja install
 RUN \
   echo "**** grabbing libgl ****" && \
   mkdir -p /tmp/libgl && \
@@ -815,6 +829,7 @@ RUN \
     --enable-gpl \
     --enable-libaom \
     --enable-libass \
+    --enable-libdav1d \
     --enable-libfdk_aac \
     --enable-libfontconfig \
     --enable-libfreetype \

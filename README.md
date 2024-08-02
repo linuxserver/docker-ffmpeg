@@ -174,6 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.08.24:** - Add libdav1d. Bump libharfbuzz, various Intel drivers and libs, libass, libdrm, libplacebo, libva, mesa, svtav1, and vulkan sdk.
 * **21.06.24:** - Bump mesa and libaom. Update lib path for rav1e.
 * **08.06.24:** - Bump ffmpeg, fribidi, libdrm, mesa and vpx.
 * **26.05.24:** - Rebase to Ubuntu Noble. Bump libass, libharfbuzz and vulkan-sdk.
