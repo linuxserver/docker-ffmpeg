@@ -47,6 +47,7 @@ ENV \
   RAV1E=0.7.1 \
   SHADERC=v2024.1 \
   SVTAV1=2.1.2 \
+  SRT=1.5.3 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPLGPURT=24.2.5 \
@@ -802,6 +803,24 @@ RUN \
   make && \
   make install
 
+RUN \
+  echo "**** grabbing srt ****" && \
+  mkdir -p /tmp/srt && \
+  git clone \
+    --branch v${SRT} \
+    --depth 1 https://github.com/Haivision/srt.git \
+    /tmp/srt
+RUN \
+  echo "**** compiling srt ****" && \
+  cd /tmp/srt && \
+  mkdir -p \
+    srt_build && \
+  cd srt_build && \
+  cmake \
+    -DBUILD_SHARED_LIBS:BOOL=on .. && \
+  make && \
+  make install
+
 # main ffmpeg build
 RUN \
   echo "**** Versioning ****" && \
@@ -858,6 +877,7 @@ RUN \
     --enable-libxml2 \
     --enable-libxvid \
     --enable-libzimg \
+    --enable-libsrt \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
