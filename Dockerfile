@@ -45,6 +45,7 @@ ENV \
   OPENJPEG=2.5.2 \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
+  RIST=0.2.10 \
   SHADERC=v2024.1 \
   SVTAV1=2.1.2 \
   SRT=1.5.3 \
@@ -821,6 +822,25 @@ RUN \
   make && \
   make install
 
+RUN \
+  echo "**** grabbing rist ****" && \
+  mkdir -p /tmp/rist && \
+  git clone \
+    --branch v${RIST} \
+    --depth 1 https://code.videolan.org/rist/librist.git \
+    /tmp/rist
+RUN \
+  echo "**** compiling rist ****" && \
+  cd /tmp/rist && \
+  mkdir -p \
+    rist_build && \
+  cd rist_build && \
+  meson \
+    --default-library=shared .. && \
+  ninja && \
+  ninja install
+
+
 # main ffmpeg build
 RUN \
   echo "**** Versioning ****" && \
@@ -877,6 +897,7 @@ RUN \
     --enable-libxml2 \
     --enable-libxvid \
     --enable-libzimg \
+    --enable-librist \
     --enable-libsrt \
     --enable-nonfree \
     --enable-nvdec \
