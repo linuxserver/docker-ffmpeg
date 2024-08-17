@@ -336,12 +336,6 @@ RUN \
   cargo cinstall --release && \
   strip -d /usr/local/lib/librav1e.so
 RUN \
-  echo "**** grabbing SVT-AV1 ****" && \
-  mkdir -p /tmp/svt-av1 && \
-  curl -Lf \
-    https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${SVTAV1}/SVT-AV1-v${SVTAV1}.tar.gz | \
-    tar -zx --strip-components=1 -C /tmp/svt-av1
-RUN \
   echo "**** grabbing rist ****" && \
   mkdir -p /tmp/rist && \
   git clone \
@@ -375,6 +369,12 @@ RUN \
     -DBUILD_SHARED_LIBS:BOOL=on .. && \
   make && \
   make install
+RUN \
+  echo "**** grabbing SVT-AV1 ****" && \
+  mkdir -p /tmp/svt-av1 && \
+  curl -Lf \
+    https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${SVTAV1}/SVT-AV1-v${SVTAV1}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/svt-av1
 RUN \
   echo "**** compiling SVT-AV1 ****" && \
   cd /tmp/svt-av1/Build && \
