@@ -45,7 +45,9 @@ ENV \
   OPENJPEG=2.5.2 \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
+  RIST=0.2.10 \
   SHADERC=v2024.1 \
+  SRT=1.5.3 \
   SVTAV1=2.1.2 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
@@ -617,6 +619,40 @@ RUN \
   meson build --buildtype release && \
   ninja -C build install
 RUN \
+  echo "**** grabbing rist ****" && \
+  mkdir -p /tmp/rist && \
+  git clone \
+    --branch v${RIST} \
+    --depth 1 https://code.videolan.org/rist/librist.git \
+    /tmp/rist
+RUN \
+  echo "**** compiling rist ****" && \
+  cd /tmp/rist && \
+  mkdir -p \
+    rist_build && \
+  cd rist_build && \
+  meson \
+    --default-library=shared .. && \
+  ninja && \
+  ninja install
+RUN \
+  echo "**** grabbing srt ****" && \
+  mkdir -p /tmp/srt && \
+  git clone \
+    --branch v${SRT} \
+    --depth 1 https://github.com/Haivision/srt.git \
+    /tmp/srt
+RUN \
+  echo "**** compiling srt ****" && \
+  cd /tmp/srt && \
+  mkdir -p \
+    srt_build && \
+  cd srt_build && \
+  cmake \
+    -DBUILD_SHARED_LIBS:BOOL=on .. && \
+  make && \
+  make install
+RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
   curl -Lf \
@@ -843,7 +879,9 @@ RUN \
     --enable-libopus \
     --enable-libplacebo \
     --enable-librav1e \
+    --enable-librist \
     --enable-libshaderc \
+    --enable-libsrt \
     --enable-libsvtav1 \
     --enable-libtheora \
     --enable-libv4l2 \
@@ -991,3 +1029,4 @@ RUN \
 COPY /root /
 
 ENTRYPOINT ["/ffmpegwrapper.sh"]
+
