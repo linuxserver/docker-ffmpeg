@@ -348,7 +348,7 @@ RUN \
   mkdir -p \
     rist_build && \
   cd rist_build && \
-  meson \
+  meson setup \
     --default-library=shared .. && \
   ninja && \
   ninja install && \
