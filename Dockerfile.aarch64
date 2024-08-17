@@ -16,9 +16,9 @@ ENV \
 ENV \
   AOM=v3.9.1 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=7.0.1 \
+  FFMPEG_HARD=7.0.2 \
   FONTCONFIG=2.15.0 \
-  FREETYPE=2.13.2 \
+  FREETYPE=2.13.3 \
   FRIBIDI=1.0.15 \
   HARFBUZZ=9.0.0 \
   KVAZAAR=2.3.1 \
@@ -351,7 +351,8 @@ RUN \
   meson \
     --default-library=shared .. && \
   ninja && \
-  ninja install
+  ninja install && \
+  strip -d /usr/local/lib/librist.so
 RUN \
   echo "**** grabbing srt ****" && \
   mkdir -p /tmp/srt && \
@@ -368,7 +369,8 @@ RUN \
   cmake \
     -DBUILD_SHARED_LIBS:BOOL=on .. && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libsrt.so
 RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \

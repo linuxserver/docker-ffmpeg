@@ -16,9 +16,9 @@ ENV \
 ENV \
   AOM=v3.9.1 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=7.0.1 \
+  FFMPEG_HARD=7.0.2 \
   FONTCONFIG=2.15.0 \
-  FREETYPE=2.13.2 \
+  FREETYPE=2.13.3 \
   FRIBIDI=1.0.15 \
   GMMLIB=22.3.20 \
   HARFBUZZ=9.0.0 \
@@ -27,7 +27,7 @@ ENV \
   LAME=3.100 \
   LIBASS=0.17.3 \
   LIBDAV1D=1.4.3 \
-  LIBDOVI=2.1.1 \
+  LIBDOVI=2.1.2 \
   LIBDRM=2.4.122 \
   LIBGL=1.7.0 \
   LIBMFX=22.5.4 \
@@ -38,7 +38,7 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.12.0 \
-  MESA=24.1.5 \
+  MESA=24.2.0 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -631,10 +631,11 @@ RUN \
   mkdir -p \
     rist_build && \
   cd rist_build && \
-  meson \
+  meson setup \
     --default-library=shared .. && \
   ninja && \
-  ninja install
+  ninja install && \
+  strip -d /usr/local/lib/librist.so
 RUN \
   echo "**** grabbing srt ****" && \
   mkdir -p /tmp/srt && \
@@ -651,7 +652,8 @@ RUN \
   cmake \
     -DBUILD_SHARED_LIBS:BOOL=on .. && \
   make && \
-  make install
+  make install && \
+  strip -d /usr/local/lib/libsrt.so
 RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
