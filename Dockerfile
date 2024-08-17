@@ -134,7 +134,7 @@ RUN \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir cmake mako meson ninja ply
+  pip install --no-cache-dir cmake mako meson ninja packaging ply pyyaml
 
 # compile 3rd party libs
 RUN \
