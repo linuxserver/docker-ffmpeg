@@ -174,7 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **14.08.24:** - Bump ffmpeg, freetype, libdovi and mesa.
+* **17.08.24:** - Bump ffmpeg, freetype, libdovi and mesa.
 * **14.08.24:** - Add SRT and libRIST.
 * **01.08.24:** - Add libdav1d. Bump libharfbuzz, various Intel drivers and libs, libass, libdrm, libplacebo, libva, mesa, svtav1, and vulkan sdk.
 * **21.06.24:** - Bump mesa and libaom. Update lib path for rav1e.
