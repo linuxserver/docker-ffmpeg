@@ -30,6 +30,7 @@ ENV \
   LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
+  LIBVMAF=3.0.0 \
   NVCODEC=n12.1.14.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -259,6 +260,21 @@ RUN \
   cd /tmp/libdav1d/build && \
   meson setup .. && \
   ninja install
+RUN \
+  echo "**** grabbing vmaf ****" && \
+  mkdir -p /tmp/vmaf && \
+  curl -Lf \
+    https://github.com/Netflix/vmaf/archive/refs/tags/v${LIBVMAF}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/vmaf
+RUN \
+  echo "**** compiling libvmaf ****" && \
+  cd /tmp/vmaf/libvmaf && \
+  meson setup \
+    --prefix=/usr --libdir=/usr/local/lib \
+    --buildtype release \
+    build && \
+  ninja -vC build && \
+  ninja -vC build install
 RUN \
   echo "**** grabbing ogg ****" && \
   mkdir -p /tmp/ogg && \
@@ -574,6 +590,7 @@ RUN \
     --enable-libtheora \
     --enable-libv4l2 \
     --enable-libvidstab \
+    --enable-libvmaf \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
