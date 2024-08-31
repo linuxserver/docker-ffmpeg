@@ -14,7 +14,7 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.9.1 \
+  AOM=v3.10.0 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.0.2 \
   FONTCONFIG=2.15.0 \
@@ -28,7 +28,7 @@ ENV \
   LIBASS=0.17.3 \
   LIBDAV1D=1.4.3 \
   LIBDOVI=2.1.2 \
-  LIBDRM=2.4.122 \
+  LIBDRM=2.4.123 \
   LIBGL=1.7.0 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.349.0 \
@@ -37,8 +37,8 @@ ENV \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
-  LIBVPL=2.12.0 \
-  MESA=24.2.0 \
+  LIBVPL=2.13.0 \
+  MESA=24.2.1 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -48,7 +48,7 @@ ENV \
   RIST=0.2.10 \
   SHADERC=v2024.1 \
   SRT=1.5.3 \
-  SVTAV1=2.1.2 \
+  SVTAV1=2.2.1 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPLGPURT=24.2.5 \
@@ -862,6 +862,7 @@ RUN \
     --disable-doc \
     --disable-ffplay \
     --enable-alsa \
+    --enable-cuda-llvm \
     --enable-cuvid \
     --enable-ffprobe \
     --enable-gpl \
@@ -901,7 +902,6 @@ RUN \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
-    --enable-cuda-llvm \
     --enable-opencl \
     --enable-openssl \
     --enable-stripping \

@@ -174,6 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **31.08.24:** - Bump libaom, libdrm, libvol, mesa and svtav1. Enable nvdec/nvenc on arm64 (untested).
 * **17.08.24:** - Bump ffmpeg, freetype, libdovi and mesa.
 * **14.08.24:** - Add SRT and libRIST.
 * **01.08.24:** - Add libdav1d. Bump libharfbuzz, various Intel drivers and libs, libass, libdrm, libplacebo, libva, mesa, svtav1, and vulkan sdk.
