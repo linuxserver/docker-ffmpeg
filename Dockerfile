@@ -57,7 +57,8 @@ ENV \
   WEBP=1.4.0 \
   X265=3.6 \
   XVID=1.3.7 \
-  ZIMG=3.0.5
+  ZIMG=3.0.5 \
+  ZMQ=v4.3.5
 
 RUN \
   echo "**** install build packages ****" && \
@@ -459,7 +460,7 @@ RUN \
   echo "**** compiling libvpl ****" && \
   mkdir -p /tmp/libvpl/build && \
   cd /tmp/libvpl/build && \
-  cmake .. && \ 
+  cmake .. && \
   cmake --build . --config Release && \
   cmake --build . --config Release --target install && \
   strip -d /usr/local/lib/libvpl.so
@@ -476,7 +477,7 @@ RUN \
   cmake \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
-    .. && \ 
+    .. && \
   make && \
   make install && \
   strip -d /usr/local/lib/libmfx-gen.so
@@ -497,7 +498,7 @@ RUN \
     -DENABLE_X11_DRI3=ON \
     -DBUILD_DISPATCHER=OFF \
     -DBUILD_TUTORIALS=OFF \
-    .. && \ 
+    .. && \
   make && \
   make install && \
   strip -d \
@@ -820,7 +821,7 @@ RUN \
 RUN \
   echo "**** compiling xvid ****" && \
   cd /tmp/xvid/build/generic && \
-  ./configure && \ 
+  ./configure && \
   make && \
   make install
 RUN \
@@ -839,6 +840,22 @@ RUN \
     --enable-shared && \
   make && \
   make install
+RUN \
+  echo "**** grabbing zmq ****" && \
+  mkdir -p /tmp/zmq && \
+  git clone \
+    --branch ${ZMQ} --depth 1 \
+    https://github.com/zeromq/libzmq.git \
+    /tmp/zmq
+RUN \
+  echo "**** compiling zmq ****" && \
+  cd /tmp/zmq && \
+  ./autogen.sh && \
+  ./configure \
+    --disable-static \
+    --enable-shared && \
+  make && \
+  make install-strip
 
 # main ffmpeg build
 RUN \
@@ -899,6 +916,7 @@ RUN \
     --enable-libxml2 \
     --enable-libxvid \
     --enable-libzimg \
+    --enable-libzmq \
     --enable-nonfree \
     --enable-nvdec \
     --enable-nvenc \
@@ -908,7 +926,8 @@ RUN \
     --enable-vaapi \
     --enable-vdpau \
     --enable-version3 \
-    --enable-vulkan && \
+    --enable-vulkan \
+    && \
   make
 
 RUN \
@@ -1031,4 +1050,3 @@ RUN \
 COPY /root /
 
 ENTRYPOINT ["/ffmpegwrapper.sh"]
-
