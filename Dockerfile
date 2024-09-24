@@ -21,7 +21,7 @@ ENV \
   FREETYPE=2.13.3 \
   FRIBIDI=1.0.15 \
   GMMLIB=22.3.20 \
-  HARFBUZZ=9.0.0 \
+  HARFBUZZ=10.0.0 \
   IHD=24.2.5 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
@@ -32,13 +32,13 @@ ENV \
   LIBGL=1.7.0 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.349.0 \
-  LIBPNG=1.6.43 \
+  LIBPNG=1.6.44 \
   LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.13.0 \
-  MESA=24.2.1 \
+  MESA=24.2.3 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -46,7 +46,7 @@ ENV \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
   RIST=0.2.10 \
-  SHADERC=v2024.1 \
+  SHADERC=v2024.3 \
   SRT=1.5.3 \
   SVTAV1=2.2.1 \
   THEORA=1.1.1 \
@@ -55,7 +55,7 @@ ENV \
   VPX=1.14.1 \
   VULKANSDK=vulkan-sdk-1.3.290.0 \
   WEBP=1.4.0 \
-  X265=3.6 \
+  X265=4.0 \
   XVID=1.3.7 \
   ZIMG=3.0.5 \
   ZMQ=v4.3.5
