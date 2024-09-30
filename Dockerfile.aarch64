@@ -503,18 +503,6 @@ RUN \
   make && \
   make install
 RUN \
-  echo "**** grabbing vvenc ****" && \
-  mkdir -p /tmp/vvenc && \
-  git clone \
-    --branch v${VVENC} \
-    --depth 1 https://github.com/fraunhoferhhi/vvenc.git \
-    /tmp/vvenc
-RUN \
-  echo "**** compiling vvenc ****" && \
-  cd /tmp/vvenc && \
-  make install install-prefix=/usr/local && \
-  strip -d /usr/local/lib/libvvenc.so
-RUN \
   echo "**** grabbing webp ****" && \
   mkdir -p /tmp/webp && \
   curl -Lf \
@@ -652,7 +640,6 @@ RUN \
     --enable-libvmaf \
     --enable-libvorbis \
     --enable-libvpx \
-    --enable-libvvenc \
     --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
