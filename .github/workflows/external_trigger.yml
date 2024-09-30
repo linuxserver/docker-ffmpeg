@@ -15,7 +15,7 @@ jobs:
           SKIP_EXTERNAL_TRIGGER: ${{ vars.SKIP_EXTERNAL_TRIGGER }}
         run: |
           printf "# External trigger for docker-ffmpeg\n\n" >> $GITHUB_STEP_SUMMARY
-          if grep -wq "^ffmpeg_master$" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+          if grep -q "^ffmpeg_master" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
             echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`ffmpeg_master\`; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
@@ -23,7 +23,7 @@ jobs:
           echo "> [!NOTE]" >> $GITHUB_STEP_SUMMARY
           echo "> External trigger running off of master branch. To disable this trigger, add \`ffmpeg_master\` into the Github organizational variable \`SKIP_EXTERNAL_TRIGGER\`." >> $GITHUB_STEP_SUMMARY
           printf "\n## Retrieving external version\n\n" >> $GITHUB_STEP_SUMMARY
-          EXT_RELEASE=$(echo 7.0.2-cli)
+          EXT_RELEASE=$(echo 7.1-cli)
           echo "Type is \`custom_version_command\`" >> $GITHUB_STEP_SUMMARY
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY

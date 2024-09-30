@@ -16,12 +16,12 @@ ENV \
 ENV \
   AOM=v3.10.0 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=7.0.2 \
+  FFMPEG_HARD=7.1 \
   FONTCONFIG=2.15.0 \
   FREETYPE=2.13.3 \
-  FRIBIDI=1.0.15 \
+  FRIBIDI=1.0.16 \
   GMMLIB=22.3.20 \
-  HARFBUZZ=10.0.0 \
+  HARFBUZZ=10.0.1 \
   IHD=24.2.5 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
@@ -30,6 +30,7 @@ ENV \
   LIBDOVI=2.1.2 \
   LIBDRM=2.4.123 \
   LIBGL=1.7.0 \
+  LIBLC3=1.1.1 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.349.0 \
   LIBPNG=1.6.44 \
@@ -54,6 +55,7 @@ ENV \
   VPLGPURT=24.2.5 \
   VPX=1.14.1 \
   VULKANSDK=vulkan-sdk-1.3.290.0 \
+  VVENC=1.12.0 \
   WEBP=1.4.0 \
   X265=4.0 \
   XVID=1.3.7 \
@@ -348,6 +350,19 @@ RUN \
   ninja -C build install && \
   strip -d /usr/local/lib/x86_64-linux-gnu/libdrm*.so
 RUN \
+  echo "**** grabbing liblc3 ****" && \
+  mkdir -p /tmp/liblc3 && \
+  git clone \
+    --branch v${LIBLC3} \
+    --depth 1 \
+    https://github.com/google/liblc3.git \
+    /tmp/liblc3
+RUN \
+    echo "**** compiling liblc3 ****" && \
+    cd /tmp/liblc3 && \
+    meson setup build && \
+    meson install -C build --strip
+RUN \
   echo "**** grabbing libva ****" && \
   mkdir -p /tmp/libva && \
   curl -Lf \
@@ -384,14 +399,14 @@ RUN \
     build && \
   ninja -C build install && \
   strip -d /usr/local/lib/libvdpau.so
-  RUN \
+RUN \
     echo "**** grabbing shaderc ****" && \
     mkdir -p /tmp/shaderc && \
     git clone \
       --branch ${SHADERC} \
       --depth 1 https://github.com/google/shaderc.git \
       /tmp/shaderc
-  RUN \
+RUN \
     echo "**** compiling shaderc ****" && \
     cd /tmp/shaderc && \
     ./utils/git-sync-deps && \
@@ -773,6 +788,18 @@ RUN \
   make && \
   make install
 RUN \
+  echo "**** grabbing vvenc ****" && \
+  mkdir -p /tmp/vvenc && \
+  git clone \
+    --branch v${VVENC} \
+    --depth 1 https://github.com/fraunhoferhhi/vvenc.git \
+    /tmp/vvenc
+RUN \
+  echo "**** compiling vvenc ****" && \
+  cd /tmp/vvenc && \
+  make install install-prefix=/usr/local && \
+  strip -d /usr/local/lib/libvvenc.so
+RUN \
   echo "**** grabbing webp ****" && \
   mkdir -p /tmp/webp && \
   curl -Lf \
@@ -892,6 +919,7 @@ RUN \
     --enable-libfribidi \
     --enable-libharfbuzz \
     --enable-libkvazaar \
+    --enable-liblc3 \
     --enable-libmp3lame \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
@@ -910,6 +938,7 @@ RUN \
     --enable-libvorbis \
     --enable-libvpl \
     --enable-libvpx \
+    --enable-libvvenc \
     --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
