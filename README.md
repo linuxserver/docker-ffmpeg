@@ -174,6 +174,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **02.10.24:** - Add support for libvvenc on aarch64.
 * **30.09.24:** - Bump ffmpeg for 7.1. Add support for libvvenc (amd64 only) and liblc3. Bump libfribidi and libharfbuzz.
 * **24.09.24:** - Let ffmpeg terminate gracefully on docker stop/restart. Bump libharfbuzz, libpng, mesa, shaderc and libx265.
 * **09.09.24:** - Add libzmq.
