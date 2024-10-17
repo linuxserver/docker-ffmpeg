@@ -22,7 +22,7 @@ dirmngr                      2.4.4-2ubuntu17                    deb
 dpkg                         1.22.6ubuntu6.1                    deb     
 e2fsprogs                    1.47.0-2.4~exp1ubuntu4.1           deb     
 findutils                    4.9.0-5build1                      deb     
-gcc-14-base                  14-20240412-0ubuntu1               deb     
+gcc-14-base                  14.2.0-4ubuntu2~24.04              deb     
 gnupg                        2.4.4-2ubuntu17                    deb     
 gnupg-l10n                   2.4.4-2ubuntu17                    deb     
 gnupg-utils                  2.4.4-2ubuntu17                    deb     
@@ -65,13 +65,13 @@ libelf1t64                   0.190-1.1build4                    deb
 libexpat1                    2.6.1-2ubuntu0.1                   deb     
 libext2fs2t64                1.47.0-2.4~exp1ubuntu4.1           deb     
 libffi8                      3.4.6-1build1                      deb     
-libgcc-s1                    14-20240412-0ubuntu1               deb     
+libgcc-s1                    14.2.0-4ubuntu2~24.04              deb     
 libgcrypt20                  1.10.3-2build1                     deb     
 libglib2.0-0t64              2.80.0-6ubuntu3.1                  deb     
 libglib2.0-data              2.80.0-6ubuntu3.1                  deb     
 libgmp10                     2:6.3.0+dfsg-2ubuntu6              deb     
 libgnutls30t64               3.8.3-1.1ubuntu3.2                 deb     
-libgomp1                     14-20240412-0ubuntu1               deb     
+libgomp1                     14.2.0-4ubuntu2~24.04              deb     
 libgpg-error0                1.47-3build2                       deb     
 libgssapi-krb5-2             1.20.1-6ubuntu2.1                  deb     
 libhogweed6t64               3.9.1-2.2build1.1                  deb     
@@ -121,7 +121,7 @@ libsqlite3-0                 3.45.1-1ubuntu2                    deb
 libss2                       1.47.0-2.4~exp1ubuntu4.1           deb     
 libssh-4                     0.10.6-2build2                     deb     
 libssl3t64                   3.0.13-0ubuntu3.4                  deb     
-libstdc++6                   14-20240412-0ubuntu1               deb     
+libstdc++6                   14.2.0-4ubuntu2~24.04              deb     
 libsystemd0                  255.4-1ubuntu8.4                   deb     
 libtasn1-6                   4.19.0-3build1                     deb     
 libtinfo6                    6.4+20240113-1ubuntu2              deb     
