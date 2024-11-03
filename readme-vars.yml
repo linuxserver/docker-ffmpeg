@@ -12,23 +12,27 @@ full_custom_readme: |
   [![Fleet](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Fleet)](https://fleet.linuxserver.io "an online web interface which displays all of our maintained images.")
   [![GitHub](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub&logo=github)](https://github.com/linuxserver "view the source for all of our repositories.")
   [![Open Collective](https://img.shields.io/opencollective/all/linuxserver.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Supporters&logo=open%20collective)](https://opencollective.com/linuxserver "please consider helping us by either donating or contributing to our budget")
-  
-  The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring :-
-  
-   * regular and timely application updates
-   * easy user mappings (PGID, PUID)
-   * custom base image with s6 overlay
-   * weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
-   * regular security updates
-  
+
+  The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring:
+
+  * regular and timely application updates
+  * easy user mappings (PGID, PUID)
+  * custom base image with s6 overlay
+  * weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
+  * regular security updates
+
   Find us at:
+
   * [Blog](https://blog.linuxserver.io) - all the things you can do with our containers including How-To guides, opinions and much more!
   * [Discord](https://discord.gg/YWrKVTn) - realtime support / chat with the community and the team.
   * [Discourse](https://discourse.linuxserver.io) - post on our community forum.
   * [Fleet](https://fleet.linuxserver.io) - an online web interface which displays all of our maintained images.
+  * [GitHub](https://github.com/linuxserver) - view the source for all of our repositories.
   * [Open Collective](https://opencollective.com/linuxserver) - please consider helping us by either donating or contributing to our budget
 
-  [![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fffmpeg?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh/gateway/linuxserver-ci/docker/linuxserver%2Fffmpeg)
+  # [linuxserver/ffmpeg](https://github.com/linuxserver/docker-ffmpeg)
+
+  [![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fffmpeg?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh)
   [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-ffmpeg)
   [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-ffmpeg/releases)
   [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub%20Package&logo=github)](https://github.com/linuxserver/docker-ffmpeg/packages)
@@ -40,12 +44,11 @@ full_custom_readme: |
   
   [FFmpeg](https://ffmpeg.org) - A complete, cross-platform solution to record, convert and stream audio and video.
   
-  
   [![ffmpeg](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ffmpeg.png)](https://ffmpeg.org)
   
   ## Supported Architectures
 
-  We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
+  We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://distribution.github.io/distribution/spec/manifest-v2-2/#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
 
   Simply pulling `lscr.io/linuxserver/ffmpeg:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
@@ -55,7 +58,7 @@ full_custom_readme: |
   | :----: | :----: | ---- |
   | x86-64 | ✅ | amd64-\<version tag\> |
   | arm64 | ✅ | arm64v8-\<version tag\> |
-  | armhf| ❌ | arm32v7-\<version tag\> |
+  | armhf | ❌ | |
   
   ## Usage
   
@@ -65,17 +68,19 @@ full_custom_readme: |
   The image supports Hardware acceleration on x86 pay close attention to the variables for the examples below.
 
   ### Included Intel Drivers (latest versions compiled):
-  - iHD Driver: Supports gen8+ (default for Intel)
-  - i965 Driver: Supports gen5+ (for gen5-gen9.5 it can be enabled by setting env var `LIBVA_DRIVER_NAME=i965` in docker arguments)
-  - Libva (VAAPI): Supports gen5+ with i965 driver and gen8+ with iHD driver
-  - Qsv Dispatcher: OneVPL (supports both OneVPL and MSDK runtimes and should automatically switch)
-  - Qsv Runtime:
-    - OneVPL: Supports gen12+
-    - MSDK (libmfx): Supports gen8 - gen12
+
+  * iHD Driver: Supports gen8+ (default for Intel)
+  * i965 Driver: Supports gen5+ (for gen5-gen9.5 it can be enabled by setting env var `LIBVA_DRIVER_NAME=i965` in docker arguments)
+  * Libva (VAAPI): Supports gen5+ with i965 driver and gen8+ with iHD driver
+  * Qsv Dispatcher: OneVPL (supports both OneVPL and MSDK runtimes and should automatically switch)
+  * Qsv Runtime:
+
+      * OneVPL: Supports gen12+
+      * MSDK (libmfx): Supports gen8 - gen12
 
   ### Basic Transcode
 
-  ```
+  ```bash
   docker run --rm -it \
     -v $(pwd):/config \
     linuxserver/ffmpeg \
@@ -89,7 +94,7 @@ full_custom_readme: |
 
   ### Hardware accelerated (VAAPI) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/VAAPI))
   
-  ```
+  ```bash
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
     -v $(pwd):/config \
@@ -105,7 +110,7 @@ full_custom_readme: |
 
   ### Hardware accelerated (QSV) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/QuickSync))
   
-  ```
+  ```bash
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
     -v $(pwd):/config \
@@ -119,9 +124,10 @@ full_custom_readme: |
   ```
 
   ### Nvidia Hardware accelerated ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#CUDANVENCNVDEC))
-  *Nvidia support requires [Nvidia container toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) and the Nvidia drivers installed on the host*
 
-  ```
+  Nvidia support __requires__ [Nvidia container toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) and the Nvidia drivers installed on the host.
+
+  ```bash
   docker run --rm -it \
     --runtime=nvidia \
     -v $(pwd):/config \
@@ -139,7 +145,7 @@ full_custom_readme: |
 
   Vulkan support has been added to x86_64 (tested with Intel and AMD iGPU) ([click for more info](https://trac.ffmpeg.org/wiki/HWAccelIntro#Vulkan)).
 
-  ```
+  ```bash
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
     -v $(pwd):/config \
@@ -152,25 +158,28 @@ full_custom_readme: |
     -f null - -benchmark
   ```
 
-  **Note:** Vulkan supports three drivers:
-    - ANV: To enable for Intel, set the env var `ANV_VIDEO_DECODE=1`
-    - RADV: To enable on AMD, set the env var `RADV_PERFTEST=video_decode`
-    - NVIDIA: To enable on Nvidia, install Nvidia Vulkan Beta drivers on the host per [this article](https://lynne.ee/vulkan-video-decoding.html#driver-support)
+  #### Vulkan supports three drivers
+
+  * ANV: To enable for Intel, set the env var `ANV_VIDEO_DECODE=1`
+  * RADV: To enable on AMD, set the env var `RADV_PERFTEST=video_decode`
+  * NVIDIA: To enable on Nvidia, install Nvidia Vulkan Beta drivers on the host per [this article](https://lynne.ee/vulkan-video-decoding.html#driver-support)
 
   ## Building locally
-  
+
   If you want to make local modifications to these images for development purposes or just to customize the logic:
-  ```
+
+  ```bash
   git clone https://github.com/linuxserver/docker-ffmpeg.git
   cd docker-ffmpeg
   docker build \
     --no-cache \
     --pull \
-    -t linuxserver/ffmpeg:latest .
+    -t lscr.io/linuxserver/docker-ffmpeg:latest .
   ```
-  
+
   The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
-  ```
+
+  ```bash
   docker run --rm --privileged multiarch/qemu-user-static:register --reset
   ```
 
