@@ -183,6 +183,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **07.11.24:** - Bump harfbuzz, Intel drivers and libs, libdav1d, mesa, svtav1, vpx, vulkan sdk and vvenc.
 * **05.10.24:** - Add support for libvvenc on aarch64. Bump mesa.
 * **30.09.24:** - Bump ffmpeg for 7.1. Add support for libvvenc (amd64 only) and liblc3. Bump libfribidi and libharfbuzz.
 * **24.09.24:** - Let ffmpeg terminate gracefully on docker stop/restart. Bump libharfbuzz, libpng, mesa, shaderc and libx265.
