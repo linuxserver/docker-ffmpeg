@@ -53,7 +53,7 @@ ENV \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
   VPLGPURT=24.3.4 \
-  VPX=1.15 \
+  VPX=1.15.0 \
   VULKANSDK=vulkan-sdk-1.3.296.0 \
   VVENC=1.12.1 \
   WEBP=1.4.0 \
