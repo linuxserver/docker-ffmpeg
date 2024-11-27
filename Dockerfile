@@ -14,7 +14,7 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.10.0 \
+  AOM=v3.11.0 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.1 \
   FONTCONFIG=2.15.0 \
@@ -39,16 +39,16 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.13.0 \
-  MESA=24.2.6 \
+  MESA=24.3.0 \
   NVCODEC=n12.2.72.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.2 \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
-  RIST=0.2.10 \
+  RIST=0.2.11 \
   SHADERC=v2024.3 \
-  SRT=1.5.3 \
+  SRT=1.5.4 \
   SVTAV1=2.3.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
@@ -57,7 +57,7 @@ ENV \
   VULKANSDK=vulkan-sdk-1.3.296.0 \
   VVENC=1.12.1 \
   WEBP=1.4.0 \
-  X265=4.0 \
+  X265=4.1 \
   XVID=1.3.7 \
   ZIMG=3.0.5 \
   ZMQ=v4.3.5
