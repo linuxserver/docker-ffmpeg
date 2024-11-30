@@ -1078,4 +1078,4 @@ RUN \
 
 COPY /root /
 
-ENTRYPOINT ["/ffmpegwrapper.sh"]
+RUN mkdir -p /workspace
