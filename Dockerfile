@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:noble as buildstage
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
 
 # set version label
 ARG FFMPEG_VERSION
