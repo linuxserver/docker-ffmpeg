@@ -2,6 +2,7 @@
 
 # project information
 project_name: ffmpeg
+project_description: A complete, cross-platform solution to record, convert and stream audio and video.
 full_custom_readme: |
   {% raw -%}
   [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
@@ -41,11 +42,11 @@ full_custom_readme: |
   [![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/ffmpeg)
   [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/ffmpeg.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/ffmpeg)
   [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-ffmpeg%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-ffmpeg/job/master/)
-  
+
   [FFmpeg](https://ffmpeg.org) - A complete, cross-platform solution to record, convert and stream audio and video.
-  
+
   [![ffmpeg](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ffmpeg.png)](https://ffmpeg.org)
-  
+
   ## Supported Architectures
 
   We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://distribution.github.io/distribution/spec/manifest-v2-2/#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
@@ -59,9 +60,9 @@ full_custom_readme: |
   | x86-64 | ✅ | amd64-\<version tag\> |
   | arm64 | ✅ | arm64v8-\<version tag\> |
   | armhf | ❌ | |
-  
+
   ## Usage
-  
+
   Unlike most of our container library this image is meant to be run ephemerally from the command line parsing user input for a custom FFmpeg command. You will need to understand some Docker basics to use this image and be familiar with how to construct an FFmpeg command. In the commands below we will be bind mounting our current working directory from the CLI to /config, the assumption is that input.mkv is in your current working directory.
 
   If an input file is detected we will run FFmpeg as that user/group so the output file will match its permissions.
@@ -93,7 +94,7 @@ full_custom_readme: |
   ```
 
   ### Hardware accelerated (VAAPI) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/VAAPI))
-  
+
   ```bash
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
@@ -109,7 +110,7 @@ full_custom_readme: |
   ```
 
   ### Hardware accelerated (QSV) ([click for more info](https://trac.ffmpeg.org/wiki/Hardware/QuickSync))
-  
+
   ```bash
   docker run --rm -it \
     --device=/dev/dri:/dev/dri \
