@@ -2,6 +2,7 @@
 
 # project information
 project_name: ffmpeg
+project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/ffmpeg.png"
 project_blurb: A complete, cross-platform solution to record, convert and stream audio and video.
 project_categories: "Media Tools"
 full_custom_readme: |
