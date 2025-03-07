@@ -171,8 +171,8 @@ RUN \
   echo "**** grabbing fontconfig ****" && \
   mkdir -p /tmp/fontconfig && \
   curl -Lf \
-    https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.gz | \
-    tar -zx --strip-components=1 -C /tmp/fontconfig
+    https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.xz | \
+    tar -xJ --strip-components=1 -C /tmp/fontconfig
 RUN \
   echo "**** compiling fontconfig ****" && \
   cd /tmp/fontconfig && \
