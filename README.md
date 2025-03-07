@@ -183,6 +183,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **07.03.25:** - Bump ffmpeg to 7.1.1, Bump aom, fontconfig, Intel drivers and libs, harfbuzz, libdav1d, libdovi, libdrm, liblc3, libpng, mesa, openjpeg, shaderc, svt-av1, vulkan-sdk, vvenc and webp.
 * **26.11.24:** - Bump libaom, mesa, rist, srt and libx265.
 * **07.11.24:** - Bump harfbuzz, Intel drivers and libs, libdav1d, mesa, svtav1, vpx, vulkan sdk and vvenc.
 * **05.10.24:** - Add support for libvvenc on aarch64. Bump mesa.
