@@ -146,7 +146,7 @@ RUN \
   mkdir -p /tmp/ffnvcodec && \
   git clone \
     --branch ${NVCODEC} \
-    --depth 1 https://git.videolan.org/git/ffmpeg/nv-codec-headers.git \
+    --depth 1 https://github.com/FFmpeg/nv-codec-headers.git \
     /tmp/ffnvcodec
 RUN \
   echo "**** compiling ffnvcodec ****" && \
