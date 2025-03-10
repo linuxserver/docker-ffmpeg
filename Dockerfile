@@ -898,10 +898,15 @@ RUN \
   curl -Lf \
     https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 | \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
+
+# Apply patch for svt-av1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/issues/2249#note_2361478864
+COPY /ffmpeg_n7_fix.patch /tmp/ffmpeg/
+
 RUN \
   echo "**** compiling ffmpeg ****" && \
   cd /tmp/ffmpeg && \
-    ./configure \
+  patch -p1 < ffmpeg_n7_fix.patch && \
+  ./configure \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
