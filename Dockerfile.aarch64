@@ -210,7 +210,7 @@ RUN \
   cd /tmp/harfbuzz && \
   meson build && \
   ninja -C build install && \
-  strip -d /usr/local/lib/libharfbuzz*.so
+  strip -d /usr/local/lib/aarch64-linux-gnu/libharfbuzz*.so
 RUN \
   echo "**** grabbing kvazaar ****" && \
   mkdir -p /tmp/kvazaar && \
@@ -679,7 +679,7 @@ RUN \
   mkdir -p \
     /buildout/usr/local/bin \
     /buildout/usr/local/etc/fonts \
-    /buildout/usr/local/lib \
+    /buildout/usr/local/lib/aarch64-linux-gnu \
     /buildout/usr/share/fonts && \
   cp \
     /tmp/ffmpeg/ffmpeg \
@@ -693,6 +693,9 @@ RUN \
   cp -a \
     /usr/local/lib/lib*so* \
     /buildout/usr/local/lib/ && \
+  cp -a \
+    /usr/local/lib/aarch64-linux-gnu/lib*so* \
+    /buildout/usr/local/lib/aarch64-linux-gnu/ && \
   cp -a \
     /usr/share/fonts/* \
     /buildout/usr/share/fonts/
