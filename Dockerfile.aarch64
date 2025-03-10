@@ -62,9 +62,7 @@ RUN \
     clang \
     diffutils \
     g++ \
-    g++-12 \
     gcc \
-    gcc-12 \
     git \
     gperf \
     libasound2-dev \
@@ -381,7 +379,7 @@ RUN \
   echo "**** compiling rav1e ****" && \
   cd /tmp/rav1e && \
   cargo cinstall --release && \
-  strip -d /usr/local/lib/librav1e.so
+  strip -d /usr/local/lib/aarch64-linux-gnu/librav1e.so
 RUN \
   echo "**** grabbing rist ****" && \
   mkdir -p /tmp/rist && \
@@ -515,7 +513,7 @@ RUN \
 RUN \
   echo "**** compiling vvenc ****" && \
   cd /tmp/vvenc && \
-  CC=/usr/bin/gcc-12 CXX=/usr/bin/g++-12 make install install-prefix=/usr/local && \
+  make install install-prefix=/usr/local && \
   strip -d /usr/local/lib/libvvenc.so
 RUN \
   echo "**** grabbing webp ****" && \
