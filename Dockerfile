@@ -14,49 +14,49 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.11.0 \
+  AOM=v3.12.0 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=7.1 \
-  FONTCONFIG=2.15.0 \
+  FFMPEG_HARD=7.1.1 \
+  FONTCONFIG=2.16.0 \
   FREETYPE=2.13.3 \
   FRIBIDI=1.0.16 \
-  GMMLIB=22.5.2 \
-  HARFBUZZ=10.1.0 \
-  IHD=24.3.4 \
+  GMMLIB=22.5.5 \
+  HARFBUZZ=10.4.0 \
+  IHD=24.4.4 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
   LIBASS=0.17.3 \
-  LIBDAV1D=1.5.0 \
-  LIBDOVI=2.1.2 \
-  LIBDRM=2.4.123 \
+  LIBDAV1D=1.5.1 \
+  LIBDOVI=2.2.0 \
+  LIBDRM=2.4.124 \
   LIBGL=1.7.0 \
-  LIBLC3=1.1.1 \
+  LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.349.0 \
-  LIBPNG=1.6.44 \
+  LIBPNG=1.6.47 \
   LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
-  LIBVPL=2.13.0 \
-  MESA=24.3.0 \
-  NVCODEC=n12.2.72.0 \
+  LIBVPL=2.14.0 \
+  MESA=25.0.1 \
+  NVCODEC=n13.0.19.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
-  OPENJPEG=2.5.2 \
+  OPENJPEG=2.5.3 \
   OPUS=1.5.2 \
   RAV1E=0.7.1 \
   RIST=0.2.11 \
-  SHADERC=v2024.3 \
+  SHADERC=v2025.1 \
   SRT=1.5.4 \
-  SVTAV1=2.3.0 \
+  SVTAV1=3.0.0 \
   THEORA=1.1.1 \
   VORBIS=1.3.7 \
-  VPLGPURT=24.3.4 \
+  VPLGPURT=24.4.4 \
   VPX=1.15.0 \
-  VULKANSDK=vulkan-sdk-1.3.296.0 \
-  VVENC=1.12.1 \
-  WEBP=1.4.0 \
+  VULKANSDK=vulkan-sdk-1.4.304.1 \
+  VVENC=1.13.0 \
+  WEBP=1.5.0 \
   X265=4.1 \
   XVID=1.3.7 \
   ZIMG=3.0.5 \
@@ -181,7 +181,7 @@ RUN \
   mkdir -p /tmp/ffnvcodec && \
   git clone \
     --branch ${NVCODEC} \
-    --depth 1 https://git.videolan.org/git/ffmpeg/nv-codec-headers.git \
+    --depth 1 https://github.com/FFmpeg/nv-codec-headers.git \
     /tmp/ffnvcodec
 RUN \
   echo "**** compiling ffnvcodec ****" && \
@@ -206,8 +206,8 @@ RUN \
   echo "**** grabbing fontconfig ****" && \
   mkdir -p /tmp/fontconfig && \
   curl -Lf \
-    https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.gz | \
-    tar -zx --strip-components=1 -C /tmp/fontconfig
+    https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.xz | \
+    tar -xJ --strip-components=1 -C /tmp/fontconfig
 RUN \
   echo "**** compiling fontconfig ****" && \
   cd /tmp/fontconfig && \
@@ -898,10 +898,15 @@ RUN \
   curl -Lf \
     https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 | \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
+
+# Apply patch for svt-av1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/issues/2249#note_2361478864
+COPY /ffmpeg_n7_fix.patch /tmp/ffmpeg/
+
 RUN \
   echo "**** compiling ffmpeg ****" && \
   cd /tmp/ffmpeg && \
-    ./configure \
+  patch -p1 < ffmpeg_n7_fix.patch && \
+  ./configure \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
