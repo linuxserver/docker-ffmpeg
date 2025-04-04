@@ -102,7 +102,7 @@ RUN \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir cmake meson ninja
+  pip install --no-cache-dir cmake==3.31.6 meson ninja
 
 # compile 3rd party libs
 RUN \
