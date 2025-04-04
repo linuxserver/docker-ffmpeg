@@ -10,6 +10,7 @@ ARG FFMPEG_VERSION
 ENV \
   DEBIAN_FRONTEND="noninteractive" \
   MAKEFLAGS="-j4" \
+  CMAKE_POLICY_VERSION_MINIMUM="3.5" \
   PATH="/root/.cargo/bin:${PATH}"
 
 # versions
@@ -131,13 +132,13 @@ RUN \
   tar xf /tmp/rust.tar.gz -C /tmp/rust --strip-components=1 && \
   cd /tmp/rust && \
   ./install.sh && \
-  cargo install cargo-c cbindgen && \
+  cargo install cargo-c cbindgen --locked && \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
     setuptools \
     wheel && \
-  pip install --no-cache-dir cmake mako meson ninja packaging ply pyyaml
+  pip install --no-cache-dir cmake==3.31.6 mako meson ninja packaging ply pyyaml
 
 # compile 3rd party libs
 RUN \
