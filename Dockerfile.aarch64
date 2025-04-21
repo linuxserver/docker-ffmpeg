@@ -438,16 +438,6 @@ RUN \
 RUN \
   echo "**** compiling theora ****" && \
   cd /tmp/theora && \
-  cp \
-    /usr/share/automake-1.16/config.guess \
-    config.guess && \
-  cp \
-    /usr/share/automake-1.16/config.sub \
-    config.sub && \
-  curl -fL \
-    'https://gitlab.xiph.org/xiph/theora/-/commit/7288b539c52e99168488dc3a343845c9365617c8.diff' \
-    > png.patch && \
-  patch ./examples/png2theora.c < png.patch && \
   ./configure \
     --disable-static \
     --enable-shared && \
