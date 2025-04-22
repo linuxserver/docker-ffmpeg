@@ -15,15 +15,15 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.12.0 \
+  AOM=v3.12.1 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=7.1.1 \
   FONTCONFIG=2.16.0 \
   FREETYPE=2.13.3 \
   FRIBIDI=1.0.16 \
-  GMMLIB=22.5.5 \
-  HARFBUZZ=10.4.0 \
-  IHD=24.4.4 \
+  GMMLIB=22.7.1 \
+  HARFBUZZ=11.1.0 \
+  IHD=25.1.4 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
   LIBASS=0.17.3 \
@@ -39,8 +39,8 @@ ENV \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
-  LIBVPL=2.14.0 \
-  MESA=25.0.1 \
+  LIBVPL=2.15.0 \
+  MESA=25.0.4 \
   NVCODEC=n13.0.19.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -50,13 +50,13 @@ ENV \
   RIST=0.2.11 \
   SHADERC=v2025.1 \
   SRT=1.5.4 \
-  SVTAV1=3.0.0 \
-  THEORA=1.1.1 \
+  SVTAV1=3.0.2 \
+  THEORA=1.2.0 \
   VORBIS=1.3.7 \
-  VPLGPURT=24.4.4 \
-  VPX=1.15.0 \
-  VULKANSDK=vulkan-sdk-1.4.304.1 \
-  VVENC=1.13.0 \
+  VPLGPURT=25.1.4 \
+  VPX=1.15.1 \
+  VULKANSDK=vulkan-sdk-1.4.309.0 \
+  VVENC=1.13.1 \
   WEBP=1.5.0 \
   X265=4.1 \
   XVID=1.3.7 \
@@ -692,16 +692,6 @@ RUN \
 RUN \
   echo "**** compiling theora ****" && \
   cd /tmp/theora && \
-  cp \
-    /usr/share/automake-1.16/config.guess \
-    config.guess && \
-  cp \
-    /usr/share/automake-1.16/config.sub \
-    config.sub && \
-  curl -fL \
-    'https://gitlab.xiph.org/xiph/theora/-/commit/7288b539c52e99168488dc3a343845c9365617c8.diff' \
-    > png.patch && \
-  patch ./examples/png2theora.c < png.patch && \
   ./configure \
     --disable-static \
     --enable-shared && \
