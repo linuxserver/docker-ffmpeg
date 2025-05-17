@@ -13,12 +13,11 @@ set_uidgid () {
 run_ffmpeg () {
   # we do not have input file or it does not exist on disk just run as root
   if [ -z ${INPUT_FILE+x} ] || [ ! -f "${INPUT_FILE}" ]; then
-    exec /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
+    exec $([ -z "${NICE}" ] || echo nice -n "$NICE") /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
   # we found the input file run as abc
   else
     set_uidgid
-    exec s6-setuidgid abc \
-      /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
+    exec s6-setuidgid abc $([ -z "${NICE}" ] || echo nice -n "$NICE") /usr/local/bin/ffmpeg "${FULL_ARGS[@]}"
   fi
 }
 
