@@ -63,6 +63,8 @@ Unlike most of our container library this image is meant to be run ephemerally f
 If an input file is detected we will run FFmpeg as that user/group so the output file will match its permissions.
 The image supports Hardware acceleration on x86 pay close attention to the variables for the examples below.
 
+Additionally you can also set the `nice`ness of the ffmpeg process via the `NICE` environment variable (`-e NICE=?`). Refer to [nice(1)](https://man7.org/linux/man-pages/man1/nice.1.html) to understand how the number works. Note that negative numbers may require root privileges.
+
 ### Included Intel Drivers (latest versions compiled):
 
 * iHD Driver: Supports gen8+ (default for Intel)
