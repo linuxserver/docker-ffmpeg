@@ -67,8 +67,8 @@ libext2fs2t64                1.47.0-2.4~exp1ubuntu4.1           deb
 libffi8                      3.4.6-1build1                      deb     
 libgcc-s1                    14.2.0-4ubuntu2~24.04              deb     
 libgcrypt20                  1.10.3-2build1                     deb     
-libglib2.0-0t64              2.80.0-6ubuntu3.2                  deb     
-libglib2.0-data              2.80.0-6ubuntu3.2                  deb     
+libglib2.0-0t64              2.80.0-6ubuntu3.4                  deb     
+libglib2.0-data              2.80.0-6ubuntu3.4                  deb     
 libgmp10                     2:6.3.0+dfsg-2ubuntu6.1            deb     
 libgnutls30t64               3.8.3-1.1ubuntu3.3                 deb     
 libgomp1                     14.2.0-4ubuntu2~24.04              deb     
@@ -117,7 +117,7 @@ libsemanage-common           3.5-1build5                        deb
 libsemanage2                 3.5-1build5                        deb     
 libsepol2                    3.5-2build1                        deb     
 libsmartcols1                2.39.3-9ubuntu6.2                  deb     
-libsqlite3-0                 3.45.1-1ubuntu2.1                  deb     
+libsqlite3-0                 3.45.1-1ubuntu2.3                  deb     
 libss2                       1.47.0-2.4~exp1ubuntu4.1           deb     
 libssh-4                     0.10.6-2build2                     deb     
 libssl3t64                   3.0.13-0ubuntu3.5                  deb     
