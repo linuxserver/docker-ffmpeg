@@ -26,12 +26,14 @@ ENV \
   LAME=3.100 \
   LIBASS=0.17.3 \
   LIBDAV1D=1.5.1 \
+  LIBDRM=2.4.124 \
   LIBLC3=1.1.3 \
   LIBPNG=1.6.47 \
   LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
+  MPP=1.0.9 \
   NVCODEC=n13.0.19.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
@@ -278,6 +280,22 @@ RUN \
   meson setup .. && \
   ninja install
 RUN \
+  echo "**** grabbing libdrm ****" && \
+  mkdir -p /tmp/libdrm && \
+  curl -Lf \
+    https://dri.freedesktop.org/libdrm/libdrm-${LIBDRM}.tar.xz | \
+    tar -xJ --strip-components=1 -C /tmp/libdrm
+RUN \
+  echo "**** compiling libdrm ****" && \
+  cd /tmp/libdrm && \
+  meson setup \
+    --prefix=/usr --libdir=/usr/local/lib/aarch64-linux-gnu \
+    -Dvalgrind=disabled \
+    . build && \
+  ninja -C build && \
+  ninja -C build install && \
+  strip -d /usr/local/lib/aarch64-linux-gnu/libdrm*.so
+RUN \
   echo "**** grabbing liblc3 ****" && \
   mkdir -p /tmp/liblc3 && \
   git clone \
@@ -305,6 +323,22 @@ RUN \
     build && \
   ninja -vC build && \
   ninja -vC build install
+RUN \
+  echo "**** grabbing mpp ****" && \
+  mkdir -p /tmp/mpp && \
+  curl -Lf \
+    https://github.com/rockchip-linux/mpp/archive/refs/tags/${MPP}.tar.gz | \
+    tar -zx --strip-components=1 -C /tmp/mpp
+RUN \
+  echo "**** compiling mpp ****" && \
+  cd /tmp/mpp && \
+  cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DTOOLCHAIN=aarch64-linux-gnu- \
+    -G "Unix Makefiles" \
+    . && \
+  cmake --build . -j && \
+  make install
 RUN \
   echo "**** grabbing ogg ****" && \
   mkdir -p /tmp/ogg && \
@@ -618,7 +652,6 @@ RUN \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
-    --disable-libdrm \
     --enable-alsa \
     --enable-cuda-llvm \
     --enable-cuvid \
@@ -661,6 +694,7 @@ RUN \
     --enable-nvdec \
     --enable-nvenc \
     --enable-openssl \
+    --enable-rkmpp \
     --enable-stripping \
     --enable-version3 \
     && \
