@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:noble as buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:noble AS buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -22,40 +22,40 @@ ENV \
   FREETYPE=2.13.3 \
   FRIBIDI=1.0.16 \
   GMMLIB=22.7.1 \
-  HARFBUZZ=11.1.0 \
+  HARFBUZZ=11.2.1 \
   IHD=25.1.4 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
-  LIBASS=0.17.3 \
+  LIBASS=0.17.4 \
   LIBDAV1D=1.5.1 \
-  LIBDOVI=2.2.0 \
+  LIBDOVI=2.3.0 \
   LIBDRM=2.4.124 \
   LIBGL=1.7.0 \
   LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
-  LIBPLACEBO=7.349.0 \
-  LIBPNG=1.6.47 \
+  LIBPLACEBO=7.351.0 \
+  LIBPNG=1.6.48 \
   LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.15.0 \
-  MESA=25.0.4 \
+  MESA=25.1.3 \
   NVCODEC=n13.0.19.0 \
   OGG=1.3.5 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.3 \
   OPUS=1.5.2 \
-  RAV1E=0.7.1 \
+  RAV1E=0.8.0 \
   RIST=0.2.11 \
-  SHADERC=v2025.1 \
+  SHADERC=v2025.2 \
   SRT=1.5.4 \
   SVTAV1=3.0.2 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
   VPLGPURT=25.1.4 \
-  VPX=1.15.1 \
-  VULKANSDK=vulkan-sdk-1.4.309.0 \
+  VPX=1.15.2 \
+  VULKANSDK=vulkan-sdk-1.4.313.0 \
   VVENC=1.13.1 \
   WEBP=1.5.0 \
   X265=4.1 \
