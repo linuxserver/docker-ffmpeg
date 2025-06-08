@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-noble as buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-noble AS buildstage
 
 # set version label
 ARG FFMPEG_VERSION
