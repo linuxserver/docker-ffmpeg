@@ -190,6 +190,7 @@ full_custom_readme: |
 
   ## Versions
 
+  * **06.08.25:** - Bump svt-av1.
   * **07.06.25:** - Bump harfbuzz, libass, libdovi, libplacebo, libpng, mesa, rav1e, shaderc, libvpx and vulkan-sdk.
   * **04.06.25:** - Add libdrm and rkmpp to arm64 image.
   * **21.04.25:** - Bump aom, Intel drivers and libs, harfbuzz, mesa, svt-av1, libvpx, libtheora, vulkan-sdk and vvenc.

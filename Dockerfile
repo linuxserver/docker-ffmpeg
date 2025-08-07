@@ -50,7 +50,7 @@ ENV \
   RIST=0.2.11 \
   SHADERC=v2025.2 \
   SRT=1.5.4 \
-  SVTAV1=3.0.2 \
+  SVTAV1=3.1.0 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
   VPLGPURT=25.1.4 \
