@@ -147,7 +147,7 @@ libxcb1                      1.15-1ubuntu2                      deb
 libxdmcp6                    1:1.1.3-0ubuntu6                   deb     
 libxext6                     2:1.3.4-1build2                    deb     
 libxfixes3                   1:6.0.0-2build1                    deb     
-libxml2                      2.9.14+dfsg-1.3ubuntu3.3           deb     
+libxml2                      2.9.14+dfsg-1.3ubuntu3.4           deb     
 libxshmfence1                1.3-1build5                        deb     
 libxxhash0                   0.8.2-2build1                      deb     
 libzstd1                     1.5.5+dfsg2-2build1.1              deb     
