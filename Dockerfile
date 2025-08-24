@@ -17,50 +17,50 @@ ENV \
 ENV \
   AOM=v3.12.1 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=7.1.1 \
+  FFMPEG_HARD=8.0 \
   FONTCONFIG=2.16.0 \
   FREETYPE=2.13.3 \
   FRIBIDI=1.0.16 \
-  GMMLIB=22.7.1 \
-  HARFBUZZ=11.2.1 \
-  IHD=25.1.4 \
+  GMMLIB=22.8.0 \
+  HARFBUZZ=11.4.3 \
+  IHD=25.2.6 \
   KVAZAAR=2.3.1 \
   LAME=3.100 \
   LIBASS=0.17.4 \
   LIBDAV1D=1.5.1 \
-  LIBDOVI=2.3.0 \
-  LIBDRM=2.4.124 \
+  LIBDOVI=2.3.1 \
+  LIBDRM=2.4.125 \
   LIBGL=1.7.0 \
   LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.351.0 \
-  LIBPNG=1.6.48 \
+  LIBPNG=1.6.50 \
   LIBVA=2.22.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.15.0 \
-  MESA=25.1.3 \
+  MESA=25.2.1 \
   NVCODEC=n13.0.19.0 \
-  OGG=1.3.5 \
+  OGG=1.3.6 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.3 \
   OPUS=1.5.2 \
-  RAV1E=0.8.0 \
+  RAV1E=0.8.1 \
   RIST=0.2.11 \
-  SHADERC=v2025.2 \
+  SHADERC=v2025.3 \
   SRT=1.5.4 \
-  SVTAV1=3.1.0 \
+  SVTAV1=3.1.1 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
-  VPLGPURT=25.1.4 \
+  VPLGPURT=25.2.6 \
   VPX=1.15.2 \
-  VULKANSDK=vulkan-sdk-1.4.313.0 \
+  VULKANSDK=vulkan-sdk-1.4.321.0 \
   VVENC=1.13.1 \
-  WEBP=1.5.0 \
+  WEBP=1.6.0 \
   X265=4.1 \
   XVID=1.3.7 \
-  ZIMG=3.0.5 \
+  ZIMG=3.0.6 \
   ZMQ=v4.3.5
 
 RUN \
@@ -132,7 +132,7 @@ RUN \
   tar xf /tmp/rust.tar.gz -C /tmp/rust --strip-components=1 && \
   cd /tmp/rust && \
   ./install.sh && \
-  cargo install cargo-c cbindgen --locked && \
+  cargo install bindgen-cli cargo-c cbindgen --locked && \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
@@ -890,13 +890,9 @@ RUN \
     https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 | \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
 
-# Apply patch for svt-av1: https://gitlab.com/AOMediaCodec/SVT-AV1/-/issues/2249#note_2361478864
-COPY /ffmpeg_n7_fix.patch /tmp/ffmpeg/
-
 RUN \
   echo "**** compiling ffmpeg ****" && \
   cd /tmp/ffmpeg && \
-  patch -p1 < ffmpeg_n7_fix.patch && \
   ./configure \
     --disable-debug \
     --disable-doc \
