@@ -961,7 +961,6 @@ RUN \
     /buildout/usr/local/lib/libmfx-gen \
     /buildout/usr/local/lib/mfx \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
-    /buildout/usr/local/lib/x86_64-linux-gnu/vdpau \
     /buildout/usr/local/share/vulkan \
     /buildout/usr/share/fonts \
     /buildout/usr/share/libdrm \
@@ -990,9 +989,6 @@ RUN \
   cp -a \
     /usr/local/lib/x86_64-linux-gnu/dri/*.so \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
-  cp -a \
-    /usr/local/lib/x86_64-linux-gnu/vdpau/*.so \
-    /buildout/usr/local/lib/x86_64-linux-gnu/vdpau/ && \
   cp -a \
     /usr/lib/x86_64-linux-gnu/dri/i965* \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
