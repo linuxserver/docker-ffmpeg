@@ -15,21 +15,21 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.12.1 \
+  AOM=v3.13.1 \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=8.0 \
   FONTCONFIG=2.16.0 \
-  FREETYPE=2.13.3 \
+  FREETYPE=2.14.1 \
   FRIBIDI=1.0.16 \
-  GMMLIB=22.8.0 \
-  HARFBUZZ=11.4.3 \
-  IHD=25.2.6 \
-  KVAZAAR=2.3.1 \
+  GMMLIB=22.8.2 \
+  HARFBUZZ=12.2.0 \
+  IHD=25.3.4 \
+  KVAZAAR=2.3.2 \
   LAME=3.100 \
   LIBASS=0.17.4 \
-  LIBDAV1D=1.5.1 \
+  LIBDAV1D=1.5.2 \
   LIBDOVI=2.3.1 \
-  LIBDRM=2.4.125 \
+  LIBDRM=2.4.129 \
   LIBGL=1.7.0 \
   LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
@@ -40,22 +40,22 @@ ENV \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.15.0 \
-  MESA=25.2.1 \
+  MESA=25.3.0 \
   NVCODEC=n13.0.19.0 \
   OGG=1.3.6 \
   OPENCOREAMR=0.1.6 \
-  OPENJPEG=2.5.3 \
+  OPENJPEG=2.5.4 \
   OPUS=1.5.2 \
   RAV1E=0.8.1 \
   RIST=0.2.11 \
-  SHADERC=v2025.3 \
+  SHADERC=v2025.4 \
   SRT=1.5.4 \
-  SVTAV1=3.1.1 \
+  SVTAV1=3.1.2 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
-  VPLGPURT=25.2.6 \
+  VPLGPURT=25.3.4 \
   VPX=1.15.2 \
-  VULKANSDK=vulkan-sdk-1.4.321.0 \
+  VULKANSDK=vulkan-sdk-1.4.328.1 \
   VVENC=1.13.1 \
   WEBP=1.6.0 \
   X265=4.1 \
@@ -961,7 +961,6 @@ RUN \
     /buildout/usr/local/lib/libmfx-gen \
     /buildout/usr/local/lib/mfx \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri \
-    /buildout/usr/local/lib/x86_64-linux-gnu/vdpau \
     /buildout/usr/local/share/vulkan \
     /buildout/usr/share/fonts \
     /buildout/usr/share/libdrm \
@@ -990,9 +989,6 @@ RUN \
   cp -a \
     /usr/local/lib/x86_64-linux-gnu/dri/*.so \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
-  cp -a \
-    /usr/local/lib/x86_64-linux-gnu/vdpau/*.so \
-    /buildout/usr/local/lib/x86_64-linux-gnu/vdpau/ && \
   cp -a \
     /usr/lib/x86_64-linux-gnu/dri/i965* \
     /buildout/usr/local/lib/x86_64-linux-gnu/dri/ && \
@@ -1060,6 +1056,7 @@ RUN \
     libxshmfence1 \
     libxml2 \
     ocl-icd-libopencl1 && \
+  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** clean up ****" && \
   rm -rf \
     /var/lib/apt/lists/* \
