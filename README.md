@@ -183,6 +183,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.12.25:** - Bump ffmpeg to 8.0.1.
 * **19.11.25:** - Bump aom, freetype, harfbuzz, Intel drivers and libs, kvazaar, libdav1d, libdrm, mesa, mpp, openjpeg, shaderc, svt-av1 and vulkan-sdk.
 * **23.08.25:** - Bump ffmpeg to 8.0. Bump harfbuzz, Intel drivers and libs, libdovi, libdrm, libpng, mesa, ogg, rav1e, shaderc, svt-av1, vulkan-sdk, webp and zimg.
 * **06.08.25:** - Bump svt-av1.
