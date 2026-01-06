@@ -673,7 +673,6 @@ RUN \
     --enable-nvdec \
     --enable-nvenc \
     --enable-openssl \
-    --enable-rkmpp \
     --enable-stripping \
     --enable-version3 \
     && \
