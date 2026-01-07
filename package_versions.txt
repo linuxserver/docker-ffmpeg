@@ -67,8 +67,8 @@ libext2fs2t64                1.47.0-2.4~exp1ubuntu4.1           deb
 libffi8                      3.4.6-1build1                      deb     
 libgcc-s1                    14.2.0-4ubuntu2~24.04              deb     
 libgcrypt20                  1.10.3-2build1                     deb     
-libglib2.0-0t64              2.80.0-6ubuntu3.5                  deb     
-libglib2.0-data              2.80.0-6ubuntu3.5                  deb     
+libglib2.0-0t64              2.80.0-6ubuntu3.6                  deb     
+libglib2.0-data              2.80.0-6ubuntu3.6                  deb     
 libgmp10                     2:6.3.0+dfsg-2ubuntu6.1            deb     
 libgnutls30t64               3.8.3-1.1ubuntu3.4                 deb     
 libgomp1                     14.2.0-4ubuntu2~24.04              deb     
