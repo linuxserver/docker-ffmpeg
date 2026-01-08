@@ -1,7 +1,7 @@
 NAME                         VERSION                            TYPE   
 adduser                      3.137ubuntu1                       deb     
 alsa-topology-conf           1.2.5.1-2                          deb     
-alsa-ucm-conf                1.2.10-1ubuntu5.7                  deb     
+alsa-ucm-conf                1.2.10-1ubuntu5.8                  deb     
 apt                          2.8.3                              deb     
 apt-utils                    2.8.3                              deb     
 base-files                   13ubuntu10.3                       deb     
