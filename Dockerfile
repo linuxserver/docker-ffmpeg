@@ -911,6 +911,7 @@ RUN \
 RUN \
   echo "**** compiling ffmpeg ****" && \
   cd /tmp/ffmpeg && \
+  curl -fSsL https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/21567.patch | patch -p1 && \
   ./configure \
     --disable-debug \
     --disable-doc \

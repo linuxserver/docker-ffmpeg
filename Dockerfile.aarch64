@@ -642,10 +642,11 @@ RUN \
     https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 | \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
   
-  RUN \
-    echo "**** compiling ffmpeg ****" && \
-    cd /tmp/ffmpeg && \
-    ./configure \
+RUN \
+  echo "**** compiling ffmpeg ****" && \
+  cd /tmp/ffmpeg && \
+  curl -fSsL https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/21567.patch | patch -p1 && \
+  ./configure \
     --disable-debug \
     --disable-doc \
     --disable-ffplay \
