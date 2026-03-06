@@ -19,11 +19,11 @@ ENV \
   FDKAAC=2.0.3 \
   FFMPEG_HARD=8.0.1 \
   FONTCONFIG=2.16.0 \
-  FREETYPE=2.14.1 \
+  FREETYPE=2.14.2 \
   FRIBIDI=1.0.16 \
-  GMMLIB=22.8.2 \
-  HARFBUZZ=12.3.0 \
-  IHD=25.3.4 \
+  GMMLIB=22.9.0 \
+  HARFBUZZ=13.0.0 \
+  IHD=25.4.6 \
   KVAZAAR=2.3.2 \
   LAME=3.100 \
   LIBASS=0.17.4 \
@@ -33,14 +33,14 @@ ENV \
   LIBGL=1.7.0 \
   LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
-  LIBPLACEBO=7.351.0 \
-  LIBPNG=1.6.53 \
+  LIBPLACEBO=7.360.0 \
+  LIBPNG=1.6.55 \
   LIBVA=2.23.0 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.1 \
   LIBVMAF=3.0.0 \
   LIBVPL=2.16.0 \
-  MESA=25.3.3 \
+  MESA=26.0.1 \
   NVCODEC=n13.0.19.0 \
   OGG=1.3.6 \
   OPENCOREAMR=0.1.6 \
@@ -48,15 +48,16 @@ ENV \
   OPUS=1.6 \
   RAV1E=0.8.1 \
   RIST=0.2.11 \
-  SHADERC=v2025.5 \
+  SHADERC=v2026.1 \
+  SOXR=0.1.3 \
   SRT=1.5.4 \
-  SVTAV1=3.1.2 \
+  SVTAV1=4.0.1 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
-  VPLGPURT=25.3.4 \
-  VPX=1.15.2 \
-  VULKANSDK=vulkan-sdk-1.4.335.0 \
-  VVENC=1.13.1 \
+  VPLGPURT=25.4.6 \
+  VPX=1.16.0 \
+  VULKANSDK=vulkan-sdk-1.4.341.0 \
+  VVENC=1.14.0 \
   WEBP=1.6.0 \
   X265=4.1 \
   XVID=1.3.7 \
@@ -654,6 +655,23 @@ RUN \
   ninja install && \
   strip -d /usr/local/lib/librist.so
 RUN \
+  echo "**** grabbing soxr ****" && \
+  mkdir -p /tmp/soxr && \
+  curl -Lf \
+    https://sourceforge.net/projects/soxr/files/soxr-${SOXR}-Source.tar.xz/download | \
+    tar -xJ --strip-components=1 -C /tmp/soxr
+RUN \
+  echo "**** compiling soxr ****" && \
+  cd /tmp/soxr && \
+  mkdir -p build && \
+  cd build && \
+  cmake \
+    -Wno-dev \
+    -DCMAKE_BUILD_TYPE=Release .. && \
+  make && \
+  make install && \
+  strip -d /usr/local/lib/libsoxr.so
+RUN \
   echo "**** grabbing srt ****" && \
   mkdir -p /tmp/srt && \
   git clone \
@@ -921,6 +939,7 @@ RUN \
     --enable-librav1e \
     --enable-librist \
     --enable-libshaderc \
+    --enable-libsoxr \
     --enable-libsrt \
     --enable-libsvtav1 \
     --enable-libtheora \
