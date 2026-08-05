@@ -75,6 +75,7 @@ RUN \
     libglib2.0-dev \
     libgomp1 \
     libharfbuzz-dev \
+    libmpg123-dev \
     libpciaccess-dev \
     libssl-dev \
     libtool \

@@ -96,6 +96,7 @@ RUN \
     libglib2.0-dev \
     libgomp1 \
     libllvmspirvlib-18-dev \
+    libmpg123-dev \
     libpciaccess-dev \
     libssl-dev \
     libtool \
