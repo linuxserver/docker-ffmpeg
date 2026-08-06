@@ -138,9 +138,8 @@ RUN \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
-    setuptools \
-    wheel && \
-  pip install --no-cache-dir cmake==3.31.6 mako meson ninja packaging ply pyyaml
+    setuptools && \
+  pip install --no-cache-dir cmake mako meson ninja packaging ply pyyaml
 
 # compile 3rd party libs
 RUN \
@@ -361,10 +360,10 @@ RUN \
     https://github.com/google/liblc3.git \
     /tmp/liblc3
 RUN \
-    echo "**** compiling liblc3 ****" && \
-    cd /tmp/liblc3 && \
-    meson setup build && \
-    meson install -C build --strip
+  echo "**** compiling liblc3 ****" && \
+  cd /tmp/liblc3 && \
+  meson setup build && \
+  meson install -C build --strip
 RUN \
   echo "**** grabbing libva ****" && \
   mkdir -p /tmp/libva && \
@@ -403,23 +402,23 @@ RUN \
   ninja -C build install && \
   strip -d /usr/local/lib/libvdpau.so
 RUN \
-    echo "**** grabbing shaderc ****" && \
-    mkdir -p /tmp/shaderc && \
-    git clone \
-      --branch ${SHADERC} \
-      --depth 1 https://github.com/google/shaderc.git \
-      /tmp/shaderc
+  echo "**** grabbing shaderc ****" && \
+  mkdir -p /tmp/shaderc && \
+  git clone \
+    --branch ${SHADERC} \
+    --depth 1 https://github.com/google/shaderc.git \
+    /tmp/shaderc
 RUN \
-    echo "**** compiling shaderc ****" && \
-    cd /tmp/shaderc && \
-    ./utils/git-sync-deps && \
-    mkdir -p build && \
-    cd build && \
-    cmake -GNinja \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_PREFIX=/usr/local \
-      .. && \
-    ninja install
+  echo "**** compiling shaderc ****" && \
+  cd /tmp/shaderc && \
+  ./utils/git-sync-deps && \
+  mkdir -p build && \
+  cd build && \
+  cmake -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    .. && \
+  ninja install
 RUN \
   echo "**** grabbing mesa ****" && \
   mkdir -p /tmp/mesa && \
@@ -464,6 +463,7 @@ RUN \
   cd /tmp/ihd/build && \
   cmake \
     -DLIBVA_DRIVERS_PATH=/usr/local/lib/x86_64-linux-gnu/dri/ \
+    -DCMAKE_CXX_FLAGS="-Wno-error=array-bounds" \
     .. && \
   make && \
   make install && \

@@ -103,9 +103,8 @@ RUN \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
-    setuptools \
-    wheel && \
-  pip install --no-cache-dir cmake==3.31.6 meson ninja
+    setuptools && \
+  pip install --no-cache-dir cmake meson ninja
 
 # compile 3rd party libs
 RUN \
@@ -305,10 +304,10 @@ RUN \
     https://github.com/google/liblc3.git \
     /tmp/liblc3
 RUN \
-    echo "**** compiling liblc3 ****" && \
-    cd /tmp/liblc3 && \
-    meson setup build && \
-    meson install -C build --strip
+  echo "**** compiling liblc3 ****" && \
+  cd /tmp/liblc3 && \
+  meson setup build && \
+  meson install -C build --strip
 RUN \
   echo "**** grabbing vmaf ****" && \
   mkdir -p /tmp/vmaf && \
