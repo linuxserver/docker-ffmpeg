@@ -858,6 +858,7 @@ RUN \
 RUN \
   echo "**** compiling xvid ****" && \
   cd /tmp/xvid/build/generic && \
+  sed -i '/typedef int bool;/d' ../../src/encoder.h && \
   ./configure && \
   make && \
   make install
