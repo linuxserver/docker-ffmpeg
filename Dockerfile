@@ -940,7 +940,6 @@ RUN \
     --enable-libplacebo \
     --enable-librav1e \
     --enable-librist \
-    --enable-libshaderc \
     --enable-libsoxr \
     --enable-libsrt \
     --enable-libsvtav1 \
