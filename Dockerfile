@@ -1057,6 +1057,7 @@ RUN \
     libglib2.0-0 \
     libgomp1 \
     libllvm18 \
+    libmpg123-0t64 \
     libpciaccess0 \
     libv4l-0 \
     libwayland-client0 \

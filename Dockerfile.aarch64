@@ -753,6 +753,7 @@ RUN \
     libglib2.0-0 \
     libgomp1 \
     libllvm18 \
+    libmpg123-0t64 \
     libv4l-0 \
     libx11-6 \
     libxcb1 \
