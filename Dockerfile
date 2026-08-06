@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:noble AS buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:resolute AS buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -86,16 +86,16 @@ RUN \
     i965-va-driver-shaders \
     libasound2-dev \
     libcairo2-dev \
-    libclang-18-dev \
-    libclang-cpp18-dev \
-    libclc-18 \
-    libclc-18-dev \
+    libclang-21-dev \
+    libclang-cpp21-dev \
+    libclc-21 \
+    libclc-21-dev \
     libelf-dev \
     libexpat1-dev \
-    libgcc-10-dev \
+    libgcc-15-dev \
     libglib2.0-dev \
     libgomp1 \
-    libllvmspirvlib-18-dev \
+    libllvmspirvlib-21-dev \
     libmpg123-dev \
     libpciaccess-dev \
     libssl-dev \
@@ -115,8 +115,8 @@ RUN \
     libxrandr-dev \
     libxshmfence-dev \
     libxxf86vm-dev \
-    llvm-18-dev \
-    llvm-spirv-18 \
+    llvm-21-dev \
+    llvm-spirv-21 \
     make \
     nasm \
     ocl-icd-opencl-dev \
@@ -1026,7 +1026,7 @@ RUN \
     /buildout/etc/OpenCL/vendors/nvidia.icd
 
 # runtime stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:noble
+FROM ghcr.io/linuxserver/baseimage-ubuntu:resolute
 
 # Add files from binstage
 COPY --from=buildstage /buildout/ /
@@ -1052,14 +1052,14 @@ RUN \
     apt-get install -y \
     libasound2t64 \
     libedit2 \
-    libelf1 \
+    libelf1t64 \
     libexpat1 \
-    libglib2.0-0 \
+    libglib2.0-0t64 \
     libgomp1 \
-    libllvm18 \
+    libllvm21 \
     libmpg123-0t64 \
     libpciaccess0 \
-    libv4l-0 \
+    libv4l-0t64 \
     libwayland-client0 \
     libx11-6 \
     libx11-xcb1 \
@@ -1075,7 +1075,7 @@ RUN \
     libxext6 \
     libxfixes3 \
     libxshmfence1 \
-    libxml2 \
+    libxml2-16 \
     ocl-icd-libopencl1 && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** clean up ****" && \

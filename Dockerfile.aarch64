@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-noble AS buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-resolute AS buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -71,7 +71,7 @@ RUN \
     libasound2-dev \
     libcairo2-dev \
     libexpat1-dev \
-    libgcc-10-dev \
+    libgcc-15-dev \
     libglib2.0-dev \
     libgomp1 \
     libharfbuzz-dev \
@@ -83,7 +83,7 @@ RUN \
     libx11-dev \
     libxext-dev \
     libxml2-dev \
-    llvm-18-dev \
+    llvm-21-dev \
     make \
     nasm \
     perl \
@@ -727,7 +727,7 @@ RUN \
     /buildout/usr/share/fonts/
 
 # runtime stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-noble
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-resolute
 
 # Add files from binstage
 COPY --from=buildstage /buildout/ /
@@ -750,16 +750,16 @@ RUN \
   apt-get install -y \
     libasound2t64 \
     libexpat1 \
-    libglib2.0-0 \
+    libglib2.0-0t64 \
     libgomp1 \
-    libllvm18 \
+    libllvm21 \
     libmpg123-0t64 \
-    libv4l-0 \
+    libv4l-0t64 \
     libx11-6 \
     libxcb1 \
     libxcb-shm0 \
     libxext6 \
-    libxml2 \
+    libxml2-16 \
     ocl-icd-libopencl1 && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** clean up ****" && \
