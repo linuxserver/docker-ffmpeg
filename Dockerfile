@@ -274,10 +274,10 @@ RUN \
   echo "**** compiling lame ****" && \
   cd /tmp/lame && \
   cp \
-    /usr/share/automake-1.16/config.guess \
+    /usr/share/automake-1.18/config.guess \
     config.guess && \
   cp \
-    /usr/share/automake-1.16/config.sub \
+    /usr/share/automake-1.18/config.sub \
     config.sub && \
   ./configure \
     --disable-frontend \
