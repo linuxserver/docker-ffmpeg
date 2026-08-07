@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # build stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:noble AS buildstage
+FROM ghcr.io/linuxserver/baseimage-ubuntu:resolute AS buildstage
 
 # set version label
 ARG FFMPEG_VERSION
@@ -17,46 +17,46 @@ ENV \
 ENV \
   AOM=v3.14.1 \
   FDKAAC=2.0.3 \
-  FFMPEG_HARD=8.1.2 \
+  FFMPEG_HARD=9.0 \
   FONTCONFIG=2.16.0 \
   FREETYPE=2.14.3 \
   FRIBIDI=1.0.16 \
   GMMLIB=22.10.0 \
-  HARFBUZZ=14.2.1 \
-  IHD=26.1.5 \
+  HARFBUZZ=14.3.0 \
+  IHD=26.2.4 \
   KVAZAAR=2.3.2 \
-  LAME=3.100 \
+  LAME=4.0 \
   LIBASS=0.17.5 \
-  LIBDAV1D=1.5.3 \
-  LIBDOVI=2.3.2 \
+  LIBDAV1D=1.5.4 \
+  LIBDOVI=2.3.3 \
   LIBDRM=2.4.134 \
   LIBGL=1.7.0 \
   LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.360.1 \
   LIBPNG=1.6.58 \
-  LIBVA=2.23.0 \
+  LIBVA=2.24.1 \
   LIBVDPAU=1.5 \
-  LIBVIDSTAB=1.1.1 \
+  LIBVIDSTAB=1.1.2 \
   LIBVMAF=3.2.0 \
-  LIBVPL=2.16.0 \
-  MESA=26.1.3 \
-  NVCODEC=n13.0.19.0 \
+  LIBVPL=2.17.0 \
+  MESA=26.2.0 \
+  NVCODEC=n13.1.15.0 \
   OGG=1.3.6 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.4 \
-  OPUS=1.6 \
+  OPUS=1.6.1 \
   RAV1E=0.8.1 \
-  RIST=0.2.18 \
-  SHADERC=v2026.2 \
+  RIST=0.2.20 \
+  SHADERC=v2026.3 \
   SOXR=0.1.3 \
-  SRT=1.5.5 \
-  SVTAV1=4.1.0 \
+  SRT=1.5.6 \
+  SVTAV1=4.2.0 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
-  VPLGPURT=26.1.5 \
+  VPLGPURT=26.2.4 \
   VPX=1.16.0 \
-  VULKANSDK=vulkan-sdk-1.4.350.1 \
+  VULKANSDK=vulkan-sdk-1.4.357.0 \
   VVENC=1.14.0 \
   WEBP=1.6.0 \
   X265=4.2 \
@@ -86,16 +86,17 @@ RUN \
     i965-va-driver-shaders \
     libasound2-dev \
     libcairo2-dev \
-    libclang-18-dev \
-    libclang-cpp18-dev \
-    libclc-18 \
-    libclc-18-dev \
+    libclang-21-dev \
+    libclang-cpp21-dev \
+    libclc-21 \
+    libclc-21-dev \
     libelf-dev \
     libexpat1-dev \
-    libgcc-10-dev \
+    libgcc-15-dev \
     libglib2.0-dev \
     libgomp1 \
-    libllvmspirvlib-18-dev \
+    libllvmspirvlib-21-dev \
+    libmpg123-dev \
     libpciaccess-dev \
     libssl-dev \
     libtool \
@@ -114,8 +115,8 @@ RUN \
     libxrandr-dev \
     libxshmfence-dev \
     libxxf86vm-dev \
-    llvm-18-dev \
-    llvm-spirv-18 \
+    llvm-21-dev \
+    llvm-spirv-21 \
     make \
     nasm \
     ocl-icd-opencl-dev \
@@ -137,9 +138,8 @@ RUN \
   python3 -m venv /lsiopy && \
   pip install -U --no-cache-dir \
     pip \
-    setuptools \
-    wheel && \
-  pip install --no-cache-dir cmake==3.31.6 mako meson ninja packaging ply pyyaml
+    setuptools && \
+  pip install --no-cache-dir cmake mako meson ninja packaging ply pyyaml
 
 # compile 3rd party libs
 RUN \
@@ -273,10 +273,10 @@ RUN \
   echo "**** compiling lame ****" && \
   cd /tmp/lame && \
   cp \
-    /usr/share/automake-1.16/config.guess \
+    /usr/share/automake-1.18/config.guess \
     config.guess && \
   cp \
-    /usr/share/automake-1.16/config.sub \
+    /usr/share/automake-1.18/config.sub \
     config.sub && \
   ./configure \
     --disable-frontend \
@@ -360,10 +360,10 @@ RUN \
     https://github.com/google/liblc3.git \
     /tmp/liblc3
 RUN \
-    echo "**** compiling liblc3 ****" && \
-    cd /tmp/liblc3 && \
-    meson setup build && \
-    meson install -C build --strip
+  echo "**** compiling liblc3 ****" && \
+  cd /tmp/liblc3 && \
+  meson setup build && \
+  meson install -C build --strip
 RUN \
   echo "**** grabbing libva ****" && \
   mkdir -p /tmp/libva && \
@@ -402,23 +402,23 @@ RUN \
   ninja -C build install && \
   strip -d /usr/local/lib/libvdpau.so
 RUN \
-    echo "**** grabbing shaderc ****" && \
-    mkdir -p /tmp/shaderc && \
-    git clone \
-      --branch ${SHADERC} \
-      --depth 1 https://github.com/google/shaderc.git \
-      /tmp/shaderc
+  echo "**** grabbing shaderc ****" && \
+  mkdir -p /tmp/shaderc && \
+  git clone \
+    --branch ${SHADERC} \
+    --depth 1 https://github.com/google/shaderc.git \
+    /tmp/shaderc
 RUN \
-    echo "**** compiling shaderc ****" && \
-    cd /tmp/shaderc && \
-    ./utils/git-sync-deps && \
-    mkdir -p build && \
-    cd build && \
-    cmake -GNinja \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_PREFIX=/usr/local \
-      .. && \
-    ninja install
+  echo "**** compiling shaderc ****" && \
+  cd /tmp/shaderc && \
+  ./utils/git-sync-deps && \
+  mkdir -p build && \
+  cd build && \
+  cmake -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    .. && \
+  ninja install
 RUN \
   echo "**** grabbing mesa ****" && \
   mkdir -p /tmp/mesa && \
@@ -463,6 +463,7 @@ RUN \
   cd /tmp/ihd/build && \
   cmake \
     -DLIBVA_DRIVERS_PATH=/usr/local/lib/x86_64-linux-gnu/dri/ \
+    -DCMAKE_CXX_FLAGS="-Wno-error=array-bounds" \
     .. && \
   make && \
   make install && \
@@ -857,6 +858,7 @@ RUN \
 RUN \
   echo "**** compiling xvid ****" && \
   cd /tmp/xvid/build/generic && \
+  sed -i '/typedef int bool;/d' ../../src/encoder.h && \
   ./configure && \
   make && \
   make install
@@ -938,7 +940,6 @@ RUN \
     --enable-libplacebo \
     --enable-librav1e \
     --enable-librist \
-    --enable-libshaderc \
     --enable-libsoxr \
     --enable-libsrt \
     --enable-libsvtav1 \
@@ -1025,7 +1026,7 @@ RUN \
     /buildout/etc/OpenCL/vendors/nvidia.icd
 
 # runtime stage
-FROM ghcr.io/linuxserver/baseimage-ubuntu:noble
+FROM ghcr.io/linuxserver/baseimage-ubuntu:resolute
 
 # Add files from binstage
 COPY --from=buildstage /buildout/ /
@@ -1051,13 +1052,14 @@ RUN \
     apt-get install -y \
     libasound2t64 \
     libedit2 \
-    libelf1 \
+    libelf1t64 \
     libexpat1 \
-    libglib2.0-0 \
+    libglib2.0-0t64 \
     libgomp1 \
-    libllvm18 \
+    libllvm21 \
+    libmpg123-0t64 \
     libpciaccess0 \
-    libv4l-0 \
+    libv4l-0t64 \
     libwayland-client0 \
     libx11-6 \
     libx11-xcb1 \
@@ -1073,7 +1075,7 @@ RUN \
     libxext6 \
     libxfixes3 \
     libxshmfence1 \
-    libxml2 \
+    libxml2-16 \
     ocl-icd-libopencl1 && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** clean up ****" && \
