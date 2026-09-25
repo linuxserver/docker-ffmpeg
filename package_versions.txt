@@ -78,13 +78,13 @@ libdb5.3t64                    5.3.28+dfsg2-10ubuntu1                 deb
 libdebconfclient0              0.280ubuntu1                           deb          
 libedit2                       3.1-20251016-1                         deb          
 libelf1t64                     0.194-4                                deb          
-libexpat1                      2.7.4-1                                deb          
+libexpat1                      2.7.4-1ubuntu0.2                       deb          
 libext2fs2t64                  1.47.2-3ubuntu4                        deb          
 libffi8                        3.5.2-4                                deb          
 libgcc-s1                      16-20260322-1ubuntu1                   deb          
 libgcrypt20                    1.12.0-2ubuntu1.1                      deb          
-libglib2.0-0t64                2.88.0-1                               deb          
-libglib2.0-data                2.88.0-1                               deb          
+libglib2.0-0t64                2.88.0-1ubuntu0.1                      deb          
+libglib2.0-data                2.88.0-1ubuntu0.1                      deb          
 libgmp10                       2:6.3.0+dfsg-5ubuntu2                  deb          
 libgnutls30t64                 3.8.12-2ubuntu1.1                      deb          
 libgomp1                       16-20260322-1ubuntu1                   deb          
@@ -134,7 +134,7 @@ libsemanage-common             3.9-1build1                            deb
 libsemanage2                   3.9-1build1                            deb          
 libsepol2                      3.9-2                                  deb          
 libsmartcols1                  2.41.3-3ubuntu2.2                      deb          
-libsqlite3-0                   3.46.1-9ubuntu0.2                      deb          
+libsqlite3-0                   3.46.1-9ubuntu0.3                      deb          
 libss2                         1.47.2-3ubuntu4                        deb          
 libssh2-1t64                   1.11.1-1ubuntu0.26.04.4                deb          
 libssl3t64                     3.5.5-1ubuntu3.5                       deb          
@@ -164,7 +164,7 @@ libxcb1                        1.17.0-2ubuntu1                        deb
 libxdmcp6                      1:1.1.5-2                              deb          
 libxext6                       2:1.3.4-1build3                        deb          
 libxfixes3                     1:6.0.0-2build2                        deb          
-libxml2-16                     2.15.2+dfsg-0.1ubuntu0.1               deb          
+libxml2-16                     2.15.2+dfsg-0.1ubuntu0.2               deb          
 libxshmfence1                  1.3.3-1build1                          deb          
 libxxhash0                     0.8.3-2build1                          deb          
 libzstd1                       1.5.7+dfsg-3                           deb          
@@ -186,7 +186,7 @@ pinentry-curses                1.3.2-3ubuntu1                         deb
 procps                         2:4.0.4-9ubuntu1                       deb          
 publicsuffix                   20260129.1928-1                        deb          
 readline-common                8.3-4                                  deb          
-rust-coreutils                 0.8.0-0ubuntu3                         deb          
+rust-coreutils                 0.10.0-1ubuntu2~26.04.1                deb          
 sed                            4.9-2ubuntu1                           deb          
 sensible-utils                 0.0.26build1                           deb          
 shared-mime-info               2.4-5build3                            deb          
