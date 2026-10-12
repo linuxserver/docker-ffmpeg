@@ -183,6 +183,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **12.10.26:** - Bump ffmpeg to 9.0.2. Also bump aom, fdk-aac, fribidi, harfbuzz, Intel drivers and libs, libdovi, libpng, libvmaf, mesa, shaderc, srt, vpx and vulkan-sdk. Make builds more resilient (curl retry).
 * **05.08.26:** - Rebase to Ubuntu Resolute. Bump ffmpeg to 9.0. Also bump harfbuzz, Intel drivers and libs, lame, libdav1d, libdovi, libvidstab, mesa, nvcodec, opus, rist, shaderc, srt, svtav1 and vulkan sdk.
 * **25.06.26:** - Bump ffmpeg to 8.1.2. Also bump aom, harfbuzz, libass, libdrm, libvmaf, mesa, rist and vulkan sdk.
 * **02.05.26:** - Bump ffmpeg to 8.1. Also bump aom, freetype, harfbuzz, Intel drivers and libs, libdovi, libdrm, libplacebo, libpng, mesa, rist, shaderc, srt, svtav1 and x265.

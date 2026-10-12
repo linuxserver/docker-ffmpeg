@@ -15,32 +15,32 @@ ENV \
 
 # versions
 ENV \
-  AOM=v3.14.1 \
-  FDKAAC=2.0.3 \
-  FFMPEG_HARD=9.0 \
+  AOM=v3.15.2 \
+  FDKAAC=3.0.3 \
+  FFMPEG_HARD=9.0.2 \
   FONTCONFIG=2.16.0 \
   FREETYPE=2.14.3 \
-  FRIBIDI=1.0.16 \
-  GMMLIB=22.10.0 \
-  HARFBUZZ=14.3.0 \
-  IHD=26.2.4 \
+  FRIBIDI=1.0.17 \
+  GMMLIB=22.10.2 \
+  HARFBUZZ=14.6.0 \
+  IHD=26.3.5 \
   KVAZAAR=2.3.2 \
   LAME=4.0 \
   LIBASS=0.17.5 \
   LIBDAV1D=1.5.4 \
-  LIBDOVI=2.3.3 \
+  LIBDOVI=2.3.4 \
   LIBDRM=2.4.134 \
   LIBGL=1.7.0 \
   LIBLC3=1.1.3 \
   LIBMFX=22.5.4 \
   LIBPLACEBO=7.360.1 \
-  LIBPNG=1.6.58 \
+  LIBPNG=1.6.59 \
   LIBVA=2.24.1 \
   LIBVDPAU=1.5 \
   LIBVIDSTAB=1.1.2 \
-  LIBVMAF=3.2.0 \
+  LIBVMAF=3.2.1 \
   LIBVPL=2.17.0 \
-  MESA=26.2.0 \
+  MESA=26.2.4 \
   NVCODEC=n13.1.15.0 \
   OGG=1.3.6 \
   OPENCOREAMR=0.1.6 \
@@ -48,15 +48,15 @@ ENV \
   OPUS=1.6.1 \
   RAV1E=0.8.1 \
   RIST=0.2.20 \
-  SHADERC=v2026.3 \
+  SHADERC=v2026.4 \
   SOXR=0.1.3 \
-  SRT=1.5.6 \
+  SRT=1.5.7 \
   SVTAV1=4.2.0 \
   THEORA=1.2.0 \
   VORBIS=1.3.7 \
-  VPLGPURT=26.2.4 \
-  VPX=1.16.0 \
-  VULKANSDK=vulkan-sdk-1.4.357.0 \
+  VPLGPURT=26.3.5 \
+  VPX=1.17.0 \
+  VULKANSDK=vulkan-sdk-1.4.363.0 \
   VVENC=1.14.0 \
   WEBP=1.6.0 \
   X265=4.2 \
@@ -166,6 +166,7 @@ RUN \
   echo "**** grabbing fdk-aac ****" && \
   mkdir -p /tmp/fdk-aac && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/mstorsjo/fdk-aac/archive/v${FDKAAC}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/fdk-aac
 RUN \
@@ -193,6 +194,7 @@ RUN \
   echo "**** grabbing freetype ****" && \
   mkdir -p /tmp/freetype && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://downloads.sourceforge.net/project/freetype/freetype2/${FREETYPE}/freetype-${FREETYPE}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/freetype
 RUN \
@@ -208,6 +210,7 @@ RUN \
   echo "**** grabbing fontconfig ****" && \
   mkdir -p /tmp/fontconfig && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG}.tar.xz | \
     tar -xJ --strip-components=1 -C /tmp/fontconfig
 RUN \
@@ -223,6 +226,7 @@ RUN \
   echo "**** grabbing fribidi ****" && \
   mkdir -p /tmp/fribidi && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/fribidi/fribidi/archive/v${FRIBIDI}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/fribidi
 RUN \
@@ -239,6 +243,7 @@ RUN \
   echo "**** grabbing harfbuzz ****" && \
   mkdir -p /tmp/harfbuzz && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/harfbuzz/harfbuzz/archive/${HARFBUZZ}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/harfbuzz
 RUN \
@@ -251,6 +256,7 @@ RUN \
   echo "**** grabbing kvazaar ****" && \
   mkdir -p /tmp/kvazaar && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/ultravideo/kvazaar/archive/v${KVAZAAR}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/kvazaar
 RUN \
@@ -267,6 +273,7 @@ RUN \
   echo "**** grabbing lame ****" && \
   mkdir -p /tmp/lame && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     http://downloads.sourceforge.net/project/lame/lame/${LAME}/lame-${LAME}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/lame
 RUN \
@@ -289,6 +296,7 @@ RUN \
   echo "**** grabbing libass ****" && \
   mkdir -p /tmp/libass && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/libass/libass/archive/${LIBASS}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/libass
 RUN \
@@ -318,7 +326,8 @@ RUN \
   echo "**** grabbing libgl ****" && \
   mkdir -p /tmp/libgl && \
   curl -Lf \
-  https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v${LIBGL}/libglvnd-v${LIBGL}.tar.gz | \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
+    https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v${LIBGL}/libglvnd-v${LIBGL}.tar.gz | \
     tar -xz --strip-components=1 -C /tmp/libgl
 RUN \
   echo "**** compiling libgl ****" && \
@@ -339,6 +348,7 @@ RUN \
   echo "**** grabbing libdrm ****" && \
   mkdir -p /tmp/libdrm && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://dri.freedesktop.org/libdrm/libdrm-${LIBDRM}.tar.xz | \
     tar -xJ --strip-components=1 -C /tmp/libdrm
 RUN \
@@ -368,6 +378,7 @@ RUN \
   echo "**** grabbing libva ****" && \
   mkdir -p /tmp/libva && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/intel/libva/archive/${LIBVA}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/libva
 RUN \
@@ -423,6 +434,7 @@ RUN \
   echo "**** grabbing mesa ****" && \
   mkdir -p /tmp/mesa && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://archive.mesa3d.org/mesa-${MESA}.tar.xz | \
     tar -xJ --strip-components=1 -C /tmp/mesa
 RUN \
@@ -439,6 +451,7 @@ RUN \
   echo "**** grabbing gmmlib ****" && \
   mkdir -p /tmp/gmmlib && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/intel/gmmlib/archive/refs/tags/intel-gmmlib-${GMMLIB}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/gmmlib
 RUN \
@@ -455,6 +468,7 @@ RUN \
   echo "**** grabbing IHD ****" && \
   mkdir -p /tmp/ihd && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/intel/media-driver/archive/refs/tags/intel-media-${IHD}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/ihd
 RUN \
@@ -472,6 +486,7 @@ RUN \
   echo "**** grabbing libvpl ****" && \
   mkdir -p /tmp/libvpl && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/intel/libvpl/archive/refs/tags/v${LIBVPL}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/libvpl
 RUN \
@@ -486,6 +501,7 @@ RUN \
   echo "**** grabbing vpl-gpu-rt ****" && \
   mkdir -p /tmp/vpl-gpu-rt && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/intel/vpl-gpu-rt/archive/refs/tags/intel-onevpl-${VPLGPURT}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/vpl-gpu-rt
 RUN \
@@ -503,6 +519,7 @@ RUN \
   echo "**** grabbing libmfx ****" && \
   mkdir -p /tmp/libmfx && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/Intel-Media-SDK/MediaSDK/archive/refs/tags/intel-mediasdk-${LIBMFX}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/libmfx
 RUN \
@@ -526,6 +543,7 @@ RUN \
   echo "**** grabbing vmaf ****" && \
   mkdir -p /tmp/vmaf && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/Netflix/vmaf/archive/refs/tags/v${LIBVMAF}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/vmaf
 RUN \
@@ -541,6 +559,7 @@ RUN \
   echo "**** grabbing ogg ****" && \
   mkdir -p /tmp/ogg && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     http://downloads.xiph.org/releases/ogg/libogg-${OGG}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/ogg
 RUN \
@@ -555,6 +574,7 @@ RUN \
   echo "**** grabbing opencore-amr ****" && \
   mkdir -p /tmp/opencore-amr && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-${OPENCOREAMR}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/opencore-amr
 RUN \
@@ -570,6 +590,7 @@ RUN \
   echo "**** grabbing openjpeg ****" && \
   mkdir -p /tmp/openjpeg && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/uclouvain/openjpeg/archive/v${OPENJPEG}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/openjpeg
 RUN \
@@ -578,6 +599,7 @@ RUN \
   rm -Rf \
     thirdparty/libpng/* && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://download.sourceforge.net/libpng/libpng-${LIBPNG}.tar.gz | \
     tar -zx --strip-components=1 -C thirdparty/libpng/ && \
   cmake \
@@ -589,6 +611,7 @@ RUN \
   echo "**** grabbing opus ****" && \
   mkdir -p /tmp/opus && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://downloads.xiph.org/releases/opus/opus-${OPUS}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/opus
 RUN \
@@ -659,6 +682,7 @@ RUN \
   echo "**** grabbing soxr ****" && \
   mkdir -p /tmp/soxr && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://sourceforge.net/projects/soxr/files/soxr-${SOXR}-Source.tar.xz/download | \
     tar -xJ --strip-components=1 -C /tmp/soxr
 RUN \
@@ -694,6 +718,7 @@ RUN \
   echo "**** grabbing SVT-AV1 ****" && \
   mkdir -p /tmp/svt-av1 && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${SVTAV1}/SVT-AV1-v${SVTAV1}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/svt-av1
 RUN \
@@ -706,7 +731,8 @@ RUN \
   echo "**** grabbing theora ****" && \
   mkdir -p /tmp/theora && \
   curl -Lf \
-    http://downloads.xiph.org/releases/theora/libtheora-${THEORA}.tar.gz | \
+    http://downloads.xiph.org/releases/theora/libtheora-${THEORA}.tar.gz 
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \| \
     tar -zx --strip-components=1 -C /tmp/theora
 RUN \
   echo "**** compiling theora ****" && \
@@ -720,6 +746,7 @@ RUN \
   echo "**** grabbing vid.stab ****" && \
   mkdir -p /tmp/vid.stab && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/vid.stab
 RUN \
@@ -733,6 +760,7 @@ RUN \
   echo "**** grabbing vorbis ****" && \
   mkdir -p /tmp/vorbis && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     http://downloads.xiph.org/releases/vorbis/libvorbis-${VORBIS}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/vorbis
 RUN \
@@ -747,6 +775,7 @@ RUN \
   echo "**** grabbing vpx ****" && \
   mkdir -p /tmp/vpx && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
   https://github.com/webmproject/libvpx/archive/v${VPX}.tar.gz | \
   tar -zx --strip-components=1 -C /tmp/vpx
 RUN \
@@ -813,6 +842,7 @@ RUN \
   echo "**** grabbing webp ****" && \
   mkdir -p /tmp/webp && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${WEBP}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/webp
 RUN \
@@ -826,6 +856,7 @@ RUN \
   echo "**** grabbing x264 ****" && \
   mkdir -p /tmp/x264 && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://code.videolan.org/videolan/x264/-/archive/master/x264-stable.tar.bz2 | \
     tar -jx --strip-components=1 -C /tmp/x264
 RUN \
@@ -842,6 +873,7 @@ RUN \
   echo "**** grabbing x265 ****" && \
   mkdir -p /tmp/x265 && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://bitbucket.org/multicoreware/x265_git/downloads/x265_${X265}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/x265
 RUN \
@@ -853,6 +885,7 @@ RUN \
   echo "**** grabbing xvid ****" && \
   mkdir -p /tmp/xvid && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://downloads.xvid.com/downloads/xvidcore-${XVID}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/xvid
 RUN \
@@ -907,6 +940,7 @@ RUN \
   mkdir -p /tmp/ffmpeg && \
   echo "https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2" && \
   curl -Lf \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
     https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 | \
     tar -jx --strip-components=1 -C /tmp/ffmpeg
 
