@@ -16,7 +16,7 @@ ENV \
 # versions
 ENV \
   AOM=v3.15.2 \
-  FDKAAC=3.0.3 \
+  FDKAAC=3.0.0 \
   FFMPEG_HARD=9.0.2 \
   FONTCONFIG=2.16.0 \
   FREETYPE=2.14.3 \
