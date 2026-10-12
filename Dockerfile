@@ -83,6 +83,7 @@ RUN \
     gcc \
     git \
     gperf \
+    help2man \
     i965-va-driver-shaders \
     libasound2-dev \
     libcairo2-dev \
