@@ -731,8 +731,8 @@ RUN \
   echo "**** grabbing theora ****" && \
   mkdir -p /tmp/theora && \
   curl -Lf \
-    http://downloads.xiph.org/releases/theora/libtheora-${THEORA}.tar.gz 
-    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \| \
+    --retry 5 --retry-all-errors --retry-delay 3 --retry-connrefused --retry-max-time 180 \
+    http://downloads.xiph.org/releases/theora/libtheora-${THEORA}.tar.gz | \
     tar -zx --strip-components=1 -C /tmp/theora
 RUN \
   echo "**** compiling theora ****" && \
