@@ -43,6 +43,7 @@ ENV \
   MESA=26.2.4 \
   NVCODEC=n13.1.15.0 \
   OGG=1.3.6 \
+  OPENVINO=2026.4.1 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.4 \
   OPUS=1.6.1 \
@@ -100,6 +101,7 @@ RUN \
     libmpg123-dev \
     libpciaccess-dev \
     libssl-dev \
+    libtbb-dev \
     libtool \
     libv4l-dev \
     libwayland-dev \
@@ -553,9 +555,54 @@ RUN \
   meson setup \
     --prefix=/usr --libdir=/usr/local/lib \
     --buildtype release \
+    -Denable_tests=false \
+    -Denable_docs=false \
     build && \
-  ninja -vC build && \
+  ninja -j2 -vC build && \
   ninja -vC build install
+RUN \
+  echo "**** grabbing openvino ****" && \
+  mkdir -p /tmp/openvino && \
+  git clone \
+    --branch ${OPENVINO} \
+    --depth 1 \
+    --recurse-submodules \
+    --shallow-submodules \
+    https://github.com/openvinotoolkit/openvino.git \
+    /tmp/openvino
+RUN \
+  echo "**** compiling openvino ****" && \
+  mkdir -p /tmp/openvino/build && \
+  cd /tmp/openvino/build && \
+  cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    -DCPACK_GENERATOR=DEB \
+    -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF \
+    -DENABLE_SYSTEM_TBB=ON \
+    -DENABLE_TBBBIND_2_5=OFF \
+    -DENABLE_INTEL_NPU=OFF \
+    -DENABLE_PYTHON=OFF \
+    -DENABLE_WHEEL=OFF \
+    -DENABLE_JS=OFF \
+    -DENABLE_SAMPLES=OFF \
+    -DENABLE_TESTS=OFF \
+    -DENABLE_DOCS=OFF \
+    -DENABLE_OV_PADDLE_FRONTEND=OFF \
+    -DENABLE_OV_PYTORCH_FRONTEND=OFF \
+    -DENABLE_OV_TF_FRONTEND=OFF \
+    -DENABLE_OV_TF_LITE_FRONTEND=OFF \
+    -DENABLE_OV_JAX_FRONTEND=OFF \
+    .. && \
+  make
+RUN \
+  echo "**** installing openvino ****" && \
+  cd /tmp/openvino/build && \
+  make install && \
+  ls -l /usr/lib/libopenvino*.so* /usr/lib/openvino-${OPENVINO}/ && \
+  pkg-config --modversion openvino && \
+  find /usr/lib -maxdepth 1 -name 'libopenvino*.so.*.*.*' -type f -exec strip -d {} + && \
+  find /usr/lib/openvino-${OPENVINO} -name '*.so' -type f -exec strip -d {} +
 RUN \
   echo "**** grabbing ogg ****" && \
   mkdir -p /tmp/ogg && \
@@ -971,6 +1018,7 @@ RUN \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
+    --enable-libopenvino \
     --enable-libopus \
     --enable-libplacebo \
     --enable-librav1e \
@@ -1056,9 +1104,16 @@ RUN \
   cp -a \
     /usr/local/share/vulkan/* \
     /buildout/usr/local/share/vulkan/ && \
+  cp -a \
+    /usr/lib/libopenvino*.so* \
+    /buildout/usr/local/lib/ && \
+  cp -a \
+    /usr/lib/openvino-${OPENVINO} \
+    /buildout/usr/local/lib/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
+    
 
 # runtime stage
 FROM ghcr.io/linuxserver/baseimage-ubuntu:resolute
@@ -1085,6 +1140,7 @@ RUN \
   echo "**** install runtime ****" && \
     apt-get update && \
     apt-get install -y \
+    libtbb12 \
     libasound2t64 \
     libedit2 \
     libelf1t64 \
