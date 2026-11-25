@@ -43,6 +43,7 @@ ENV \
   MESA=26.2.4 \
   NVCODEC=n13.1.15.0 \
   OGG=1.3.6 \
+  OPENVINO=2025.4.0 \
   OPENCOREAMR=0.1.6 \
   OPENJPEG=2.5.4 \
   OPUS=1.6.1 \
@@ -557,6 +558,43 @@ RUN \
   ninja -vC build && \
   ninja -vC build install
 RUN \
+  echo "**** grabbing openvino ****" && \
+  mkdir -p /tmp/openvino && \
+  git clone \
+    --branch ${OPENVINO} \
+    --depth 1 \
+    --recurse-submodules \
+    --shallow-submodules \
+    https://github.com/openvinotoolkit/openvino.git \
+    /tmp/openvino
+RUN \
+  echo "**** compiling openvino ****" && \
+  mkdir -p /tmp/openvino/build && \
+  cd /tmp/openvino/build && \
+  cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF \
+    -DENABLE_SYSTEM_TBB=ON \
+    -DENABLE_TBBBIND_2_5=OFF \
+    -DENABLE_INTEL_NPU=OFF \
+    -DENABLE_PYTHON=OFF \
+    -DENABLE_WHEEL=OFF \
+    -DENABLE_JS=OFF \
+    -DENABLE_SAMPLES=OFF \
+    -DENABLE_TESTS=OFF \
+    -DENABLE_DOCS=OFF \
+    -DENABLE_OV_PADDLE_FRONTEND=OFF \
+    -DENABLE_OV_PYTORCH_FRONTEND=OFF \
+    -DENABLE_OV_TF_FRONTEND=OFF \
+    -DENABLE_OV_TF_LITE_FRONTEND=OFF \
+    -DENABLE_OV_JAX_FRONTEND=OFF \
+    .. && \
+  make && \
+  make install && \
+  strip -d /usr/local/lib/libopenvino*.so
+RUN \
   echo "**** grabbing ogg ****" && \
   mkdir -p /tmp/ogg && \
   curl -Lf \
@@ -971,6 +1009,7 @@ RUN \
     --enable-libopencore-amrnb \
     --enable-libopencore-amrwb \
     --enable-libopenjpeg \
+    --enable-libopenvino \
     --enable-libopus \
     --enable-libplacebo \
     --enable-librav1e \
@@ -1056,9 +1095,13 @@ RUN \
   cp -a \
     /usr/local/share/vulkan/* \
     /buildout/usr/local/share/vulkan/ && \
+  cp -a \
+    /usr/local/lib/openvino-* \
+    /buildout/usr/local/lib/ && \
   echo \
     'libnvidia-opencl.so.1' > \
     /buildout/etc/OpenCL/vendors/nvidia.icd
+    
 
 # runtime stage
 FROM ghcr.io/linuxserver/baseimage-ubuntu:resolute
@@ -1085,6 +1128,7 @@ RUN \
   echo "**** install runtime ****" && \
     apt-get update && \
     apt-get install -y \
+    libtbb-dev \
     libasound2t64 \
     libedit2 \
     libelf1t64 \
