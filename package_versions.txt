@@ -54,8 +54,8 @@ jq                             1.8.1-4ubuntu2                         deb
 krb5-locales                   1.22.1-2ubuntu4.1                      deb          
 libacl1                        2.3.2-2                                deb          
 libapt-pkg7.0                  3.2.1ubuntu0.1                         deb          
-libasound2-data                1.2.15.3-1ubuntu1.1                    deb          
-libasound2t64                  1.2.15.3-1ubuntu1.1                    deb          
+libasound2-data                1.2.15.3-1ubuntu1.2                    deb          
+libasound2t64                  1.2.15.3-1ubuntu1.2                    deb          
 libassuan9                     3.0.2-2build1                          deb          
 libatomic1                     16-20260322-1ubuntu1                   deb          
 libattr1                       1:2.5.2-4ubuntu0.1                     deb          
@@ -76,7 +76,7 @@ libdb5.3t64                    5.3.28+dfsg2-10ubuntu1                 deb
 libdebconfclient0              0.280ubuntu1                           deb          
 libedit2                       3.1-20251016-1                         deb          
 libelf1t64                     0.194-4                                deb          
-libexpat1                      2.7.4-1ubuntu0.2                       deb          
+libexpat1                      2.7.4-1ubuntu0.3                       deb          
 libext2fs2t64                  1.47.2-3ubuntu4                        deb          
 libffi8                        3.5.2-4                                deb          
 libgcc-s1                      16-20260322-1ubuntu1                   deb          
@@ -132,7 +132,7 @@ libsemanage-common             3.9-1build1                            deb
 libsemanage2                   3.9-1build1                            deb          
 libsepol2                      3.9-2                                  deb          
 libsmartcols1                  2.41.3-3ubuntu2.2                      deb          
-libsqlite3-0                   3.46.1-9ubuntu0.3                      deb          
+libsqlite3-0                   3.46.1-9ubuntu0.4                      deb          
 libss2                         1.47.2-3ubuntu4                        deb          
 libssh2-1t64                   1.11.1-1ubuntu0.26.04.4                deb          
 libssl3t64                     3.5.5-1ubuntu3.7                       deb          
@@ -192,7 +192,7 @@ stdlib                         go1.27.3                               go-module
 systemd-standalone-sysusers    259.9-0ubuntu0.1                       deb          
 sysvinit-utils                 3.15-5ubuntu1                          deb          
 tar                            1.35+dfsg-4ubuntu0.4                   deb          
-tzdata                         2026e-0ubuntu0.26.04.1                 deb          
+tzdata                         2026f-0ubuntu0.26.04.1                 deb          
 ubuntu-keyring                 2023.11.28.1build1                     deb          
 util-linux                     2.41.3-3ubuntu2.2                      deb          
 xdg-user-dirs                  0.19-1                                 deb          
