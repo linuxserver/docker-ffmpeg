@@ -166,6 +166,63 @@ full_custom_readme: |
   * ANV: To enable for Intel, set the env var `ANV_VIDEO_DECODE=1`
   * RADV: To enable on AMD, set the env var `RADV_PERFTEST=video_decode`
   * NVIDIA: To enable on Nvidia, install Nvidia Vulkan Beta drivers on the host per [this article](https://lynne.ee/vulkan-video-decoding.html#driver-support)
+  
+  ### OpenVINO (DNN inference, x86_64 only)
+
+  FFmpeg is built with `--enable-libopenvino`, so the `dnn_processing`, `dnn_classify` and `dnn_detect` filters can run models on the OpenVINO backend. Models must be in OpenVINO IR format (`.xml` + `.bin`) or ONNX. Bind mount your models directory into the container (read-only is fine).
+
+  ```bash
+  docker run --rm -it \
+    -v $(pwd):/config \
+    -v /path/to/models:/models:ro \
+    linuxserver/ffmpeg \
+    -i /config/input.mkv \
+    -vf "dnn_processing=dnn_backend=openvino:model=/models/espcn.xml:input=x:output=y:backend_configs=device=CPU" \
+    -c:v libx264 \
+    -c:a copy \
+    /config/output.mkv
+  ```
+
+  `input` and `output` must match the tensor names in the model (for example `x` and `y` for the ESPCN super-resolution model).
+
+  #### Selecting an adapter
+
+  The inference device is set with `device=` inside `backend_configs`. Multiple options are separated with `&`.
+
+  | Device | Description | Extra docker args |
+  | :----: | ---- | ---- |
+  | `CPU` | Default. Runs on any x86-64 CPU. | none |
+  | `GPU` | Intel iGPU/dGPU (gen9+, Arc). Use `GPU.0`, `GPU.1` to pick a specific card. | `--device=/dev/dri:/dev/dri` |
+  | `AUTO` | Lets OpenVINO choose the best available device and fall back. | `--device=/dev/dri:/dev/dri` to allow GPU use |
+
+  Intel GPU example:
+
+  ```bash
+  docker run --rm -it \
+    --device=/dev/dri:/dev/dri \
+    -v $(pwd):/config \
+    -v /path/to/models:/models:ro \
+    linuxserver/ffmpeg \
+    -i /config/input.mkv \
+    -vf "dnn_processing=dnn_backend=openvino:model=/models/espcn.xml:input=x:output=y:backend_configs=device=GPU&nireq=4" \
+    -c:v libx264 \
+    /config/output.mkv
+  ```
+
+  Object detection with `dnn_detect` (bounding boxes are attached to frames as side data, so this example just benchmarks it):
+
+  ```bash
+  docker run --rm -it \
+    --device=/dev/dri:/dev/dri \
+    -v $(pwd):/config \
+    -v /path/to/models:/models:ro \
+    linuxserver/ffmpeg \
+    -i /config/input.mkv \
+    -vf "dnn_detect=dnn_backend=openvino:model=/models/face-detection.xml:input=data:output=detection_out:confidence=0.6:backend_configs=device=AUTO" \
+    -f null - -benchmark
+  ```
+
+  Useful `backend_configs` options: `device`, `nireq` (parallel inference requests), `batch_size`, `input_resizable`, `layout`, `scale` and `mean`.
 
   ## Building locally
 
@@ -190,6 +247,7 @@ full_custom_readme: |
 
   ## Versions
 
+  * **26.11.26:** - Add support for OpenVINO (libopenvino) to x86_64, usable with the DNN filters (`dnn_processing`, `dnn_classify`, `dnn_detect`).
   * **12.10.26:** - Bump ffmpeg to 9.0.2. Also bump aom, fdk-aac, fribidi, harfbuzz, Intel drivers and libs, libdovi, libpng, libvmaf, mesa, shaderc, srt, vpx and vulkan-sdk. Make builds more resilient (curl retry).
   * **05.08.26:** - Rebase to Ubuntu Resolute. Bump ffmpeg to 9.0. Also bump harfbuzz, Intel drivers and libs, lame, libdav1d, libdovi, libvidstab, mesa, nvcodec, opus, rist, shaderc, srt, svtav1 and vulkan sdk.
   * **25.06.26:** - Bump ffmpeg to 8.1.2. Also bump aom, harfbuzz, libass, libdrm, libvmaf, mesa, rist and vulkan sdk.
